@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ServicioJuegoPassword.Servicios
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    public class ServicioChat : IServicioChat
+    public partial class ServicioPassword : IServicioChat
     {
         private static List<IServicioChatCallback> clientes = new List<IServicioChatCallback>();
         public void Chatear(string chat)

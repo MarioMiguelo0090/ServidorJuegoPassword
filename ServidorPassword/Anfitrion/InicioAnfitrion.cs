@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Anfitrion
 {
-    internal class InicioAnfitrion
+    public class InicioAnfitrion
     {
         static void Main(string[] args)
         {
-            using (ServiceHost anfitrion = new ServiceHost(typeof(ServicioJuegoPassword.Servicios.ServicioChat))) 
+            using (ServiceHost anfitrion = new ServiceHost(typeof(ServicioJuegoPassword.Servicios.ServicioPassword))) 
             {
                 anfitrion.Open();
                 Console.WriteLine("El servidor esta corriendo");
                 Console.ReadLine();
-            }
+            }           
         }
     }
 }

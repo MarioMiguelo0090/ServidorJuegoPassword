@@ -59,10 +59,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceso.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="Amistad.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleLogro.cs">
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePartida.cs">
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Estadistica.cs">
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="GestionAcceso.cs" />
     <Compile Include="GestionAmistad.cs" />
@@ -70,82 +79,71 @@
     <Compile Include="GestionDetallePartida.cs" />
     <Compile Include="GestionEstadistica.cs" />
     <Compile Include="GestionJugador.cs" />
-    <Compile Include="DetalleLogro.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DetallePartida.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Estadistica.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
-    </Compile>
     <Compile Include="GestionLogro.cs" />
     <Compile Include="GestionPartida.cs" />
     <Compile Include="GestionPerfil.cs" />
     <Compile Include="GestionPregunta.cs" />
     <Compile Include="GestionRespuesta.cs" />
     <Compile Include="Jugador.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="Logro.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBDPassword.Context.cs">
+    <Compile Include="ModeloPassword.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBDPassword.Context.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBDPassword.cs">
+    <Compile Include="ModeloPassword.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBDPassword.Designer.cs">
+    <Compile Include="ModeloPassword.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBDPassword.edmx</DependentUpon>
+      <DependentUpon>ModeloPassword.edmx</DependentUpon>
     </Compile>
     <Compile Include="Partida.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="Perfil.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="Pregunta.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Respuesta.cs">
-      <DependentUpon>ModeloBDPassword.tt</DependentUpon>
+      <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ModeloBDPassword.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModeloBDPassword.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ModeloBDPassword.edmx.diagram">
-      <DependentUpon>ModeloBDPassword.edmx</DependentUpon>
+    <EntityDeploy Include="ModeloPassword.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModeloPassword.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModeloPassword.edmx.diagram">
+      <DependentUpon>ModeloPassword.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModeloBDPassword.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModeloBDPassword.Context.cs</LastGenOutput>
-      <DependentUpon>ModeloBDPassword.edmx</DependentUpon>
-    </Content>
-    <Content Include="ModeloBDPassword.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModeloBDPassword.edmx</DependentUpon>
-      <LastGenOutput>ModeloBDPassword.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="ModeloPassword.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModeloPassword.edmx</DependentUpon>
+      <LastGenOutput>ModeloPassword.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModeloPassword.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModeloPassword.edmx</DependentUpon>
+      <LastGenOutput>ModeloPassword.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

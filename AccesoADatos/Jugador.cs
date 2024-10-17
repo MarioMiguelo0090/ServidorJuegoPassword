@@ -26,9 +26,9 @@ namespace AccesoADatos
         public string nombre { get; set; }
         public string apellidos { get; set; }
         public bool estadoJugador { get; set; }
-        public int FKidAcceso { get; set; }
+        public Nullable<int> FKidAcceso { get; set; }
         public Nullable<int> FKIdPerfil { get; set; }
-        public int FKidEstadistica { get; set; }
+        public Nullable<int> FKidEstadistica { get; set; }
     
         public virtual Acceso Acceso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
