@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AccesoADatos.Auxiliares;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -58,13 +59,13 @@ namespace AccesoADatos
                         {
                             _bitacora.Warn(excepcionValidacion);
                             contextoTransaccion.Rollback();
-                            resultadoRegistro = -1;
+                            resultadoRegistro = -2;
                         }
                         catch (SqlException excepcionSQL)
                         {
                             _bitacora.Error(excepcionSQL);
                             contextoTransaccion.Rollback();
-                            resultadoRegistro = -2;
+                            resultadoRegistro = -1;
                         }
                     }
                 }
@@ -72,7 +73,7 @@ namespace AccesoADatos
             catch (SqlException excepcionSQL)
             {
                 _bitacora.Error(excepcionSQL);
-                resultadoRegistro = -2;
+                resultadoRegistro = -1;
             }
             return resultadoRegistro;                                 
         }
@@ -141,5 +142,53 @@ namespace AccesoADatos
             }
             return resultado;
         }
+
+        public Cuenta ObtenerCuentaPorCorreo(string correo) 
+        {
+            Cuenta cuenta = new Cuenta();
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var resultadoConsulta = (from jugador in contexto.Jugador
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
+                                             join perfil in contexto.Perfil on jugador.FKIdPerfil equals perfil.idPerfil
+                                             where acceso.correo == correo
+                                             select new
+                                             {
+                                                 acceso.idAcceso,
+                                                 acceso.correo,
+                                                 acceso.contrasenia,
+                                                 perfil.idPerfil,
+                                                 perfil.nombreUsuario,
+                                                 perfil.rutaImagen,
+                                                 perfil.descripcion,
+                                                 jugador.idJugador,
+                                                 jugador.nombre,
+                                                 jugador.apellidos,
+                                             }).FirstOrDefault();
+                    if (resultadoConsulta != null)
+                    {
+                        cuenta.IdAcceso = resultadoConsulta.idAcceso;
+                        cuenta.Correo = resultadoConsulta.correo;
+                        cuenta.Contrasenia = resultadoConsulta.contrasenia;
+                        cuenta.IdPerfil = resultadoConsulta.idPerfil;
+                        cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
+                        cuenta.RutaImagen = resultadoConsulta.rutaImagen;
+                        cuenta.Descripcion = resultadoConsulta.descripcion;
+                        cuenta.IdJugador = resultadoConsulta.idJugador;
+                        cuenta.Nombre = resultadoConsulta.nombre;
+                        cuenta.Apellidos = resultadoConsulta.apellidos;
+                    }
+                }
+            }
+            catch (SqlException excepcionSql)
+            {
+                _bitacora.Warn(excepcionSql);
+                cuenta.IdAcceso = -1;
+            }            
+            return cuenta;                        
+        }
+        
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Amistad.cs">
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
+    <Compile Include="Auxiliares\Cuenta.cs" />
     <Compile Include="DetalleLogro.cs">
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
@@ -74,16 +75,7 @@
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
     <Compile Include="GestionAcceso.cs" />
-    <Compile Include="GestionAmistad.cs" />
-    <Compile Include="GestionDetalleLogro.cs" />
-    <Compile Include="GestionDetallePartida.cs" />
-    <Compile Include="GestionEstadistica.cs" />
-    <Compile Include="GestionJugador.cs" />
-    <Compile Include="GestionLogro.cs" />
-    <Compile Include="GestionPartida.cs" />
     <Compile Include="GestionPerfil.cs" />
-    <Compile Include="GestionPregunta.cs" />
-    <Compile Include="GestionRespuesta.cs" />
     <Compile Include="Jugador.cs">
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>

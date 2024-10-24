@@ -1,4 +1,5 @@
 ﻿using AccesoADatos;
+using AccesoADatos.Auxiliares;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace ServicioJuegoPassword.Interfaces
     public interface IServicioGestionAcceso
     {
         [OperationContract]  
-        void RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador);
+        int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador);
 
         [OperationContract]
         int ValidarInicioDeSesion(Acceso acceso);
@@ -25,5 +26,8 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         bool ValidarNombreUsuario(string nombreUsuario);
+
+        [OperationContract]
+        Cuenta RecuperarCuentaPorCorreo(string correo);
     }
 }

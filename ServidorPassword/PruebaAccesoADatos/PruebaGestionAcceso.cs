@@ -1,4 +1,5 @@
 ﻿using AccesoADatos;
+using AccesoADatos.Auxiliares;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -70,5 +71,25 @@ namespace PruebaAccesoADatos
             int resultadoObtenido=gestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
+
+        [TestMethod]
+        public void PruebaObtenerCuentaPorCorreoExitosa() 
+        {   
+            Cuenta cuentaPrueba=new Cuenta();
+            cuentaPrueba.IdAcceso = 1;
+            cuentaPrueba.Correo= "mariolimon@gmail.com";
+            cuentaPrueba.Contrasenia= "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";
+            cuentaPrueba.Nombre = "Mario Miguel";
+            cuentaPrueba.Apellidos = "Limon Cabrera";
+            cuentaPrueba.IdJugador = 1;
+            cuentaPrueba.IdPerfil = 1;
+            cuentaPrueba.NombreUsuario = "MarioLimon";
+            cuentaPrueba.RutaImagen = "";
+            cuentaPrueba.Descripcion = "";            
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida=gestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
+            Assert.AreEqual(cuentaPrueba, cuentaObtenida);
+        }
+
     }
 }

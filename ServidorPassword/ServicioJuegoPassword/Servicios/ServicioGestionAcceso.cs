@@ -10,6 +10,7 @@ using ServicioJuegoPassword.Validadores;
 using FluentValidation.Results;
 using ServicioJuegoPassword.Interfaces;
 using System.ServiceModel;
+using AccesoADatos.Auxiliares;
 
 namespace ServicioJuegoPassword.Servicios
 {
@@ -19,19 +20,20 @@ namespace ServicioJuegoPassword.Servicios
         private GestionAcceso _gestionAcceso = new GestionAcceso();
         private GestionPerfil _gestionPerfil = new GestionPerfil();
 
-        public void RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
+        public int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
         {
-            if (ValidarNuevoRegistro(acceso, perfil, jugador)) {
-                if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0)
+            int resultadoRegistro = 0;
+            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0)
+            {
+                if (ValidarNombreUsuario(perfil.nombreUsuario))
                 {
-                    if (ValidarNombreUsuario(perfil.nombreUsuario))
-                    {
-                        string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
-                        acceso.contrasenia = contraseniaEncriptada;
-                        _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
-                    }
+                    string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
+                    acceso.contrasenia = contraseniaEncriptada;
+                    _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
+                    resultadoRegistro = 1;
                 }
-            }
+            }            
+            return resultadoRegistro;
         }
 
         public int ValidarInicioDeSesion(Acceso acceso)
@@ -84,6 +86,12 @@ namespace ServicioJuegoPassword.Servicios
                 validacion = true;
             }
             return validacion;
+        }
+
+        public Cuenta RecuperarCuentaPorCorreo(string correo) 
+        {
+            Cuenta cuentaRecuperada= _gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            return cuentaRecuperada;
         }
 
     }
