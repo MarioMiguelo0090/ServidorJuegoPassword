@@ -1,6 +1,7 @@
 ﻿using AccesoADatos.Auxiliares;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
@@ -135,7 +136,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (SqlException excepcionSql) 
+            catch (EntityException excepcionSql) 
             {
                 _bitacora.Warn(excepcionSql);
                 resultado = -1;
@@ -179,6 +180,10 @@ namespace AccesoADatos
                         cuenta.IdJugador = resultadoConsulta.idJugador;
                         cuenta.Nombre = resultadoConsulta.nombre;
                         cuenta.Apellidos = resultadoConsulta.apellidos;
+                    }
+                    else 
+                    {
+                        cuenta.IdAcceso = 0;
                     }
                 }
             }

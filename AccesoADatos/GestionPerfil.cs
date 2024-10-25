@@ -45,8 +45,11 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var perfil = contexto.Perfil.Find(idPerfil);
-                    perfil.rutaImagen = rutaImagen;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    if (perfil != null)
+                    {
+                        perfil.rutaImagen = rutaImagen;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                                      
                 }
             }
             catch (DbUpdateException excepcionActualizacion) 
@@ -70,8 +73,11 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var perfil = contexto.Perfil.Find(idPerfil);
-                    perfil.descripcion = descripcion;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    if (perfil != null)
+                    {
+                        perfil.descripcion = descripcion;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
@@ -95,8 +101,11 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var perfil = contexto.Perfil.Find(idPerfil);
-                    perfil.nombreUsuario = nombreUsuario;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    if (perfil != null)
+                    {
+                        perfil.nombreUsuario = nombreUsuario;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
@@ -120,8 +129,11 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades()) 
                 {
                     var acceso = contexto.Acceso.Find(idAcceso);
-                    acceso.correo = correo;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    if (acceso != null) 
+                    {
+                        acceso.correo = correo;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
@@ -145,8 +157,11 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var acceso = contexto.Acceso.Find(idAcceso);
-                    acceso.contrasenia = contrasenia;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    if (acceso != null) 
+                    {
+                        acceso.contrasenia = contrasenia;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
@@ -161,6 +176,5 @@ namespace AccesoADatos
             }
             return resultadoActualizacion;
         }
-
     }
 }

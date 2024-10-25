@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using AccesoADatos;
-using ServicioJuegoPassword.Validadores;
 using FluentValidation.Results;
 using ServicioJuegoPassword.Interfaces;
 using System.ServiceModel;
 using AccesoADatos.Auxiliares;
 
 namespace ServicioJuegoPassword.Servicios
-{
-    
+{    
     public partial class ServicioPassword:IServicioGestionAcceso
     {
         private GestionAcceso _gestionAcceso = new GestionAcceso();
@@ -23,14 +21,13 @@ namespace ServicioJuegoPassword.Servicios
         public int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
         {
             int resultadoRegistro = 0;
-            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0)
+            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0 && acceso.correo!=null)
             {
                 if (ValidarNombreUsuario(perfil.nombreUsuario))
                 {
                     string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
                     acceso.contrasenia = contraseniaEncriptada;
-                    _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
-                    resultadoRegistro = 1;
+                    resultadoRegistro = _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);                     
                 }
             }            
             return resultadoRegistro;
@@ -49,23 +46,7 @@ namespace ServicioJuegoPassword.Servicios
             }
             return validacion;
         }
-
-        public bool ValidarNuevoRegistro(Acceso acceso, Perfil perfil, Jugador jugador)
-        {
-            bool validacion = false;
-            ValidacionAcceso validacionAcceso = new ValidacionAcceso();
-            ValidacionJugador validacionJugador = new ValidacionJugador();
-            ValidacionPerfil validacionPerfil = new ValidacionPerfil();
-            ValidationResult resultadoAcceso = validacionAcceso.Validate(acceso);
-            ValidationResult resultadoJugador = validacionJugador.Validate(jugador);
-            ValidationResult resultadoPerfil = validacionPerfil.Validate(perfil);
-            if (resultadoAcceso.IsValid && resultadoJugador.IsValid && resultadoPerfil.IsValid)
-            {
-                validacion = true;
-            }
-            return validacion;
-        }
-
+        
         public string EncriptarContrasenia(string contrasenia)
         {
             var sha256 = SHA256.Create();
@@ -93,6 +74,5 @@ namespace ServicioJuegoPassword.Servicios
             Cuenta cuentaRecuperada= _gestionAcceso.ObtenerCuentaPorCorreo(correo);
             return cuentaRecuperada;
         }
-
     }
 }

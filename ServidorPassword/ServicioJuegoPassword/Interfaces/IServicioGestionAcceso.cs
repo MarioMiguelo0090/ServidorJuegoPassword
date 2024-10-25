@@ -17,10 +17,7 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         int ValidarInicioDeSesion(Acceso acceso);
-
-        [OperationContract]
-        bool ValidarNuevoRegistro(Acceso acceso, Perfil perfil, Jugador jugador);
-
+                
         [OperationContract]
         string EncriptarContrasenia(string contrasenia);
 

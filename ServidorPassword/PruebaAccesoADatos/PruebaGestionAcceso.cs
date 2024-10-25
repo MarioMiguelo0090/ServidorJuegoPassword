@@ -28,10 +28,9 @@ namespace PruebaAccesoADatos
             int resultadoEsperado = 1;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
-
         
         [TestMethod]
-        public void PruebaRegistrarAccesoExcepcion()
+        public void PruebaRegistrarAccesoFallida()
         {
             GestionAcceso gestionAcceso = new GestionAcceso();
             Acceso acceso = new Acceso();    
@@ -53,6 +52,16 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
+        public void PruebaRetonarIdAccesoPorCorreoFallida() 
+        {
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            string correo = "ejemplo@hotmail.com";
+            int resultadoEsperado = 0;
+            int resultadoObtenido = gestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
+        [TestMethod]
         public void PruebaRetornarContraseniaPorCorreoExitoso() 
         {
             GestionAcceso gestionAcceso = new GestionAcceso();
@@ -63,11 +72,31 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
+        public void PruebaRetornarContraseniaPorCorreoFallida() 
+        {
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            string correo = "ejemplo@hotmail.com";
+            string contraseniaEsperada = "";
+            string contrasniaObtenida=gestionAcceso.RetornarContraseniaPorCorreo(correo);
+            Assert.AreEqual(contraseniaEsperada, contrasniaObtenida);
+        }
+
+        [TestMethod]
         public void PruebaValidarPresenciaCorreoExitoso() 
         {
             GestionAcceso gestionAcceso = new GestionAcceso();
-            String correo = "mariolimon@gmail.com";
+            string correo = "mariolimon@gmail.com";
             int resultadoEsperado = 1;
+            int resultadoObtenido=gestionAcceso.ValidarPresenciaCorreo(correo);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
+        [TestMethod]
+        public void PruebaValidarPresenciaCorreoFallida() 
+        {
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            string correo = "ejemplo@gmail.com";
+            int resultadoEsperado = 0;
             int resultadoObtenido=gestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
@@ -91,5 +120,15 @@ namespace PruebaAccesoADatos
             Assert.AreEqual(cuentaPrueba, cuentaObtenida);
         }
 
+        [TestMethod]
+        public void PruebaObtenerCuentaPorCorreoFallida() 
+        {
+            GestionAcceso gestionAcceso=new GestionAcceso();
+            string correo = "ejemplo@gmail.com";
+            Cuenta cuentaEsperada= new Cuenta();
+            cuentaEsperada.IdAcceso= 0;
+            Cuenta cuentaObtenida=gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            Assert.AreEqual(cuentaEsperada.IdAcceso,cuentaObtenida.IdAcceso);
+        }
     }
 }

@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace ServicioJuegoPassword.Servicios
 {
     public partial class ServicioPassword : IServicioPersonalizacionPerfil
-    {
-                
+    {                
         public int EditarCorreoPorIdAcceso(int idAcceso, string correo)
         {
             return _gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
@@ -33,7 +32,8 @@ namespace ServicioJuegoPassword.Servicios
 
         public int EditarContraseniaPorIdAcceso(int idAcceso, string contrasenia)
         {
-            return _gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, contrasenia);
+            string nuevaContrasenia = EncriptarContrasenia(contrasenia);
+            return _gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, nuevaContrasenia);
         }
     }
 }
