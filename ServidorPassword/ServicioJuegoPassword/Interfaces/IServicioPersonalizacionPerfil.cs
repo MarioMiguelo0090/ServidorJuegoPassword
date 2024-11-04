@@ -23,6 +23,9 @@ namespace ServicioJuegoPassword.Interfaces
         int EditarRutaImagenPorIdPerfil(int idPerfil, string rutaImagen);
 
         [OperationContract]
-        int EditarContraseniaPorIdAcceso(int idAcceso,string contrasenia);        
+        int EditarContraseniaPorIdAcceso(int idAcceso,string contrasenia);
+
+        [OperationContract]
+        int RecuperarIdAccesoPorCorreo(string correo);
     }
 }

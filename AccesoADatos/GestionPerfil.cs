@@ -1,5 +1,7 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
@@ -12,11 +14,11 @@ namespace AccesoADatos
 {
     public class GestionPerfil
     {
-        private static readonly log4net.ILog _bitacora = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public int ValidarPresenciaDeNombreUsuario(string nombreUsuario) 
         {
-            int resultado = 0;
+            int resultadoPresencia = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -24,18 +26,17 @@ namespace AccesoADatos
                     var perfil = contexto.Perfil.Any(entidad => entidad.nombreUsuario == nombreUsuario);
                     if (perfil)
                     {
-                        resultado = 1;
+                        resultadoPresencia = 1;
                     }
                 }
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Warn(excepcionSql);
-                resultado = -1;
+                resultadoPresencia = -1;
             }                            
-            return resultado;
+            return resultadoPresencia;
         }
-
 
         public int GuadarRutaImagenPorIdPerfil(int idPerfil,string rutaImagen) 
         {
@@ -57,10 +58,10 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
@@ -85,10 +86,10 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
@@ -113,10 +114,10 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
@@ -141,10 +142,10 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
@@ -169,12 +170,36 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
+
+        public int ObtenerIdAccesoPorCorreo(string correo) 
+        {
+            int idAcceso = 0;
+            try 
+            {
+                using (var contexto = new PasswordEntidades()) 
+                {
+                    var acceso = contexto.Acceso.FirstOrDefault(entidad => entidad.correo == correo);
+                    if (acceso != null) 
+                    {
+                        idAcceso = acceso.idAcceso;
+                    }                    
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                idAcceso = -1;
+            }
+            return idAcceso;
+        }
+
+        
     }
 }

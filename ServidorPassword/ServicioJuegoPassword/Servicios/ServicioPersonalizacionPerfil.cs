@@ -35,5 +35,10 @@ namespace ServicioJuegoPassword.Servicios
             string nuevaContrasenia = EncriptarContrasenia(contrasenia);
             return _gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, nuevaContrasenia);
         }
+
+        public int RecuperarIdAccesoPorCorreo(string correo)
+        {
+            return _gestionPerfil.ObtenerIdAccesoPorCorreo(correo);
+        }
     }
 }

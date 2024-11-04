@@ -22,9 +22,12 @@ namespace ServicioJuegoPassword.Interfaces
         string EncriptarContrasenia(string contrasenia);
 
         [OperationContract]
-        bool ValidarNombreUsuario(string nombreUsuario);
+        int ValidarNombreUsuario(string nombreUsuario);
 
         [OperationContract]
         Cuenta RecuperarCuentaPorCorreo(string correo);
+
+        [OperationContract]
+        int ValidarPresenciaDeCorreo(string correo);        
     }
 }

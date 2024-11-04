@@ -21,7 +21,6 @@ namespace AccesoADatos
         }
     
         public int idPregunta { get; set; }
-        public int duracion { get; set; }
         public string pregunta1 { get; set; }
         public string respuestaCorrecta { get; set; }
         public int FKidPartida { get; set; }

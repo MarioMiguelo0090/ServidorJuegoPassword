@@ -11,16 +11,16 @@ namespace ServicioJuegoPassword.Servicios
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public partial class ServicioPassword : IServicioChat
     {
-        private static List<IServicioChatCallback> clientes = new List<IServicioChatCallback>();
+        private static List<IServicioChatCallback> _clientes = new List<IServicioChatCallback>();
         public void Chatear(string chat)
         {
             var cliente = OperationContext.Current.GetCallbackChannel<IServicioChatCallback>();
-            if (!clientes.Contains(cliente))
+            if (!_clientes.Contains(cliente))
             {
-                clientes.Add(cliente);
+                _clientes.Add(cliente);
             }            
             string mensaje = chat + Environment.NewLine;            
-            foreach (var callback in clientes)
+            foreach (var callback in _clientes)
             {
                 if (((ICommunicationObject)callback).State == CommunicationState.Opened)
                 {

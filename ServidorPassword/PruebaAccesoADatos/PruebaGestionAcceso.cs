@@ -65,9 +65,9 @@ namespace PruebaAccesoADatos
         public void PruebaRetornarContraseniaPorCorreoExitoso() 
         {
             GestionAcceso gestionAcceso = new GestionAcceso();
-            String correo = "mariolimon@gmail.com";
+            string correo = "mariolimon@gmail.com";
             string resultadoEsperado = "Qwerty1234";
-            String resultadoObtenido=gestionAcceso.RetornarContraseniaPorCorreo(correo);
+            string resultadoObtenido=gestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 

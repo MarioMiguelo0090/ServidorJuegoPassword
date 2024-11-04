@@ -89,7 +89,9 @@ namespace PruebaServicioJuegoPassword
         {
             ServicioPassword servicioGestionAcceso = new ServicioPassword();
             string nombreUsuario = "MarioLimon";
-            Assert.IsFalse(servicioGestionAcceso.ValidarNombreUsuario(nombreUsuario));
+            int resultadoEsperado = 1;
+            int resultadoObtenido = servicioGestionAcceso.ValidarNombreUsuario(nombreUsuario);
+            Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
 
         [TestMethod]
@@ -97,7 +99,9 @@ namespace PruebaServicioJuegoPassword
         {
             ServicioPassword servicioGestionAcceso = new ServicioPassword();
             string nombreUsuario = "nadie";            
-            Assert.IsTrue(servicioGestionAcceso.ValidarNombreUsuario(nombreUsuario));
+            int resultadoEsperado = 0;
+            int resultadoObtenido = servicioGestionAcceso.ValidarNombreUsuario(nombreUsuario);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
@@ -125,5 +129,26 @@ namespace PruebaServicioJuegoPassword
             Cuenta cuentaObtenida = servicioGestionAcceso.RecuperarCuentaPorCorreo(correo);
             Assert.AreNotEqual(cuentaEsperada, cuentaObtenida);
         }
+
+        [TestMethod]
+        public void PruebaValidarPresenciaDeCorreoExitosa() 
+        {
+            string correo = "mariolimon@gmail.com";
+            ServicioPassword servicioGestionAcceso = new ServicioPassword();
+            int resultadoEsperado = 1;
+            int resultadoObtenido = servicioGestionAcceso.ValidarPresenciaDeCorreo(correo);
+            Assert.AreEqual(resultadoEsperado,resultadoObtenido);
+        }
+
+        [TestMethod]
+        public void PruebaValidarPresenciaDeCorreoFallida() 
+        {
+            string correo = "ejemplo@gmail.com";
+            ServicioPassword servicioGestionAcceso = new ServicioPassword();
+            int resultadoEsperado = 0;
+            int resultadoObtenido = servicioGestionAcceso.ValidarPresenciaDeCorreo(correo);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
     }
 }

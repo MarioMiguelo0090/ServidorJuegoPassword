@@ -20,30 +20,23 @@ namespace ServicioJuegoPassword.Servicios
 
         public int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
         {
-            int resultadoRegistro = 0;
-            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0 && acceso.correo!=null)
-            {
-                if (ValidarNombreUsuario(perfil.nombreUsuario))
-                {
-                    string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
-                    acceso.contrasenia = contraseniaEncriptada;
-                    resultadoRegistro = _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);                     
-                }
-            }            
-            return resultadoRegistro;
+            string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
+            acceso.contrasenia = contraseniaEncriptada;
+            return _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);                                             
         }
 
         public int ValidarInicioDeSesion(Acceso acceso)
         {
-            int validacion = 0;
-            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) > 0)
+            int validacion = 0;            
+            string contraseniaEncriptada = _gestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
+            if (contraseniaEncriptada == EncriptarContrasenia(acceso.contrasenia))
             {
-                string contraseniaEncriptada = _gestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
-                if (contraseniaEncriptada == EncriptarContrasenia(acceso.contrasenia))
-                {
-                    validacion = 1;
-                }
+                validacion = 1;
             }
+            else if (contraseniaEncriptada == "excepcion") 
+            {
+                validacion = -1;
+            }            
             return validacion;
         }
         
@@ -59,20 +52,20 @@ namespace ServicioJuegoPassword.Servicios
             return constructorCadena.ToString();
         }
 
-        public bool ValidarNombreUsuario(string nombreUsuario)
+        public int ValidarNombreUsuario(string nombreUsuario)
         {
-            bool validacion = false;
-            if (_gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario) == 0)
-            {
-                validacion = true;
-            }
-            return validacion;
+            return _gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);            
+        }
+
+        public int ValidarPresenciaDeCorreo(string correo) 
+        {
+            return _gestionAcceso.ValidarPresenciaCorreo(correo);            
         }
 
         public Cuenta RecuperarCuentaPorCorreo(string correo) 
         {
-            Cuenta cuentaRecuperada= _gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            Cuenta cuentaRecuperada=_gestionAcceso.ObtenerCuentaPorCorreo(correo);
             return cuentaRecuperada;
-        }
+        }      
     }
 }

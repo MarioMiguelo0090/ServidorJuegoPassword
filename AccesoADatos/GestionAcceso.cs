@@ -7,12 +7,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using log4net;
 
 namespace AccesoADatos
 {
     public class GestionAcceso
     {
-        private static readonly log4net.ILog _bitacora= log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _bitacora=LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
                 
         public int RegistrarAcceso(Acceso nuevoAcceso,Jugador nuevoJugador,Perfil nuevoPerfil) 
         {            
@@ -25,7 +26,6 @@ namespace AccesoADatos
                     {
                         try
                         {
-
                             Acceso acceso = new Acceso
                             {
                                 correo = nuevoAcceso.correo,
@@ -60,9 +60,9 @@ namespace AccesoADatos
                         {
                             _bitacora.Warn(excepcionValidacion);
                             contextoTransaccion.Rollback();
-                            resultadoRegistro = -2;
+                            resultadoRegistro = -1;
                         }
-                        catch (SqlException excepcionSQL)
+                        catch (EntityException excepcionSQL)
                         {
                             _bitacora.Error(excepcionSQL);
                             contextoTransaccion.Rollback();
@@ -71,7 +71,7 @@ namespace AccesoADatos
                     }
                 }
             }            
-            catch (SqlException excepcionSQL)
+            catch (EntityException excepcionSQL)
             {
                 _bitacora.Error(excepcionSQL);
                 resultadoRegistro = -1;
@@ -93,7 +93,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (SqlException excepcionSql) 
+            catch (EntityException excepcionSql) 
             {
                 _bitacora.Warn(excepcionSql);
                 idAcceso = -1;
@@ -115,9 +115,10 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
-                _bitacora.Warn(excepcionSql);                
+                _bitacora.Warn(excepcionSql);
+                contrasenia = "excepcion";
             }
             return contrasenia;
         }
@@ -187,7 +188,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Warn(excepcionSql);
                 cuenta.IdAcceso = -1;
