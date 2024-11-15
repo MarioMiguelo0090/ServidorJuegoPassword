@@ -12,12 +12,12 @@ namespace ServicioJuegoPassword.Interfaces
     [ServiceContract]
     public interface IServicioGestionAcceso
     {
-        [OperationContract]  
+        [OperationContract]
         int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador);
 
         [OperationContract]
         int ValidarInicioDeSesion(Acceso acceso);
-                
+
         [OperationContract]
         string EncriptarContrasenia(string contrasenia);
 
@@ -28,6 +28,9 @@ namespace ServicioJuegoPassword.Interfaces
         Cuenta RecuperarCuentaPorCorreo(string correo);
 
         [OperationContract]
-        int ValidarPresenciaDeCorreo(string correo);        
+        int ValidarPresenciaDeCorreo(string correo);
+
+        [OperationContract]
+        Cuenta RecuperarCuentaPorIdJugador(int idJugador);
     }
 }

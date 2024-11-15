@@ -24,6 +24,20 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
+        public void PruebaRegistrarNuevaPartidaPorIdJugadorFallida() 
+        {
+            int idJugador = 0;
+            Partida partida = new Partida();
+            partida.codigoPartida = "12345678";
+            partida.modoJuego = "Facil";
+            partida.estadoPartida = "Activa";
+            GestionPartida gestionPartida = new GestionPartida();
+            int resultadoEsperado = -1;
+            int resultadoObtenido = gestionPartida.RegistrarNuevaPartidaPorIdJugador(idJugador, partida);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
+        [TestMethod]
         public void PruebaActualizarEstadoDePartidaPorIdPartidaExitosa() 
         {
             int idPartida = 1;
@@ -31,6 +45,17 @@ namespace PruebaAccesoADatos
             GestionPartida gestionPartida=new GestionPartida();
             int resultadoEsperado = 1;
             int resultadoObtenido=gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
+        [TestMethod]
+        public void PruebaActualizarEstadoDePartidaPorIdPartidaFallida() 
+        {
+            int idPartida = 0;
+            string estadoPartida = "Terminada";
+            GestionPartida gestionPartida = new GestionPartida();
+            int resultadoEsperado = 0;
+            int resultadoObtenido = gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -65,6 +90,16 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
+        public void PruebaRecuperarPreguntasFallida() 
+        {
+            int resultadoEsperado = 0;
+            GestionPartida gestionPartida = new GestionPartida();
+            List<Pregunta> preguntasObtenidas = gestionPartida.RecuperarPreguntas();
+            int resultadoObtenido = preguntasObtenidas.Count();
+            Assert.AreEqual(resultadoEsperado, resultadoObtenido);
+        }
+
+        [TestMethod]
         public void PruebaRecuperarRespuestasPorIdPreguntaExitosa() 
         {
             int idPregunta = 1;
@@ -73,6 +108,17 @@ namespace PruebaAccesoADatos
             List<Respuesta> respuestasObtenidas = gestionPartida.RecuperarRespuestasPorIdPregunta(idPregunta);
             Respuesta respuestaObtenida = respuestasObtenidas.First();
             Assert.AreEqual(resultadoEsperado,respuestaObtenida.idRespuesta);
+        }
+
+        [TestMethod]
+        public void PruebaRecuperarRespuestasPorIdPreguntaFallida() 
+        {
+            int idPregunta = 0;
+            int resultadoEsperado = 0;
+            GestionPartida gestionPartida = new GestionPartida();
+            List<Respuesta> respuestasObtenidas = gestionPartida.RecuperarRespuestasPorIdPregunta(idPregunta);
+            int resultadoObtenido = respuestasObtenidas.Count();
+            Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
     }
 }

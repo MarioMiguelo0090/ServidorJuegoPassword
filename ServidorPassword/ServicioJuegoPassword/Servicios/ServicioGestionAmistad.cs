@@ -21,12 +21,12 @@ namespace ServicioJuegoPassword.Servicios
             return _gestionAmistad.ConfirmarSolicitudAmistadPorIdAmistad(amistad);
         }
 
-        public List<Amistad> ConsultarAmistadesPorIdJugador(int idJugador)
+        public List<int> ConsultarAmistadesPorIdJugador(int idJugador)
         {
-            return _gestionAmistad.RecuperarAmigosPorIdJugador(idJugador);
+            return _gestionAmistad.RecuperarIdAmigosPorIdJugador(idJugador);
         }
 
-        public List<Amistad> ConsultarSolicitudesAmistadPorIdJugador(int idJugador)
+        public List<int> ConsultarSolicitudesAmistadPorIdJugador(int idJugador)
         {
             return _gestionAmistad.RecuperarSolicitudesAmistadPorIdJugador(idJugador);
         }
@@ -34,6 +34,21 @@ namespace ServicioJuegoPassword.Servicios
         public int ConsultarIdJugadorPorCorreo(string correo)
         {
             return _gestionAmistad.ObtenerIdJugadorPorCorreo(correo);
+        }
+
+        public List<string> ObtenerNombresDeUsuarioPorIdJugadores(List<int> idJugadores)
+        {
+            return _gestionAmistad.RecuperarNombresDeUsuarioPorIdJugador(idJugadores);
+        }
+
+        public int ValidarExistenciaAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos)
+        {
+            return _gestionAmistad.ValidarExistenciaAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
+        }
+
+        public int RecuperarIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos)
+        {
+            return _gestionAmistad.ObtenerIdAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
         }
     }
 }

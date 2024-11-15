@@ -20,11 +20,11 @@ namespace AccesoADatos
             int registroNuevaPartida = 0;
             try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
                     using (var contextoTransaccion = contexto.Database.BeginTransaction())
                     {
-                        try 
+                        try
                         {
                             Partida partida = new Partida
                             {
@@ -57,9 +57,14 @@ namespace AccesoADatos
                             _bitacora.Error(excepcionEntidad);
                             contextoTransaccion.Rollback();
                             registroNuevaPartida = -1;
-                        }                        
+                        }
                     }
                 }
+            }
+            catch (DbUpdateException excepcionActualizacion) 
+            {
+                _bitacora.Warn(excepcionActualizacion);
+                registroNuevaPartida = -1;
             }
             catch (EntityException excepcionEntidad)
             {

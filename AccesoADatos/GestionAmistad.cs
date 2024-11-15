@@ -32,6 +32,11 @@ namespace AccesoADatos
                     resultadoRegistroAmistad = contexto.SaveChanges();
                 }
             }
+            catch(DbUpdateException excepcionActualizacion)
+            {
+                _bitacora.Warn(excepcionActualizacion);
+                resultadoRegistroAmistad = -1;
+            }
             catch (DbEntityValidationException excepcionValidacion)
             {
                 _bitacora.Warn(excepcionValidacion);
@@ -39,7 +44,7 @@ namespace AccesoADatos
             }
             catch (EntityException excepcionEntidad)
             {
-                _bitacora.Warn(excepcionEntidad);
+                _bitacora.Error(excepcionEntidad);
                 resultadoRegistroAmistad = -1;
             }
             return resultadoRegistroAmistad;
@@ -74,50 +79,46 @@ namespace AccesoADatos
             return resultadoConfirmacion;
         }
 
-        public List<Amistad> RecuperarSolicitudesAmistadPorIdJugador(int idJugador)
+        public List<int> RecuperarSolicitudesAmistadPorIdJugador(int idJugador)
         {
-            List<Amistad> amistades = new List<Amistad>();
+            List<int> idJugadores = new List<int>();
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    amistades = contexto.Amistad.Where(jugador => jugador.FKidJugador == idJugador && jugador.respuesta == null)
-                    .ToList();
+                    idJugadores = contexto.Amistad
+                        .Where(entidad => entidad.idJugadorAmigo == idJugador && entidad.respuesta == null)
+                        .Select(entidad => entidad.FKidJugador)
+                        .ToList();
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                Amistad amistad = new Amistad
-                {
-                    idAmistad = -1
-                };
-                amistades.Insert(0, amistad);
+                idJugadores.Insert(0, -1); 
             }
-            return amistades;
+            return idJugadores;
         }
 
-        public List<Amistad> RecuperarAmigosPorIdJugador(int idJugador)
+        public List<int> RecuperarIdAmigosPorIdJugador(int idJugador)
         {
-            List<Amistad> amistades = new List<Amistad>();
+            List<int> idAmigos = new List<int>();
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    amistades = contexto.Amistad.Where(jugador => jugador.FKidJugador == idJugador && jugador.respuesta == true)
-                    .ToList();
+                    idAmigos = contexto.Amistad
+                        .Where(entidad => entidad.FKidJugador == idJugador && entidad.respuesta == true)
+                        .Select(entidad => entidad.idJugadorAmigo)
+                        .ToList();                    
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                Amistad amistad = new Amistad
-                {
-                    idAmistad = -1
-                };
-                amistades.Insert(0, amistad);
+                idAmigos.Insert(0, -1);                 
             }
-            return amistades;
+            return idAmigos;
         }
 
         public int ObtenerIdJugadorPorCorreo(string correo) 
@@ -147,27 +148,74 @@ namespace AccesoADatos
             return idJugador;
         }
 
-        public List<string> RecuperarJugadoresPorIdJugador(List<int> idJugadores) 
+        public List<string> RecuperarNombresDeUsuarioPorIdJugador(List<int> idJugadores) 
         {
-            List<string> jugadores = new List<string>();
+            List<string> nombresUsuarios = new List<string>();
             try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
-                    jugadores = contexto.Jugador
-                               .Where(j => idJugadores.Contains(j.idJugador)) 
-                               .Select(j => j.apellidos) 
-                               .ToList();
+                    nombresUsuarios = contexto.Jugador
+                    .Where(entidad => idJugadores.Contains(entidad.idJugador))
+                    .Select(entidad => entidad.Perfil.nombreUsuario)
+                    .ToList();
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                string jugador = "excepcion";
-                jugadores.Add(jugador);
+                string nombreUsuario = "excepcion";
+                nombresUsuarios.Add(nombreUsuario);
             }
-            return jugadores;
+            return nombresUsuarios;
         }
 
+
+        public int ValidarExistenciaAmistadPorIdJugadores(int idJugadorRemitente, int idJugadorDestinatario) 
+        {
+            int validacionInexistenciaAmistad = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var amistad = contexto.Amistad.FirstOrDefault(entidad =>
+                        (entidad.FKidJugador == idJugadorRemitente && entidad.idJugadorAmigo == idJugadorDestinatario) ||
+                        (entidad.idJugadorAmigo == idJugadorRemitente && entidad.FKidJugador == idJugadorDestinatario));
+                    if (amistad != null)
+                    {
+                        validacionInexistenciaAmistad = 1;
+                    }
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                validacionInexistenciaAmistad = -1;
+            }        
+            return validacionInexistenciaAmistad;
+        }
+
+        public int ObtenerIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos) 
+        {
+            int idAmistad = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades()) 
+                {
+                    var amistad = contexto.Amistad.FirstOrDefault(entidad =>
+                        (entidad.FKidJugador == idJugadorUno && entidad.idJugadorAmigo == idJugadorDos));
+                    if (amistad != null) 
+                    {
+                        idAmistad = amistad.idAmistad;
+                    }
+                }
+            }
+            catch (EntityException excepcionEntidad) 
+            {
+                _bitacora.Error(excepcionEntidad);
+                idAmistad = -1;
+            }
+            return idAmistad;
+        }
     }
 }

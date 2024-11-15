@@ -66,6 +66,11 @@ namespace ServicioJuegoPassword.Servicios
         {
             Cuenta cuentaRecuperada=_gestionAcceso.ObtenerCuentaPorCorreo(correo);
             return cuentaRecuperada;
-        }      
+        }
+
+        public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
+        {
+            return _gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+        }
     }
 }

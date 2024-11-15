@@ -130,5 +130,20 @@ namespace PruebaAccesoADatos
             Cuenta cuentaObtenida=gestionAcceso.ObtenerCuentaPorCorreo(correo);
             Assert.AreEqual(cuentaEsperada.IdAcceso,cuentaObtenida.IdAcceso);
         }
+
+        [TestMethod]
+        public void PruebaRecuperarCuentaPorIdJugadorExitosa() 
+        {
+            Cuenta cuentaEsperada = new Cuenta {
+                IdAcceso = 1,
+                IdJugador = 1,
+                IdPerfil = 1,
+            };
+            int idJugador = 1;
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida = gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+            Assert.AreEqual(cuentaEsperada,cuentaObtenida);
+        }
+
     }
 }

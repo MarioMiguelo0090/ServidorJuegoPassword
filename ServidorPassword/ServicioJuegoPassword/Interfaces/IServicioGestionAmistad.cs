@@ -19,12 +19,21 @@ namespace ServicioJuegoPassword.Interfaces
         int ResponderSolicitudAmistad(Amistad amistad);
 
         [OperationContract]
-        List<Amistad> ConsultarSolicitudesAmistadPorIdJugador(int idJugador);
+        List<int> ConsultarSolicitudesAmistadPorIdJugador(int idJugador);
 
         [OperationContract]
-        List<Amistad> ConsultarAmistadesPorIdJugador(int idJugador);
+        List<int> ConsultarAmistadesPorIdJugador(int idJugador);
 
         [OperationContract]
         int ConsultarIdJugadorPorCorreo(string correo);
+
+        [OperationContract]
+        List<string> ObtenerNombresDeUsuarioPorIdJugadores(List<int> idJugadores);
+
+        [OperationContract]
+        int ValidarExistenciaAmistadPorIdJugadores(int idJugadorUno,int idJugadorDos);
+
+        [OperationContract]
+        int RecuperarIdAmistadPorIdJugadores(int idJugadorUno,int idJugadorDos);        
     }
 }

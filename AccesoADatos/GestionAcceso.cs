@@ -95,7 +95,7 @@ namespace AccesoADatos
             }
             catch (EntityException excepcionSql) 
             {
-                _bitacora.Warn(excepcionSql);
+                _bitacora.Error(excepcionSql);
                 idAcceso = -1;
             }
             return idAcceso;
@@ -117,7 +117,7 @@ namespace AccesoADatos
             }
             catch (EntityException excepcionSql)
             {
-                _bitacora.Warn(excepcionSql);
+                _bitacora.Error(excepcionSql);
                 contrasenia = "excepcion";
             }
             return contrasenia;
@@ -139,7 +139,7 @@ namespace AccesoADatos
             }
             catch (EntityException excepcionSql) 
             {
-                _bitacora.Warn(excepcionSql);
+                _bitacora.Error(excepcionSql);
                 resultado = -1;
             }
             return resultado;
@@ -190,10 +190,59 @@ namespace AccesoADatos
             }
             catch (EntityException excepcionSql)
             {
-                _bitacora.Warn(excepcionSql);
+                _bitacora.Error(excepcionSql);
                 cuenta.IdAcceso = -1;
             }            
             return cuenta;                        
+        }
+
+        public Cuenta RecuperarCuentaPorIdJugador(int idJugador) 
+        {
+            Cuenta cuenta = new Cuenta();
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var resultadoConsulta = (from jugador in contexto.Jugador
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
+                                             join perfil in contexto.Perfil on jugador.FKIdPerfil equals perfil.idPerfil
+                                             where jugador.idJugador == idJugador
+                                             select new
+                                             {
+                                                 acceso.idAcceso,
+                                                 acceso.correo,                                                 
+                                                 perfil.idPerfil,
+                                                 perfil.nombreUsuario,
+                                                 perfil.rutaImagen,
+                                                 perfil.descripcion,
+                                                 jugador.idJugador,
+                                                 jugador.nombre,
+                                                 jugador.apellidos,
+                                             }).FirstOrDefault();
+                    if (resultadoConsulta != null)
+                    {
+                        cuenta.IdAcceso = resultadoConsulta.idAcceso;
+                        cuenta.Correo = resultadoConsulta.correo;                        
+                        cuenta.IdPerfil = resultadoConsulta.idPerfil;
+                        cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
+                        cuenta.RutaImagen = resultadoConsulta.rutaImagen;
+                        cuenta.Descripcion = resultadoConsulta.descripcion;
+                        cuenta.IdJugador = resultadoConsulta.idJugador;
+                        cuenta.Nombre = resultadoConsulta.nombre;
+                        cuenta.Apellidos = resultadoConsulta.apellidos;
+                    }
+                    else
+                    {
+                        cuenta.IdAcceso = 0;
+                    }
+                }
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                cuenta.IdAcceso = -1;
+            }
+            return cuenta;
         }
         
     }
