@@ -12,7 +12,7 @@ namespace ServicioJuegoPassword.Servicios
     {
         private GestionPartida _gestionPartida=new GestionPartida();
 
-        public int RegistrarPartidaPorIdJugador(int idJugador, Partida partida)
+        public int RegistrarPartidaPorIdJugador(int idJugador, AccesoADatos.Partida partida)
         {
             return _gestionPartida.RegistrarNuevaPartidaPorIdJugador(idJugador,partida);
         }
@@ -26,14 +26,39 @@ namespace ServicioJuegoPassword.Servicios
             return _gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
         }
 
-        public List<Pregunta> ObtenerPreguntas()
+        public List<PreguntaContrato> ObtenerPreguntas()
         {
-            return _gestionPartida.RecuperarPreguntas();
+            var preguntasObtenidas=_gestionPartida.RecuperarPreguntas();
+            List<PreguntaContrato> preguntasFinales=new List<PreguntaContrato>();
+            foreach (var pregunta in preguntasObtenidas) 
+            {
+                PreguntaContrato preguntaContrato=PreguntaContrato.ConvertirDeAccesoADatos(pregunta);
+                preguntasFinales.Add(preguntaContrato);
+            }
+            return preguntasFinales;
         }
 
         public List<Respuesta> ObtenerRespuestaPorIdPregunta(int idPregunta)
         {
             return _gestionPartida.RecuperarRespuestasPorIdPregunta(idPregunta);
+        }
+
+        public PartidaContrato RecuperarPartidaPorCodigo(string codigoPartida)
+        {
+            var datosPartida = _gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            return PartidaContrato.ConvertirDeAccesoADatos(datosPartida);             
+        }
+
+        public List<RespuestaContrato> RecuperarRespuestasPorIdPreguntas(List<int> idPreguntas)
+        {
+            var respuestasObtenidas = _gestionPartida.ObtenerRespuestasPorIdPreguntas(idPreguntas);
+            List<RespuestaContrato> respuestasFinales = new List<RespuestaContrato>();
+            foreach (var respuesta in respuestasObtenidas)
+            {
+                RespuestaContrato respuestaContrato = RespuestaContrato.ConvertirDeAccesoADatos(respuesta);
+                respuestasFinales.Add(respuestaContrato);
+            }
+            return respuestasFinales;
         }
     }
             

@@ -30,7 +30,5 @@ namespace AccesoADatos.Auxiliares
             }
             return resultado;
         }
-    }
-
-    
+    }    
 }

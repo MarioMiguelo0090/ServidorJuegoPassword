@@ -166,7 +166,50 @@ namespace AccesoADatos
                 respuestas.Insert(0,respuesta);
             }
             return respuestas;
-
         }
+
+        public Partida ObtenerPartidaPorCodigoPartida(string codigoPartida)
+        {
+            Partida partida = new Partida();
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    partida = contexto.Partida.FirstOrDefault(entidad => entidad.codigoPartida == codigoPartida);
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                partida.idPartida = -1;
+            }
+            return partida;
+        }
+
+
+        public List<Respuesta> ObtenerRespuestasPorIdPreguntas(List<int> idPreguntas) 
+        {
+            List<Respuesta> respuestasObtenidas=new List<Respuesta>();
+            try
+            {
+                using (var contexto = new PasswordEntidades()) 
+                {
+                    respuestasObtenidas = contexto.Respuesta
+                    .Where(entidad => idPreguntas.Contains(entidad.FKidPregunta))
+                    .ToList();
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                Respuesta respuesta = new Respuesta
+                {
+                    idRespuesta = -1
+                };
+                respuestasObtenidas.Insert(0, respuesta);
+            }
+            return respuestasObtenidas;
+        }
+
     }
 }

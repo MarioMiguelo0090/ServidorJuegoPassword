@@ -120,5 +120,38 @@ namespace PruebaAccesoADatos
             int resultadoObtenido = respuestasObtenidas.Count();
             Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
+
+        [TestMethod]
+        public void PruebaObtenerPartidaPorCodigoPartidaExitosa() 
+        {
+            string codigoPartida = "71582435";
+            int idPartidaEsperado = 1;
+            GestionPartida gestionPartida = new GestionPartida();
+            Partida partidaObtenida=gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            int idPartidaObtenido = partidaObtenida.idPartida;
+            Assert.AreEqual(idPartidaEsperado,idPartidaObtenido);
+        }
+
+        [TestMethod]
+        public void PruebaObtenerPartidaPorCodigoPartidaFallida()
+        {
+            string codigoPartida = "7158243";            
+            GestionPartida gestionPartida = new GestionPartida();
+            Partida partidaObtenida = gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            Assert.IsNull(partidaObtenida);
+        }
+
+        [TestMethod]
+        public void PruebaObtenerRespuestasPorIdPreguntasExitosa() 
+        {
+            int resultadoEsperado = 6;
+            List<int> idPreguntas = new List<int>();
+            idPreguntas.Add(1);
+            idPreguntas.Add(2);
+            GestionPartida gestionPartida=new GestionPartida();
+            List<Respuesta> respuestasObtenidas=gestionPartida.ObtenerRespuestasPorIdPreguntas(idPreguntas);
+            int resultadoObtenido=respuestasObtenidas.Count;
+            Assert.AreEqual(resultadoEsperado,resultadoObtenido);
+        }
     }
 }
