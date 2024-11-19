@@ -1,4 +1,5 @@
-﻿using ServicioJuegoPassword.Interfaces;
+﻿using AccesoADatos;
+using ServicioJuegoPassword.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,45 +11,51 @@ namespace ServicioJuegoPassword.Servicios
 {    
     public partial class ServicioPassword : IServicioSalaDeEspera
     {
-        private readonly List<JugadorContrato> _jugadores;
-        private readonly List<IServicioSalaDeEsperaCallback> _clientesSalaDeEspera;
+        private static List<JugadorContrato> _jugadoresConectados = new List<JugadorContrato>();
+        private static List<IServicioSalaDeEsperaCallback> _callbacks = new List<IServicioSalaDeEsperaCallback>();
 
-        public List<JugadorContrato> ObtenerJugadores()
+        public void ConectarJugador(string nombreUsuario, string rutaImagen)
         {
-            return _jugadores;
-        }
+            var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
 
-        public void RegistrarJugador(JugadorContrato jugador)
-        {
-            _jugadores.Add(jugador);            
-            foreach (var cliente in _clientesSalaDeEspera)
+            if (!_callbacks.Contains(cliente))
             {
-                try
+                _callbacks.Add(cliente);
+            }
+
+            if (!_jugadoresConectados.Any(j => j.NombreUsuario == nombreUsuario))
+            {
+                _jugadoresConectados.Add(new JugadorContrato
                 {
-                    cliente.JugadorConectado(jugador);
-                }
-                catch (Exception ex)
-                {                    
-                    Console.WriteLine($"Error al notificar cliente: {ex.Message}");
-                }
+                    NombreUsuario = nombreUsuario,
+                    RutaImagen = rutaImagen
+                });
+                NotificarJugadoresActualizados();
             }
         }
 
-        public void Conectar()
+        public void DesconectarJugador(string nombreUsuario)
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
-            if (!_clientesSalaDeEspera.Contains(callback))
-            {
-                _clientesSalaDeEspera.Add(callback);
-            }
+            var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
+
+            _jugadoresConectados.RemoveAll(j => j.NombreUsuario == nombreUsuario);
+            _callbacks.Remove(cliente);
+            NotificarJugadoresActualizados();
         }
 
-        public void Desconectar()
+        public List<JugadorContrato> ObtenerJugadoresConectados()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
-            if (_clientesSalaDeEspera.Contains(callback))
+            return _jugadoresConectados;
+        }
+
+        private void NotificarJugadoresActualizados()
+        {
+            foreach (var callback in _callbacks)
             {
-                _clientesSalaDeEspera.Remove(callback);
+                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+                {
+                    callback.ActualizarListaJugadores(_jugadoresConectados);
+                }
             }
         }
     }

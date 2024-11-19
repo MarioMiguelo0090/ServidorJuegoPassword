@@ -12,21 +12,23 @@ namespace ServicioJuegoPassword.Interfaces
     [ServiceContract(CallbackContract = typeof(IServicioSalaDeEsperaCallback))]
     public interface IServicioSalaDeEspera
     {
-        [OperationContract(IsOneWay = true)]
-        void RegistrarJugador(JugadorContrato jugador);
+        [OperationContract]
+        void ConectarJugador(string nombreUsuario, string rutaImagen);
 
         [OperationContract]
-        List<JugadorContrato> ObtenerJugadores();
+        void DesconectarJugador(string nombreUsuario);
+
+        [OperationContract]
+        List<JugadorContrato> ObtenerJugadoresConectados();
     }
 
-
-    public interface IServicioSalaDeEsperaCallback 
+    public interface IServicioSalaDeEsperaCallback
     {
         [OperationContract(IsOneWay = true)]
-        void JugadorConectado(JugadorContrato jugador);
+        void ActualizarListaJugadores(List<JugadorContrato> jugadores);
     }
 
-
+    
     [DataContract]
     public class JugadorContrato
     {
