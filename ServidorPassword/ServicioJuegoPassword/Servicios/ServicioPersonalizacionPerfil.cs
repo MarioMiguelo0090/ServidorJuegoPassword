@@ -17,7 +17,7 @@ namespace ServicioJuegoPassword.Servicios
 
         public int EditarDescripcionPorIdPerfil(int idPerfil, string descripcion)
         {
-            return _gestionPerfil.GuadarRutaImagenPorIdPerfil(idPerfil, descripcion);
+            return _gestionPerfil.GuadarDescripcionPorIdPerfil(idPerfil, descripcion);
         }
 
         public int EditarNombreUsuarioPorIdPerfil(int idPerfil, string nombreUsuario)

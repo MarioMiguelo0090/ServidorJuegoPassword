@@ -186,7 +186,6 @@ namespace AccesoADatos
             return partida;
         }
 
-
         public List<Respuesta> ObtenerRespuestasPorIdPreguntas(List<int> idPreguntas) 
         {
             List<Respuesta> respuestasObtenidas=new List<Respuesta>();

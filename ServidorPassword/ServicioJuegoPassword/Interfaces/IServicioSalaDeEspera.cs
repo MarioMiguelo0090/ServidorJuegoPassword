@@ -12,20 +12,23 @@ namespace ServicioJuegoPassword.Interfaces
     [ServiceContract(CallbackContract = typeof(IServicioSalaDeEsperaCallback))]
     public interface IServicioSalaDeEspera
     {
-        [OperationContract]
-        void ConectarJugador(string nombreUsuario, string rutaImagen);
+        [OperationContract(IsOneWay = true)]
+        void ConectarJugador(string codigoPartida,JugadorContrato jugador);
 
-        [OperationContract]
-        void DesconectarJugador(string nombreUsuario);
+        [OperationContract(IsOneWay = true)]
+        void DesconectarJugador(string codigoPartida,JugadorContrato jugador);
 
-        [OperationContract]
-        List<JugadorContrato> ObtenerJugadoresConectados();
+        [OperationContract(IsOneWay = true)]
+        void IniciarPartida(string codigoPartida);
     }
 
     public interface IServicioSalaDeEsperaCallback
     {
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void ActualizarListaJugadores(List<JugadorContrato> jugadores);
+
+        [OperationContract]
+        void AbrirVentanaPartida();
     }
 
     
@@ -40,6 +43,6 @@ namespace ServicioJuegoPassword.Interfaces
 
         [DataMember]
         public int IdJugador { get; set; }
-    }
+    }    
 
 }

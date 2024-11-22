@@ -4,59 +4,72 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ServicioJuegoPassword.Servicios
-{    
+{
     public partial class ServicioPassword : IServicioSalaDeEspera
     {
-        private static List<JugadorContrato> _jugadoresConectados = new List<JugadorContrato>();
-        private static List<IServicioSalaDeEsperaCallback> _callbacks = new List<IServicioSalaDeEsperaCallback>();
+        private static Dictionary<string, List<IServicioSalaDeEsperaCallback>> _jugadoresEnPartida = new Dictionary<string, List<IServicioSalaDeEsperaCallback>>();
+        private static Dictionary<string, List<JugadorContrato>> _jugadores= new Dictionary<string, List<JugadorContrato>>();
 
-        public void ConectarJugador(string nombreUsuario, string rutaImagen)
+
+        public void ConectarJugador(string codigoPartida, JugadorContrato jugador)
         {
             var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
-
-            if (!_callbacks.Contains(cliente))
+            if (!_jugadoresEnPartida.ContainsKey(codigoPartida)) 
             {
-                _callbacks.Add(cliente);
+                _jugadoresEnPartida[codigoPartida] = new List<IServicioSalaDeEsperaCallback>();
             }
-
-            if (!_jugadoresConectados.Any(j => j.NombreUsuario == nombreUsuario))
+            if (!_jugadoresEnPartida[codigoPartida].Contains(cliente)) 
             {
-                _jugadoresConectados.Add(new JugadorContrato
+                _jugadoresEnPartida[codigoPartida].Add(cliente);
+                if (!_jugadores.ContainsKey(codigoPartida))
                 {
-                    NombreUsuario = nombreUsuario,
-                    RutaImagen = rutaImagen
-                });
-                NotificarJugadoresActualizados();
+                    _jugadores[codigoPartida] = new List<JugadorContrato>();
+                }
+                _jugadores[codigoPartida].Add(jugador);
+            }            
+            foreach (var callback in _jugadoresEnPartida[codigoPartida])
+            {
+                callback.ActualizarListaJugadores(_jugadores[codigoPartida]);
             }
         }
 
-        public void DesconectarJugador(string nombreUsuario)
+        public void DesconectarJugador(string codigoPartida, JugadorContrato jugador)
         {
-            var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();
-
-            _jugadoresConectados.RemoveAll(j => j.NombreUsuario == nombreUsuario);
-            _callbacks.Remove(cliente);
-            NotificarJugadoresActualizados();
-        }
-
-        public List<JugadorContrato> ObtenerJugadoresConectados()
-        {
-            return _jugadoresConectados;
-        }
-
-        private void NotificarJugadoresActualizados()
-        {
-            foreach (var callback in _callbacks)
-            {
-                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+            var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();            
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida))
+            {                
+                var jugadorAEliminar = _jugadores[codigoPartida].FirstOrDefault(j => j.NombreUsuario == jugador.NombreUsuario);
+                if (jugadorAEliminar != null)
                 {
-                    callback.ActualizarListaJugadores(_jugadoresConectados);
+                    _jugadores[codigoPartida].Remove(jugadorAEliminar);
+                }             
+                if (_jugadoresEnPartida[codigoPartida].Contains(cliente))
+                {
+                    _jugadoresEnPartida[codigoPartida].Remove(cliente);
+                }                
+                foreach (var callback in _jugadoresEnPartida[codigoPartida])
+                {
+                    callback.ActualizarListaJugadores(_jugadores[codigoPartida]);
+                }                                
+            }
+        }
+
+        public void IniciarPartida(string codigoPartida) 
+        {
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida)) 
+            {
+                foreach (var callback in _jugadoresEnPartida[codigoPartida])
+                {
+                    callback.AbrirVentanaPartida();
                 }
             }
         }
+
+
     }
 }

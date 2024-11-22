@@ -100,10 +100,7 @@ namespace ServicioJuegoPassword.Interfaces
         public string Pregunta { get;set; }
 
         [DataMember]
-        public string RespuestaCorrecta { get; set; }
-
-        [DataMember]
-        public int FKIdPartida {  get; set; }
+        public string RespuestaCorrecta { get; set; }        
 
         public static PreguntaContrato ConvertirDeAccesoADatos(Pregunta pregunta)
         {
@@ -111,8 +108,7 @@ namespace ServicioJuegoPassword.Interfaces
             {
                 IdPregunta=pregunta.idPregunta,
                 Pregunta=pregunta.pregunta1,
-                RespuestaCorrecta=pregunta.respuestaCorrecta,
-                FKIdPartida=pregunta.FKidPartida,
+                RespuestaCorrecta=pregunta.respuestaCorrecta,                
             };
         }
     }
