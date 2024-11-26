@@ -33,6 +33,13 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         List<RespuestaContrato> RecuperarRespuestasPorIdPreguntas(List<int> idRespuestas);
+
+        [OperationContract]
+        List<PreguntaContrato> SeleccionarPreguntasAlAzar(int cantidadPreguntas);
+
+        [OperationContract]
+        List<int> ObtenerIdPreguntas(List<PreguntaContrato> preguntasSeleccionadas);        
+
     }
 
 

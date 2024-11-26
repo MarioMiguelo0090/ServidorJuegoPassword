@@ -12,7 +12,7 @@ namespace ServicioJuegoPassword.Servicios
     {
         private GestionPartida _gestionPartida=new GestionPartida();
 
-        public int RegistrarPartidaPorIdJugador(int idJugador, AccesoADatos.Partida partida)
+        public int RegistrarPartidaPorIdJugador(int idJugador, Partida partida)
         {
             return _gestionPartida.RegistrarNuevaPartidaPorIdJugador(idJugador,partida);
         }
@@ -60,6 +60,34 @@ namespace ServicioJuegoPassword.Servicios
             }
             return respuestasFinales;
         }
+
+        public List<PreguntaContrato> SeleccionarPreguntasAlAzar(int cantidadPreguntas)
+        {
+            List<PreguntaContrato> preguntasObtenidas = ObtenerPreguntas();
+            List<PreguntaContrato> preguntasSeleccionadas = new List<PreguntaContrato>();
+            Random aleatorio = new Random();
+            HashSet<int> indicesSeleccionados = new HashSet<int>();
+            while (preguntasSeleccionadas.Count < cantidadPreguntas)
+            {
+                int indiceAleatorio = aleatorio.Next(preguntasObtenidas.Count);
+                if (!indicesSeleccionados.Contains(indiceAleatorio))
+                {
+                    indicesSeleccionados.Add(indiceAleatorio);
+                    preguntasSeleccionadas.Add(preguntasObtenidas[indiceAleatorio]);
+                }
+            }
+            return preguntasSeleccionadas;
+        }
+
+        public List<int> ObtenerIdPreguntas(List<PreguntaContrato> preguntasSeleccionadas) 
+        {
+            List<int> idPreguntas = new List<int>();
+            foreach (var pregunta in preguntasSeleccionadas) 
+            {
+                idPreguntas.Add(pregunta.IdPregunta);
+            }
+            return idPreguntas;
+        }        
     }
             
 }

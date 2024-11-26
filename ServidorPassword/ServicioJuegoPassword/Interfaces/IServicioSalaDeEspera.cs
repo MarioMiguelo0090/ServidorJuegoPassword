@@ -19,7 +19,7 @@ namespace ServicioJuegoPassword.Interfaces
         void DesconectarJugador(string codigoPartida,JugadorContrato jugador);
 
         [OperationContract(IsOneWay = true)]
-        void IniciarPartida(string codigoPartida);
+        void IniciarPartida(string codigoPartida,int cantidadPreguntas);
     }
 
     public interface IServicioSalaDeEsperaCallback
@@ -28,7 +28,7 @@ namespace ServicioJuegoPassword.Interfaces
         void ActualizarListaJugadores(List<JugadorContrato> jugadores);
 
         [OperationContract]
-        void AbrirVentanaPartida();
+        void AbrirVentanaPartida(List<PreguntaContrato> preguntasSeleccionadas,List<RespuestaContrato> respuestasSeleccionadas);
     }
 
     
