@@ -15,19 +15,19 @@ namespace ServicioJuegoPassword.Servicios
             return _gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
         }
 
-        public int EditarDescripcionPorIdPerfil(int idPerfil, string descripcion)
+        public int EditarDescripcionPorIdJugador(int idJugador, string descripcion)
         {
-            return _gestionPerfil.GuadarDescripcionPorIdPerfil(idPerfil, descripcion);
+            return _gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
         }
 
-        public int EditarNombreUsuarioPorIdPerfil(int idPerfil, string nombreUsuario)
+        public int EditarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario)
         {
-            return _gestionPerfil.GuardarNombreUsuarioPorIdPerfil(idPerfil, nombreUsuario);
+            return _gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
         }
 
-        public int EditarRutaImagenPorIdPerfil(int idPerfil, string rutaImagen)
+        public int EditarRutaImagenPorIdJugador(int idJugador, string rutaImagen)
         {            
-            return _gestionPerfil.GuadarRutaImagenPorIdPerfil(idPerfil,rutaImagen);
+            return _gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
         }
 
         public int EditarContraseniaPorIdAcceso(int idAcceso, string contrasenia)

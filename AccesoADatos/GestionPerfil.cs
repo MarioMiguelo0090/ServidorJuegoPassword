@@ -23,7 +23,7 @@ namespace AccesoADatos
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Any(entidad => entidad.nombreUsuario == nombreUsuario);
+                    var perfil = contexto.Jugador.Any(entidad => entidad.nombreUsuario == nombreUsuario);
                     if (perfil)
                     {
                         resultadoPresencia = 1;
@@ -38,17 +38,17 @@ namespace AccesoADatos
             return resultadoPresencia;
         }
 
-        public int GuadarRutaImagenPorIdPerfil(int idPerfil,string rutaImagen) 
+        public int GuadarRutaImagenPorIdJugador(int idJugador,string rutaImagen) 
         {
             int resultadoActualizacion = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Find(idPerfil);
-                    if (perfil != null)
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
                     {
-                        perfil.rutaImagen = rutaImagen;
+                        jugador.rutaImagen = rutaImagen;
                         resultadoActualizacion = contexto.SaveChanges();
                     }                                      
                 }
@@ -66,17 +66,17 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuadarDescripcionPorIdPerfil(int idPerfil, string descripcion)
+        public int GuadarDescripcionPorIdJugador(int idJugador, string descripcion)
         {
             int resultadoActualizacion = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Find(idPerfil);
-                    if (perfil != null)
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
                     {
-                        perfil.descripcion = descripcion;
+                        jugador.descripcion = descripcion;
                         resultadoActualizacion = contexto.SaveChanges();
                     }                    
                 }
@@ -94,17 +94,17 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuardarNombreUsuarioPorIdPerfil(int idPerfil, string nombreUsuario) 
+        public int GuardarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario) 
         {
             int resultadoActualizacion = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Find(idPerfil);
-                    if (perfil != null)
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
                     {
-                        perfil.nombreUsuario = nombreUsuario;
+                        jugador.nombreUsuario = nombreUsuario;
                         resultadoActualizacion = contexto.SaveChanges();
                     }                    
                 }

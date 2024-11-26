@@ -17,14 +17,10 @@ namespace PruebaAccesoADatos
             acceso.correo = "mariolimon@gmail.com";
             acceso.contrasenia = "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";
             Jugador jugador=new Jugador();
-            jugador.nombre = "Mario Miguel";
-            jugador.apellidos = "Limon Cabrera";
-            jugador.estadoJugador = true;
-            Perfil perfil = new Perfil();
-            perfil.nombreUsuario = "MarioLimon";
-            perfil.rutaImagen = "";
-            perfil.descripcion = "";
-            int resultadoObtenido=gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
+            jugador.nombreUsuario = "MarioLimon";
+            jugador.rutaImagen = "";
+            jugador.descripcion = "";
+            int resultadoObtenido=gestionAcceso.RegistrarAcceso(acceso,jugador);
             int resultadoEsperado = 1;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
@@ -33,10 +29,9 @@ namespace PruebaAccesoADatos
         public void PruebaRegistrarAccesoFallida()
         {
             GestionAcceso gestionAcceso = new GestionAcceso();
-            Acceso acceso = new Acceso();    
-            Perfil perfil = new Perfil();
+            Acceso acceso = new Acceso();                
             Jugador jugador =new Jugador();
-            int resultadoObtenido = gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
+            int resultadoObtenido = gestionAcceso.RegistrarAcceso(acceso,jugador);
             int resultadoEsperado = -1;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
@@ -107,11 +102,8 @@ namespace PruebaAccesoADatos
             Cuenta cuentaPrueba=new Cuenta();
             cuentaPrueba.IdAcceso = 1;
             cuentaPrueba.Correo= "mariolimon@gmail.com";
-            cuentaPrueba.Contrasenia= "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";
-            cuentaPrueba.Nombre = "Mario Miguel";
-            cuentaPrueba.Apellidos = "Limon Cabrera";
-            cuentaPrueba.IdJugador = 1;
-            cuentaPrueba.IdPerfil = 1;
+            cuentaPrueba.Contrasenia= "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";            
+            cuentaPrueba.IdJugador = 1;            
             cuentaPrueba.NombreUsuario = "MarioLimon";
             cuentaPrueba.RutaImagen = "";
             cuentaPrueba.Descripcion = "";            
@@ -136,8 +128,7 @@ namespace PruebaAccesoADatos
         {
             Cuenta cuentaEsperada = new Cuenta {
                 IdAcceso = 1,
-                IdJugador = 1,
-                IdPerfil = 1,
+                IdJugador = 1,               
             };
             int idJugador = 1;
             GestionAcceso gestionAcceso = new GestionAcceso();

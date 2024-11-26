@@ -22,35 +22,35 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
-        public void PruebaGuadarRutaImagenPorIdPerfilExcepcion() 
+        public void PruebaGuadarRutaImagenPorIdJugadorExcepcion() 
         {
-            int idPerfil = 1;
+            int idJugador = 1;
             string rutaImagen = "ImagenEjemplo.jpg";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdPerfil(idPerfil, rutaImagen);
+            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuadarDescripcionPorIdPerfilExcepcion() 
+        public void PruebaGuadarDescripcionPorIdJugadorExcepcion() 
         {
-            int idPerfil = 1;
+            int idJugador = 1;
             string descripcion = "Soy un nuevo jugador en password";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdPerfil(idPerfil, descripcion);
+            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuardarNombreUsuarioPorIdPerfilExcepcion() 
+        public void PruebaGuardarNombreUsuarioPorIdJugadorExcepcion() 
         {
-            int idPerfil = 1;
+            int idJugador = 1;
             string nombreUsuario = "MarioMiguelLimon";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdPerfil(idPerfil, nombreUsuario);
+            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 

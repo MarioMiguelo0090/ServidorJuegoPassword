@@ -14,13 +14,13 @@ namespace ServicioJuegoPassword.Interfaces
         int EditarCorreoPorIdAcceso(int idAcceso,string correo);
 
         [OperationContract]
-        int EditarDescripcionPorIdPerfil(int idPerfil,string descripcion);
+        int EditarDescripcionPorIdJugador(int idJugador,string descripcion);
 
         [OperationContract]
-        int EditarNombreUsuarioPorIdPerfil(int idPerfil, string nombreUsuario);
+        int EditarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario);
 
         [OperationContract]
-        int EditarRutaImagenPorIdPerfil(int idPerfil, string rutaImagen);
+        int EditarRutaImagenPorIdJugador(int idJugador, string rutaImagen);
 
         [OperationContract]
         int EditarContraseniaPorIdAcceso(int idAcceso,string contrasenia);

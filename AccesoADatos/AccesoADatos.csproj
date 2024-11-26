@@ -103,9 +103,6 @@
     <Compile Include="Partida.cs">
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>
-    <Compile Include="Perfil.cs">
-      <DependentUpon>ModeloPassword.tt</DependentUpon>
-    </Compile>
     <Compile Include="Pregunta.cs">
       <DependentUpon>ModeloPassword.tt</DependentUpon>
     </Compile>

@@ -19,15 +19,11 @@ namespace PruebaAccesoADatos
             Acceso acceso = new Acceso();
             acceso.correo = "mariolimon@gmail.com";
             acceso.contrasenia = "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";
-            Jugador jugador = new Jugador();
-            jugador.nombre = "Mario Miguel";
-            jugador.apellidos = "Limon Cabrera";
-            jugador.estadoJugador = true;
-            Perfil perfil = new Perfil();
-            perfil.nombreUsuario = "MarioLimon";
-            perfil.rutaImagen = "";
-            perfil.descripcion = "";
-            int resultadoObtenido = gestionAcceso.RegistrarAcceso(acceso, jugador, perfil);
+            Jugador jugador = new Jugador();            
+            jugador.nombreUsuario = "MarioLimon";
+            jugador.rutaImagen = "";
+            jugador.descripcion = "";
+            int resultadoObtenido = gestionAcceso.RegistrarAcceso(acceso, jugador);
             int resultadoEsperado = -1;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }

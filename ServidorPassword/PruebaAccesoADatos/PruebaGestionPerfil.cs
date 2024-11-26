@@ -33,68 +33,68 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
-        public void PruebaGuadarRutaImagenPorIdPerfilExitosa()
+        public void PruebaGuadarRutaImagenPorIdJugadorExitosa()
         {
-            int idPerfil = 1;
-            string rutaImagen = "ImagenEjemplo.jpg";
+            int idJugador = 1;
+            string rutaImagen = "pack://application:,,,/Imagenes/Fondos/perfil1.png";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = 1;
-            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdPerfil(idPerfil, rutaImagen);
+            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuadarRutaImagenPorIdPerfilFallida()
+        public void PruebaGuadarRutaImagenPorIdJugadorFallida()
         {
             GestionPerfil gestionPerfil = new GestionPerfil();
-            int idPerfil = 0;
+            int idJugador = 0;
             string rutaImagen = "ImagenEjemplo.jpg";
             int resultadoEsperado = 0;
-            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdPerfil(idPerfil, rutaImagen);
+            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuadarDescripcionPorIdPerfilExitosa()
+        public void PruebaGuadarDescripcionPorIdJugadorExitosa()
         {
-            int idPerfil = 1;
+            int idJugador = 1;
             string descripcion = "Soy un nuevo jugador en password";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = 1;
-            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdPerfil(idPerfil, descripcion);
+            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuadarDescripcionPorIdPerfilFallida()
+        public void PruebaGuadarDescripcionPorIdJugadorFallida()
         {
-            int idPerfil = 0;
+            int idJugador = 0;
             string descripcion = "Nada";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = 0;
-            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdPerfil(idPerfil, descripcion);
+            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuardarNombreUsuarioPorIdPerfilExitosa()
+        public void PruebaGuardarNombreUsuarioPorIdJugadorExitosa()
         {
-            int idPerfil = 1;
+            int idJugador = 1;
             string nombreUsuario = "MarioMiguelLimon";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = 1;
-            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdPerfil(idPerfil, nombreUsuario);
+            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
-        public void PruebaGuardarNombreUsuarioPorIdPerfilFallida()
+        public void PruebaGuardarNombreUsuarioPorIdJugadorFallida()
         {
-            int idPerfil = 0;
+            int idJugador = 0;
             string nombreUsuario = "nadie";
             GestionPerfil gestionPerfil = new GestionPerfil();
             int resultadoEsperado = 0;
-            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdPerfil(idPerfil, nombreUsuario);
+            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 

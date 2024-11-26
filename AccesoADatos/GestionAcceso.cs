@@ -15,7 +15,7 @@ namespace AccesoADatos
     {
         private static readonly ILog _bitacora=LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
                 
-        public int RegistrarAcceso(Acceso nuevoAcceso,Jugador nuevoJugador,Perfil nuevoPerfil) 
+        public int RegistrarAcceso(Acceso nuevoAcceso,Jugador nuevoJugador) 
         {            
             int resultadoRegistro = 0;
             try
@@ -33,23 +33,13 @@ namespace AccesoADatos
                             };
                             contexto.Acceso.Add(acceso);
                             contexto.SaveChanges();
-                            int idAcceso = acceso.idAcceso;
-                            Perfil perfil = new Perfil
-                            {
-                                nombreUsuario = nuevoPerfil.nombreUsuario,
-                                descripcion = nuevoPerfil.descripcion,
-                                rutaImagen = nuevoPerfil.rutaImagen,
-                            };
-                            contexto.Perfil.Add(perfil);
-                            contexto.SaveChanges();
-                            int idPerfil = perfil.idPerfil;
+                            int idAcceso = acceso.idAcceso;                            
                             Jugador jugador = new Jugador
                             {
-                                nombre = nuevoJugador.nombre,
-                                apellidos = nuevoJugador.apellidos,
-                                estadoJugador = nuevoJugador.estadoJugador,
-                                FKidAcceso = idAcceso,
-                                FKIdPerfil = idPerfil,
+                                nombreUsuario=nuevoJugador.nombreUsuario,
+                                descripcion=nuevoJugador.descripcion,
+                                rutaImagen=nuevoJugador.rutaImagen,                                
+                                FKidAcceso = idAcceso,                                
                             };
                             contexto.Jugador.Add(jugador);
                             contexto.SaveChanges();
@@ -153,34 +143,27 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var resultadoConsulta = (from jugador in contexto.Jugador
-                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
-                                             join perfil in contexto.Perfil on jugador.FKIdPerfil equals perfil.idPerfil
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso                                             
                                              where acceso.correo == correo
                                              select new
                                              {
                                                  acceso.idAcceso,
                                                  acceso.correo,
-                                                 acceso.contrasenia,
-                                                 perfil.idPerfil,
-                                                 perfil.nombreUsuario,
-                                                 perfil.rutaImagen,
-                                                 perfil.descripcion,
-                                                 jugador.idJugador,
-                                                 jugador.nombre,
-                                                 jugador.apellidos,
+                                                 acceso.contrasenia,                                                 
+                                                 jugador.nombreUsuario,
+                                                 jugador.rutaImagen,
+                                                 jugador.descripcion,
+                                                 jugador.idJugador,                                                 
                                              }).FirstOrDefault();
                     if (resultadoConsulta != null)
                     {
                         cuenta.IdAcceso = resultadoConsulta.idAcceso;
                         cuenta.Correo = resultadoConsulta.correo;
-                        cuenta.Contrasenia = resultadoConsulta.contrasenia;
-                        cuenta.IdPerfil = resultadoConsulta.idPerfil;
+                        cuenta.Contrasenia = resultadoConsulta.contrasenia;                        
                         cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
                         cuenta.RutaImagen = resultadoConsulta.rutaImagen;
                         cuenta.Descripcion = resultadoConsulta.descripcion;
-                        cuenta.IdJugador = resultadoConsulta.idJugador;
-                        cuenta.Nombre = resultadoConsulta.nombre;
-                        cuenta.Apellidos = resultadoConsulta.apellidos;
+                        cuenta.IdJugador = resultadoConsulta.idJugador;                        
                     }
                     else 
                     {
@@ -204,32 +187,25 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var resultadoConsulta = (from jugador in contexto.Jugador
-                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
-                                             join perfil in contexto.Perfil on jugador.FKIdPerfil equals perfil.idPerfil
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso                                             
                                              where jugador.idJugador == idJugador
                                              select new
                                              {
                                                  acceso.idAcceso,
                                                  acceso.correo,                                                 
-                                                 perfil.idPerfil,
-                                                 perfil.nombreUsuario,
-                                                 perfil.rutaImagen,
-                                                 perfil.descripcion,
-                                                 jugador.idJugador,
-                                                 jugador.nombre,
-                                                 jugador.apellidos,
+                                                 jugador.nombreUsuario,
+                                                 jugador.rutaImagen,
+                                                 jugador.descripcion,
+                                                 jugador.idJugador,                                                 
                                              }).FirstOrDefault();
                     if (resultadoConsulta != null)
                     {
                         cuenta.IdAcceso = resultadoConsulta.idAcceso;
-                        cuenta.Correo = resultadoConsulta.correo;                        
-                        cuenta.IdPerfil = resultadoConsulta.idPerfil;
+                        cuenta.Correo = resultadoConsulta.correo;                                                
                         cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
                         cuenta.RutaImagen = resultadoConsulta.rutaImagen;
                         cuenta.Descripcion = resultadoConsulta.descripcion;
-                        cuenta.IdJugador = resultadoConsulta.idJugador;
-                        cuenta.Nombre = resultadoConsulta.nombre;
-                        cuenta.Apellidos = resultadoConsulta.apellidos;
+                        cuenta.IdJugador = resultadoConsulta.idJugador;                        
                     }
                     else
                     {

@@ -157,7 +157,7 @@ namespace AccesoADatos
                 {
                     nombresUsuarios = contexto.Jugador
                     .Where(entidad => idJugadores.Contains(entidad.idJugador))
-                    .Select(entidad => entidad.Perfil.nombreUsuario)
+                    .Select(entidad => entidad.nombreUsuario)
                     .ToList();
                 }
             }

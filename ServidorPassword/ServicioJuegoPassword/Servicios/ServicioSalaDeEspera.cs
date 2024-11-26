@@ -59,22 +59,19 @@ namespace ServicioJuegoPassword.Servicios
             }
         }
 
-        public void IniciarPartida(string codigoPartida, int cantidadPreguntas) 
+        public void IniciarPartida(string codigoPartida, int cantidadPreguntas)
         {
-            if (_jugadoresEnPartida.ContainsKey(codigoPartida)) 
-            {                
-                List<PreguntaContrato> preguntasObtenidas=SeleccionarPreguntasAlAzar(cantidadPreguntas);
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida))
+            {
+                List<PreguntaContrato> preguntasObtenidas = SeleccionarPreguntasAlAzar(cantidadPreguntas);
                 List<int> idPreguntasObtenidas = ObtenerIdPreguntas(preguntasObtenidas);
                 List<RespuestaContrato> respuestasObtenidas = RecuperarRespuestasPorIdPreguntas(idPreguntasObtenidas);
-                foreach (var callback in _jugadoresEnPartida[codigoPartida])
+                Parallel.ForEach(_jugadoresEnPartida[codigoPartida], retrollamada =>
                 {
-                    callback.AbrirVentanaPartida(preguntasObtenidas,respuestasObtenidas);
-                }
+                    retrollamada.AbrirVentanaPartida(preguntasObtenidas, respuestasObtenidas);
+                });
             }
         }
-
-        
-
 
     }
 }

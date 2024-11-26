@@ -18,11 +18,11 @@ namespace ServicioJuegoPassword.Servicios
         private GestionAcceso _gestionAcceso = new GestionAcceso();
         private GestionPerfil _gestionPerfil = new GestionPerfil();
 
-        public int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
+        public int RegistrarNuevoJugador(Acceso acceso, Jugador jugador)
         {
             string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
             acceso.contrasenia = contraseniaEncriptada;
-            return _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);                                             
+            return _gestionAcceso.RegistrarAcceso(acceso,jugador);                                             
         }
 
         public int ValidarInicioDeSesion(Acceso acceso)

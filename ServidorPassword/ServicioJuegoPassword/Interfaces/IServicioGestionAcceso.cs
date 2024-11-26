@@ -13,7 +13,7 @@ namespace ServicioJuegoPassword.Interfaces
     public interface IServicioGestionAcceso
     {
         [OperationContract]
-        int RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador);
+        int RegistrarNuevoJugador(Acceso acceso, Jugador jugador);
 
         [OperationContract]
         int ValidarInicioDeSesion(Acceso acceso);
