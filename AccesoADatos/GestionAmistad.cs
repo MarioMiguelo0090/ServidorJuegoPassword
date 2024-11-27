@@ -110,7 +110,12 @@ namespace AccesoADatos
                     idAmigos = contexto.Amistad
                         .Where(entidad => entidad.FKidJugador == idJugador && entidad.respuesta == true)
                         .Select(entidad => entidad.idJugadorAmigo)
-                        .ToList();                    
+                        .Union(
+                            contexto.Amistad
+                            .Where(entidad => entidad.idJugadorAmigo == idJugador && entidad.respuesta == true)
+                            .Select(entidad => entidad.FKidJugador)
+                        )
+                        .ToList();
                 }
             }
             catch (EntityException excepcionEntidad)
