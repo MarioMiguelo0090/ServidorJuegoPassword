@@ -10,14 +10,14 @@ namespace ServicioJuegoPassword.Servicios
     public partial class ServicioPassword : IServicioPartida
     {
         private static Dictionary<string, Dictionary<string, int>> _puntajeJugadores = new Dictionary<string, Dictionary<string, int>>();
-        private static Dictionary<string, Dictionary<int,bool>> _preguntasRegistradas=new Dictionary<string, Dictionary<int,bool>>();
+        private static Dictionary<string, Dictionary<int, bool>> _preguntasRegistradas = new Dictionary<string, Dictionary<int, bool>>();
 
         public void ConfigurarJugadores(string codigoPartida, List<string> jugadores)
         {
-            if (!_puntajeJugadores.ContainsKey(codigoPartida)) 
+            if (!_puntajeJugadores.ContainsKey(codigoPartida))
             {
-                Dictionary<string, int> nombresUsuario= new Dictionary<string, int>();
-                for (int i = 0; i < jugadores.Count; i++) 
+                Dictionary<string, int> nombresUsuario = new Dictionary<string, int>();
+                for (int i = 0; i < jugadores.Count; i++)
                 {
                     nombresUsuario.Add(jugadores[i], 0);
                 }
@@ -27,7 +27,7 @@ namespace ServicioJuegoPassword.Servicios
 
         public void InicializarPartida(string codigoPartida, int numeroPreguntas)
         {
-            if (!_preguntasRegistradas.ContainsKey(codigoPartida)) 
+            if (!_preguntasRegistradas.ContainsKey(codigoPartida))
             {
                 Dictionary<int, bool> preguntas = new Dictionary<int, bool>();
                 for (int i = 1; i <= numeroPreguntas; i++)
@@ -38,24 +38,24 @@ namespace ServicioJuegoPassword.Servicios
             }
         }
 
-        public void EvaluarPregunta(string codigoPartida, string nombreUsuario, int numeroPregunta) 
+        public void EvaluarPregunta(string codigoPartida, string nombreUsuario, int numeroPregunta)
         {
             if (_preguntasRegistradas.ContainsKey(codigoPartida))
             {
                 var preguntas = _preguntasRegistradas[codigoPartida];
-                if (preguntas.ContainsKey(numeroPregunta)) 
+                if (preguntas.ContainsKey(numeroPregunta))
                 {
                     if (!preguntas[numeroPregunta])
                     {
                         preguntas[numeroPregunta] = true;
                         SumarPuntaje(codigoPartida, nombreUsuario, 20);
                     }
-                    else 
+                    else
                     {
                         SumarPuntaje(codigoPartida, nombreUsuario, 10);
                     }
                 }
-                
+
             }
         }
 
@@ -65,7 +65,7 @@ namespace ServicioJuegoPassword.Servicios
             var puntajeJugadores = _puntajeJugadores[codigoPartida];
             if (puntajeJugadores.ContainsKey(nombreUsuario))
             {
-                puntaje=puntajeJugadores[nombreUsuario];
+                puntaje = puntajeJugadores[nombreUsuario];
             }
             return puntaje;
         }
@@ -75,25 +75,29 @@ namespace ServicioJuegoPassword.Servicios
             var puntajeJugadores = _puntajeJugadores[codigoPartida];
             if (puntajeJugadores.ContainsKey(nombreUsuario))
             {
-                puntajeJugadores[nombreUsuario] -=10;
+                puntajeJugadores[nombreUsuario] -= 10;
             }
         }
 
         public void SumarPuntaje(string codigoPartida, string nombreUsuario, int cantidadASumar)
         {
             var puntajeJugadores = _puntajeJugadores[codigoPartida];
-            if (puntajeJugadores.ContainsKey(nombreUsuario)) 
+            if (puntajeJugadores.ContainsKey(nombreUsuario))
             {
-                puntajeJugadores[nombreUsuario]+=cantidadASumar;
+                puntajeJugadores[nombreUsuario] += cantidadASumar;
             }
         }
 
-        public bool ObtenerGanador(string codigoPartida, string nombreUsuario) 
+        public string ObtenerGanador(string codigoPartida)
         {
-            var puntajeJugadores = _puntajeJugadores[codigoPartida];                       
-            int puntajeJugador = puntajeJugadores[nombreUsuario];                
-            int puntajeMaximo = puntajeJugadores.Values.Max();                                            
-            return puntajeJugador == puntajeMaximo;
+            string jugador = "";
+            if (_puntajeJugadores.ContainsKey(codigoPartida))
+            {
+                var puntajeJugadores = _puntajeJugadores[codigoPartida];
+                var jugadorConMayorPuntaje = puntajeJugadores.Aggregate((x, y) => x.Value > y.Value ? x : y);
+                jugador = jugadorConMayorPuntaje.Key;
+            }
+            return jugador;
         }
     }
 }
