@@ -13,10 +13,10 @@ namespace AccesoADatos
 {
     public class GestionAcceso
     {
-        private static readonly ILog _bitacora=LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-                
-        public int RegistrarAcceso(Acceso nuevoAcceso,Jugador nuevoJugador) 
-        {            
+        private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public int RegistrarAcceso(Acceso nuevoAcceso, Jugador nuevoJugador)
+        {
             int resultadoRegistro = 0;
             try
             {
@@ -33,13 +33,23 @@ namespace AccesoADatos
                             };
                             contexto.Acceso.Add(acceso);
                             contexto.SaveChanges();
-                            int idAcceso = acceso.idAcceso;                            
+                            int idAcceso = acceso.idAcceso;
+                            Estadistica estadistica = new Estadistica
+                            {
+                                puntaje = 0,
+                                partidasGanadas = 0,
+                                partidasPerdidas = 0,
+                            };
+                            contexto.Estadistica.Add(estadistica);
+                            contexto.SaveChanges();
+                            int idEstadisitca = estadistica.idEstadistica;
                             Jugador jugador = new Jugador
                             {
-                                nombreUsuario=nuevoJugador.nombreUsuario,
-                                descripcion=nuevoJugador.descripcion,
-                                rutaImagen=nuevoJugador.rutaImagen,                                
-                                FKidAcceso = idAcceso,                                
+                                nombreUsuario = nuevoJugador.nombreUsuario,
+                                descripcion = nuevoJugador.descripcion,
+                                rutaImagen = nuevoJugador.rutaImagen,
+                                FKidAcceso = idAcceso,
+                                FKidEstadistica = idEstadisitca,
                             };
                             contexto.Jugador.Add(jugador);
                             contexto.SaveChanges();
@@ -60,16 +70,16 @@ namespace AccesoADatos
                         }
                     }
                 }
-            }            
+            }
             catch (EntityException excepcionSQL)
             {
                 _bitacora.Error(excepcionSQL);
                 resultadoRegistro = -1;
             }
-            return resultadoRegistro;                                 
+            return resultadoRegistro;
         }
-        
-        public int RetonarIdAccesoPorCorreo(string correo) 
+
+        public int RetonarIdAccesoPorCorreo(string correo)
         {
             int idAcceso = 0;
             try
@@ -83,7 +93,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (EntityException excepcionSql) 
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
                 idAcceso = -1;
@@ -91,7 +101,7 @@ namespace AccesoADatos
             return idAcceso;
         }
 
-        public string RetornarContraseniaPorCorreo(string correo) 
+        public string RetornarContraseniaPorCorreo(string correo)
         {
             string contrasenia = "";
             try
@@ -113,7 +123,7 @@ namespace AccesoADatos
             return contrasenia;
         }
 
-        public int ValidarPresenciaCorreo(string correo) 
+        public int ValidarPresenciaCorreo(string correo)
         {
             int resultado = 0;
             try
@@ -127,7 +137,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (EntityException excepcionSql) 
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
                 resultado = -1;
@@ -135,7 +145,7 @@ namespace AccesoADatos
             return resultado;
         }
 
-        public Cuenta ObtenerCuentaPorCorreo(string correo) 
+        public Cuenta ObtenerCuentaPorCorreo(string correo)
         {
             Cuenta cuenta = new Cuenta();
             try
@@ -143,69 +153,29 @@ namespace AccesoADatos
                 using (var contexto = new PasswordEntidades())
                 {
                     var resultadoConsulta = (from jugador in contexto.Jugador
-                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso                                             
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
                                              where acceso.correo == correo
                                              select new
                                              {
                                                  acceso.idAcceso,
                                                  acceso.correo,
-                                                 acceso.contrasenia,                                                 
+                                                 acceso.contrasenia,
                                                  jugador.nombreUsuario,
                                                  jugador.rutaImagen,
                                                  jugador.descripcion,
-                                                 jugador.idJugador,                                                 
+                                                 jugador.idJugador,
+                                                 jugador.FKidEstadistica,
                                              }).FirstOrDefault();
                     if (resultadoConsulta != null)
                     {
                         cuenta.IdAcceso = resultadoConsulta.idAcceso;
                         cuenta.Correo = resultadoConsulta.correo;
-                        cuenta.Contrasenia = resultadoConsulta.contrasenia;                        
+                        cuenta.Contrasenia = resultadoConsulta.contrasenia;
                         cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
                         cuenta.RutaImagen = resultadoConsulta.rutaImagen;
                         cuenta.Descripcion = resultadoConsulta.descripcion;
-                        cuenta.IdJugador = resultadoConsulta.idJugador;                        
-                    }
-                    else 
-                    {
-                        cuenta.IdAcceso = 0;
-                    }
-                }
-            }
-            catch (EntityException excepcionSql)
-            {
-                _bitacora.Error(excepcionSql);
-                cuenta.IdAcceso = -1;
-            }            
-            return cuenta;                        
-        }
-
-        public Cuenta RecuperarCuentaPorIdJugador(int idJugador) 
-        {
-            Cuenta cuenta = new Cuenta();
-            try
-            {
-                using (var contexto = new PasswordEntidades())
-                {
-                    var resultadoConsulta = (from jugador in contexto.Jugador
-                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso                                             
-                                             where jugador.idJugador == idJugador
-                                             select new
-                                             {
-                                                 acceso.idAcceso,
-                                                 acceso.correo,                                                 
-                                                 jugador.nombreUsuario,
-                                                 jugador.rutaImagen,
-                                                 jugador.descripcion,
-                                                 jugador.idJugador,                                                 
-                                             }).FirstOrDefault();
-                    if (resultadoConsulta != null)
-                    {
-                        cuenta.IdAcceso = resultadoConsulta.idAcceso;
-                        cuenta.Correo = resultadoConsulta.correo;                                                
-                        cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
-                        cuenta.RutaImagen = resultadoConsulta.rutaImagen;
-                        cuenta.Descripcion = resultadoConsulta.descripcion;
-                        cuenta.IdJugador = resultadoConsulta.idJugador;                        
+                        cuenta.IdJugador = resultadoConsulta.idJugador;
+                        cuenta.IdEstadistica = resultadoConsulta.FKidEstadistica ?? 0;
                     }
                     else
                     {
@@ -220,6 +190,50 @@ namespace AccesoADatos
             }
             return cuenta;
         }
-        
+
+        public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
+        {
+            Cuenta cuenta = new Cuenta();
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var resultadoConsulta = (from jugador in contexto.Jugador
+                                             join acceso in contexto.Acceso on jugador.FKidAcceso equals acceso.idAcceso
+                                             where jugador.idJugador == idJugador
+                                             select new
+                                             {
+                                                 acceso.idAcceso,
+                                                 acceso.correo,
+                                                 jugador.nombreUsuario,
+                                                 jugador.rutaImagen,
+                                                 jugador.descripcion,
+                                                 jugador.idJugador,
+                                                 jugador.FKidEstadistica,
+                                             }).FirstOrDefault();
+                    if (resultadoConsulta != null)
+                    {
+                        cuenta.IdAcceso = resultadoConsulta.idAcceso;
+                        cuenta.Correo = resultadoConsulta.correo;
+                        cuenta.NombreUsuario = resultadoConsulta.nombreUsuario;
+                        cuenta.RutaImagen = resultadoConsulta.rutaImagen;
+                        cuenta.Descripcion = resultadoConsulta.descripcion;
+                        cuenta.IdJugador = resultadoConsulta.idJugador;
+                        cuenta.IdEstadistica = resultadoConsulta.FKidEstadistica ?? 0;
+                    }
+                    else
+                    {
+                        cuenta.IdAcceso = 0;
+                    }
+                }
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                cuenta.IdAcceso = -1;
+            }
+            return cuenta;
+        }
+
     }
 }

@@ -22,13 +22,13 @@ namespace ServicioJuegoPassword.Servicios
                 _jugadoresActivos.Add(jugador);
                 resultadoConexion = 1;
             }
-            return resultadoConexion;   
+            return resultadoConexion;
         }
-            
+
 
         public void DesconectarJugadorJuego(string jugador)
         {
-            if (_jugadoresActivos.Contains(jugador)) 
+            if (_jugadoresActivos.Contains(jugador))
             {
                 _jugadoresActivos.Remove(jugador);
             }
@@ -37,6 +37,16 @@ namespace ServicioJuegoPassword.Servicios
         public List<string> ObtenerJugadores()
         {
             return _jugadoresActivos;
+        }
+
+        public bool VerificarConexionUsuario(string jugador)
+        {
+            bool resultadoConexion = false;
+            if (_jugadoresActivos.Contains(jugador))
+            {
+                resultadoConexion = true;
+            }
+            return resultadoConexion;
         }
     }
 }

@@ -17,15 +17,15 @@ namespace ServicioJuegoPassword.Interfaces
         void ConfigurarJugadores(string codigoPartida, List<string> jugadores);
 
         [OperationContract]
-        void EvaluarPregunta(string codigoPartida,string nombreUsuario,int numeroPregunta);           
+        void EvaluarPregunta(string codigoPartida, string nombreUsuario, int numeroPregunta);
 
         [OperationContract]
-        void RestarPuntaje(string codigoPartida,string nombreUsuario);
+        void RestarPuntaje(string codigoPartida, string nombreUsuario);
 
         [OperationContract]
-        int ObtenerPuntaje(string codigoPartida,string nombreUsuario);
+        int ObtenerPuntaje(string codigoPartida, string nombreUsuario);
 
         [OperationContract]
-        bool ObtenerGanador(string codigoPartida, string nombreUsuario);
+        string ObtenerGanador(string codigoPartida);
     }
 }

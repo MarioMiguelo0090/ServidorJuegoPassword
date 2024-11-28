@@ -25,6 +25,8 @@ namespace AccesoADatos
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Pregunta> Pregunta { get; set; }
+        public virtual DbSet<Respuesta> Respuesta { get; set; }
         public virtual DbSet<Acceso> Acceso { get; set; }
         public virtual DbSet<Amistad> Amistad { get; set; }
         public virtual DbSet<DetalleLogro> DetalleLogro { get; set; }
@@ -33,7 +35,5 @@ namespace AccesoADatos
         public virtual DbSet<Jugador> Jugador { get; set; }
         public virtual DbSet<Logro> Logro { get; set; }
         public virtual DbSet<Partida> Partida { get; set; }
-        public virtual DbSet<Pregunta> Pregunta { get; set; }
-        public virtual DbSet<Respuesta> Respuesta { get; set; }
     }
 }
