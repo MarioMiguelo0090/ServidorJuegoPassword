@@ -18,7 +18,6 @@ namespace AccesoADatos
         public Partida()
         {
             this.DetallePartida = new HashSet<DetallePartida>();
-            this.Pregunta = new HashSet<Pregunta>();
         }
     
         public int idPartida { get; set; }
@@ -29,7 +28,5 @@ namespace AccesoADatos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetallePartida> DetallePartida { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pregunta> Pregunta { get; set; }
     }
 }

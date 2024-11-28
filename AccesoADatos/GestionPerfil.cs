@@ -1,8 +1,11 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,41 +14,43 @@ namespace AccesoADatos
 {
     public class GestionPerfil
     {
-        private static readonly log4net.ILog _bitacora = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public int ValidarPresenciaDeNombreUsuario(string nombreUsuario) 
         {
-            int resultado = 0;
+            int resultadoPresencia = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Any(entidad => entidad.nombreUsuario == nombreUsuario);
+                    var perfil = contexto.Jugador.Any(entidad => entidad.nombreUsuario == nombreUsuario);
                     if (perfil)
                     {
-                        resultado = 1;
+                        resultadoPresencia = 1;
                     }
                 }
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Warn(excepcionSql);
-                resultado = -1;
+                resultadoPresencia = -1;
             }                            
-            return resultado;
+            return resultadoPresencia;
         }
 
-
-        public int GuadarRutaImagenPorIdPerfil(int idPerfil,string rutaImagen) 
+        public int GuadarRutaImagenPorIdJugador(int idJugador,string rutaImagen) 
         {
             int resultadoActualizacion = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Find(idPerfil);
-                    perfil.rutaImagen = rutaImagen;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
+                    {
+                        jugador.rutaImagen = rutaImagen;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                                      
                 }
             }
             catch (DbUpdateException excepcionActualizacion) 
@@ -53,24 +58,27 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
 
-        public int GuadarDescripcionPorIdPerfil(int idPerfil, string descripcion)
+        public int GuadarDescripcionPorIdJugador(int idJugador, string descripcion)
         {
             int resultadoActualizacion = 0;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    var perfil = contexto.Perfil.Find(idPerfil);
-                    perfil.descripcion = descripcion;
-                    resultadoActualizacion = contexto.SaveChanges();
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
+                    {
+                        jugador.descripcion = descripcion;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
@@ -78,13 +86,120 @@ namespace AccesoADatos
                 _bitacora.Warn(excepcionActualizacion);
                 resultadoActualizacion = -1;
             }
-            catch (SqlException excepcionSql)
+            catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoActualizacion = -2;
+                resultadoActualizacion = -1;
             }
             return resultadoActualizacion;
         }
 
+        public int GuardarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario) 
+        {
+            int resultadoActualizacion = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var jugador = contexto.Jugador.Find(idJugador);
+                    if (jugador != null)
+                    {
+                        jugador.nombreUsuario = nombreUsuario;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
+                }
+            }
+            catch (DbUpdateException excepcionActualizacion)
+            {
+                _bitacora.Warn(excepcionActualizacion);
+                resultadoActualizacion = -1;
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                resultadoActualizacion = -1;
+            }
+            return resultadoActualizacion;
+        }
+
+        public int GuardarCorreoPorIdAcceso(int idAcceso, string correo) 
+        {
+            int resultadoActualizacion = 0;
+            try 
+            {
+                using (var contexto = new PasswordEntidades()) 
+                {
+                    var acceso = contexto.Acceso.Find(idAcceso);
+                    if (acceso != null) 
+                    {
+                        acceso.correo = correo;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
+                }
+            }
+            catch (DbUpdateException excepcionActualizacion)
+            {
+                _bitacora.Warn(excepcionActualizacion);
+                resultadoActualizacion = -1;
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                resultadoActualizacion = -1;
+            }
+            return resultadoActualizacion;
+        }
+
+        public int GuardarContraseniaPorIdAcceso(int idAcceso, string contrasenia) 
+        {
+            int resultadoActualizacion = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var acceso = contexto.Acceso.Find(idAcceso);
+                    if (acceso != null) 
+                    {
+                        acceso.contrasenia = contrasenia;
+                        resultadoActualizacion = contexto.SaveChanges();
+                    }                    
+                }
+            }
+            catch (DbUpdateException excepcionActualizacion)
+            {
+                _bitacora.Warn(excepcionActualizacion);
+                resultadoActualizacion = -1;
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                resultadoActualizacion = -1;
+            }
+            return resultadoActualizacion;
+        }
+
+        public int ObtenerIdAccesoPorCorreo(string correo) 
+        {
+            int idAcceso = 0;
+            try 
+            {
+                using (var contexto = new PasswordEntidades()) 
+                {
+                    var acceso = contexto.Acceso.FirstOrDefault(entidad => entidad.correo == correo);
+                    if (acceso != null) 
+                    {
+                        idAcceso = acceso.idAcceso;
+                    }                    
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                idAcceso = -1;
+            }
+            return idAcceso;
+        }
+
+        
     }
 }

@@ -21,12 +21,9 @@ namespace AccesoADatos
         }
     
         public int idPregunta { get; set; }
-        public int duracion { get; set; }
         public string pregunta1 { get; set; }
         public string respuestaCorrecta { get; set; }
-        public int FKidPartida { get; set; }
     
-        public virtual Partida Partida { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuesta> Respuesta { get; set; }
     }

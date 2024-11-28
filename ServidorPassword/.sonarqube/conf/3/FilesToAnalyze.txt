@@ -1,0 +1,4 @@
+﻿C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\Anfitrion\InicioAnfitrion.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\Anfitrion\Properties\AssemblyInfo.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\Anfitrion\App.config
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\Anfitrion\packages.config

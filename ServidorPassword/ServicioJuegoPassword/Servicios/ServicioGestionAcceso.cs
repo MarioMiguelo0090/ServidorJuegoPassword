@@ -6,64 +6,40 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using AccesoADatos;
-using ServicioJuegoPassword.Validadores;
 using FluentValidation.Results;
 using ServicioJuegoPassword.Interfaces;
 using System.ServiceModel;
+using AccesoADatos.Auxiliares;
 
 namespace ServicioJuegoPassword.Servicios
-{
-    
+{    
     public partial class ServicioPassword:IServicioGestionAcceso
     {
         private GestionAcceso _gestionAcceso = new GestionAcceso();
         private GestionPerfil _gestionPerfil = new GestionPerfil();
 
-        public void RegistrarNuevoJugador(Acceso acceso, Perfil perfil, Jugador jugador)
+        public int RegistrarNuevoJugador(Acceso acceso, Jugador jugador)
         {
-            if (ValidarNuevoRegistro(acceso, perfil, jugador)) {
-                if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) == 0)
-                {
-                    if (ValidarNombreUsuario(perfil.nombreUsuario))
-                    {
-                        string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
-                        acceso.contrasenia = contraseniaEncriptada;
-                        _gestionAcceso.RegistrarAcceso(acceso,jugador,perfil);
-                    }
-                }
-            }
+            string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
+            acceso.contrasenia = contraseniaEncriptada;
+            return _gestionAcceso.RegistrarAcceso(acceso,jugador);                                             
         }
 
         public int ValidarInicioDeSesion(Acceso acceso)
         {
-            int validacion = 0;
-            if (_gestionAcceso.ValidarPresenciaCorreo(acceso.correo) > 0)
+            int validacion = 0;            
+            string contraseniaEncriptada = _gestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
+            if (contraseniaEncriptada == EncriptarContrasenia(acceso.contrasenia))
             {
-                string contraseniaEncriptada = _gestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
-                if (contraseniaEncriptada == EncriptarContrasenia(acceso.contrasenia))
-                {
-                    validacion = 1;
-                }
+                validacion = 1;
             }
+            else if (contraseniaEncriptada == "excepcion") 
+            {
+                validacion = -1;
+            }            
             return validacion;
         }
-
-        public bool ValidarNuevoRegistro(Acceso acceso, Perfil perfil, Jugador jugador)
-        {
-            bool validacion = false;
-            ValidacionAcceso validacionAcceso = new ValidacionAcceso();
-            ValidacionJugador validacionJugador = new ValidacionJugador();
-            ValidacionPerfil validacionPerfil = new ValidacionPerfil();
-            ValidationResult resultadoAcceso = validacionAcceso.Validate(acceso);
-            ValidationResult resultadoJugador = validacionJugador.Validate(jugador);
-            ValidationResult resultadoPerfil = validacionPerfil.Validate(perfil);
-            if (resultadoAcceso.IsValid && resultadoJugador.IsValid && resultadoPerfil.IsValid)
-            {
-                validacion = true;
-            }
-            return validacion;
-        }
-
+        
         public string EncriptarContrasenia(string contrasenia)
         {
             var sha256 = SHA256.Create();
@@ -76,15 +52,25 @@ namespace ServicioJuegoPassword.Servicios
             return constructorCadena.ToString();
         }
 
-        public bool ValidarNombreUsuario(string nombreUsuario)
+        public int ValidarNombreUsuario(string nombreUsuario)
         {
-            bool validacion = false;
-            if (_gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario) == 0)
-            {
-                validacion = true;
-            }
-            return validacion;
+            return _gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);            
         }
 
+        public int ValidarPresenciaDeCorreo(string correo) 
+        {
+            return _gestionAcceso.ValidarPresenciaCorreo(correo);            
+        }
+
+        public Cuenta RecuperarCuentaPorCorreo(string correo) 
+        {
+            Cuenta cuentaRecuperada=_gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            return cuentaRecuperada;
+        }
+
+        public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
+        {
+            return _gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+        }
     }
 }

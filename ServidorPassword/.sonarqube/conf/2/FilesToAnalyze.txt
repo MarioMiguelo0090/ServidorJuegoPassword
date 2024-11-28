@@ -1,0 +1,14 @@
+﻿C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioChat.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioGestionAcceso.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioGestionAmistad.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioGestionPartida.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioPersonalizacionPerfil.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Interfaces\IServicioSalaDeEspera.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Properties\AssemblyInfo.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioChat.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioGestionAcceso.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioGestionAmistad.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioGestionPartida.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioPersonalizacionPerfil.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\Servicios\ServicioSalaDeEspera.cs
+C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\ServicioJuegoPassword\packages.config
