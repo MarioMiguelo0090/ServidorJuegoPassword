@@ -23,11 +23,10 @@ namespace AccesoADatos
         }
     
         public int idJugador { get; set; }
-        public string nombre { get; set; }
-        public string apellidos { get; set; }
-        public bool estadoJugador { get; set; }
+        public string nombreUsuario { get; set; }
+        public string descripcion { get; set; }
+        public string rutaImagen { get; set; }
         public Nullable<int> FKidAcceso { get; set; }
-        public Nullable<int> FKIdPerfil { get; set; }
         public Nullable<int> FKidEstadistica { get; set; }
     
         public virtual Acceso Acceso { get; set; }
@@ -38,6 +37,5 @@ namespace AccesoADatos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetallePartida> DetallePartida { get; set; }
         public virtual Estadistica Estadistica { get; set; }
-        public virtual Perfil Perfil { get; set; }
     }
 }

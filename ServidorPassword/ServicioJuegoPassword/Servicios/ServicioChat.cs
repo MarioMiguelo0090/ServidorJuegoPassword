@@ -10,23 +10,31 @@ namespace ServicioJuegoPassword.Servicios
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public partial class ServicioPassword : IServicioChat
-    {
-        private static List<IServicioChatCallback> clientes = new List<IServicioChatCallback>();
+    {        
+        private static Dictionary<string, List<IServicioChatCallback>> _clientesPorPartida = new Dictionary<string, List<IServicioChatCallback>>();
+
         public void Chatear(string chat)
         {
             var cliente = OperationContext.Current.GetCallbackChannel<IServicioChatCallback>();
-            if (!clientes.Contains(cliente))
+            string codigoPartida = chat.Split(':')[1];            
+            if (!_clientesPorPartida.ContainsKey(codigoPartida))
             {
-                clientes.Add(cliente);
-            }            
-            string mensaje = chat + Environment.NewLine;            
-            foreach (var callback in clientes)
+                _clientesPorPartida[codigoPartida] = new List<IServicioChatCallback>();
+            }
+
+            if (!_clientesPorPartida[codigoPartida].Contains(cliente))
             {
+                _clientesPorPartida[codigoPartida].Add(cliente);
+            }         
+            string mensaje=chat+Environment.NewLine;
+            foreach (var callback in _clientesPorPartida[codigoPartida])
+            {                
                 if (((ICommunicationObject)callback).State == CommunicationState.Opened)
                 {
                     callback.Responder(mensaje);
                 }
             }
         }
+
     }
 }

@@ -59,7 +59,13 @@
   <ItemGroup>
     <Compile Include="PruebaGestionAcceso.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PruebaGestionAccesoExcepcion.cs" />
+    <Compile Include="PruebaGestionAmistad.cs" />
+    <Compile Include="PruebaGestionAmistadExcepcion.cs" />
+    <Compile Include="PruebaGestionPartida.cs" />
+    <Compile Include="PruebaGestionPartidaExcepcion.cs" />
     <Compile Include="PruebaGestionPerfil.cs" />
+    <Compile Include="PruebaGestionPerfilExcepcion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

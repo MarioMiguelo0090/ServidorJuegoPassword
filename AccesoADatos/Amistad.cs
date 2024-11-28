@@ -18,6 +18,7 @@ namespace AccesoADatos
         public int idJugadorAmigo { get; set; }
         public System.DateTime fechaSolicitud { get; set; }
         public Nullable<System.DateTime> fechaRespuesta { get; set; }
+        public Nullable<bool> respuesta { get; set; }
         public int FKidJugador { get; set; }
     
         public virtual Jugador Jugador { get; set; }
