@@ -21,7 +21,7 @@ namespace AccesoADatos
         }
     
         public int idEstadistica { get; set; }
-        public string puntaje { get; set; }
+        public int puntaje { get; set; }
         public int partidasGanadas { get; set; }
         public int partidasPerdidas { get; set; }
     

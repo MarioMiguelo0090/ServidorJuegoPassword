@@ -18,6 +18,9 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         List<string> ObtenerJugadores();
-    }    
+
+        [OperationContract]
+        bool VerificarConexionUsuario(string jugador);
+    }
 
 }

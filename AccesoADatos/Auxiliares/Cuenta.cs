@@ -14,7 +14,9 @@ namespace AccesoADatos.Auxiliares
         public string NombreUsuario { get; set; }
         public string RutaImagen { get; set; }
         public string Descripcion { get; set; }
-        public int IdJugador { get; set; }        
+        public int IdJugador { get; set; }   
+        
+        public int IdEstadistica { get; set; }
 
         public override bool Equals(object obj)
         {
