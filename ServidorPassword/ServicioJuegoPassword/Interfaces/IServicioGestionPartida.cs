@@ -32,7 +32,7 @@ namespace ServicioJuegoPassword.Interfaces
         PartidaContrato RecuperarPartidaPorCodigo(string codigoPartida);
 
         [OperationContract]
-        List<RespuestaContrato> RecuperarRespuestasPorIdPreguntas(List<int> idRespuestas);
+        List<RespuestaContrato> RecuperarRespuestasPorIdPreguntas(List<int> idPreguntas);
 
         [OperationContract]
         List<PreguntaContrato> SeleccionarPreguntasAlAzar(int cantidadPreguntas);

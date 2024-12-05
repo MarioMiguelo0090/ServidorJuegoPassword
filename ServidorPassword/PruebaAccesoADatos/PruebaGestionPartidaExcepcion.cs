@@ -29,10 +29,9 @@ namespace PruebaAccesoADatos
         public void PruebaActualizarEstadoDePartidaPorIdPartidaExcepcion() 
         {
             int idPartida = 1;
-            string estadoPartida = "Terminada";
-            GestionPartida gestionPartida = new GestionPartida();
+            string estadoPartida = "Terminada";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
+            int resultadoObtenido = GestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -40,9 +39,8 @@ namespace PruebaAccesoADatos
         public void PruebaValidarInexistenciaCodigoPartidaExcepcion() 
         {
             string codigoPartida = "1234";
-            int resultadoEsperado = -1;
-            GestionPartida gestionPartida = new GestionPartida();
-            int resultadoObtenido = gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            int resultadoEsperado = -1;            
+            int resultadoObtenido = GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 

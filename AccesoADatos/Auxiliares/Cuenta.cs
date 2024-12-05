@@ -14,19 +14,29 @@ namespace AccesoADatos.Auxiliares
         public string NombreUsuario { get; set; }
         public string RutaImagen { get; set; }
         public string Descripcion { get; set; }
-        public int IdJugador { get; set; }   
-        
-        public int IdEstadistica { get; set; }
+        public int IdJugador { get; set; }        
+
+        public int IdEstadistica {  get; set; }
 
         public override bool Equals(object obj)
         {
-            bool resultado = false;
-            if (obj is Cuenta nuevaCuenta) 
+            if (obj is Cuenta nuevaCuenta)
             {
-                resultado = this.IdAcceso == nuevaCuenta.IdAcceso &&
-                    this.IdJugador == nuevaCuenta.IdJugador;                    
+                return this.IdAcceso == nuevaCuenta.IdAcceso &&
+                       this.IdJugador == nuevaCuenta.IdJugador;
             }
-            return resultado;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {            
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + IdAcceso.GetHashCode();
+                hash = hash * 23 + IdJugador.GetHashCode();
+                return hash;
+            }
         }
     }    
 }

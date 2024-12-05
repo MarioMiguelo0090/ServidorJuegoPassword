@@ -30,31 +30,28 @@ namespace PruebaAccesoADatos
 
         [TestMethod]
         public void PruebaRetonarIdAccesoPorCorreoExcepcion() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            int resultadoObtenido = GestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaRetornarContraseniaPorCorreoExcepcion()
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "mariolimon@gmail.com";
             string resultadoEsperado = "excepcion";
-            string resultadoObtenido = gestionAcceso.RetornarContraseniaPorCorreo(correo);
+            string resultadoObtenido = GestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaValidarPresenciaCorreoExcepcion() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionAcceso.ValidarPresenciaCorreo(correo);
+            int resultadoObtenido = GestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -62,9 +59,8 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerCuentaPorCorreoExcepcion() 
         {
             Cuenta cuentaPrueba = new Cuenta();
-            cuentaPrueba.IdAcceso = -1;            
-            GestionAcceso gestionAcceso = new GestionAcceso();
-            Cuenta cuentaObtenida = gestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
+            cuentaPrueba.IdAcceso = -1;                        
+            Cuenta cuentaObtenida = GestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
             Assert.AreEqual(cuentaPrueba.IdAcceso, cuentaObtenida.IdAcceso);
         }
     }

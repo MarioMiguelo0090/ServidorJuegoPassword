@@ -15,9 +15,8 @@ namespace ServicioJuegoPassword.Servicios
 {    
     public partial class ServicioPassword:IServicioGestionAcceso
     {
-        private GestionAcceso _gestionAcceso = new GestionAcceso();
-        private GestionPerfil _gestionPerfil = new GestionPerfil();
-
+        private GestionAcceso _gestionAcceso = new GestionAcceso();        
+        
         public int RegistrarNuevoJugador(Acceso acceso, Jugador jugador)
         {
             string contraseniaEncriptada = EncriptarContrasenia(acceso.contrasenia);
@@ -28,7 +27,7 @@ namespace ServicioJuegoPassword.Servicios
         public int ValidarInicioDeSesion(Acceso acceso)
         {
             int validacion = 0;            
-            string contraseniaEncriptada = _gestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
+            string contraseniaEncriptada = GestionAcceso.RetornarContraseniaPorCorreo(acceso.correo);
             if (contraseniaEncriptada == EncriptarContrasenia(acceso.contrasenia))
             {
                 validacion = 1;
@@ -54,23 +53,23 @@ namespace ServicioJuegoPassword.Servicios
 
         public int ValidarNombreUsuario(string nombreUsuario)
         {
-            return _gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);            
+            return GestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);            
         }
 
         public int ValidarPresenciaDeCorreo(string correo) 
         {
-            return _gestionAcceso.ValidarPresenciaCorreo(correo);            
+            return GestionAcceso.ValidarPresenciaCorreo(correo);            
         }
 
         public Cuenta RecuperarCuentaPorCorreo(string correo) 
         {
-            Cuenta cuentaRecuperada=_gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            Cuenta cuentaRecuperada=GestionAcceso.ObtenerCuentaPorCorreo(correo);
             return cuentaRecuperada;
         }
 
         public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
         {
-            return _gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+            return GestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Anfitrion
 {
-    public class InicioAnfitrion
+    public static class InicioAnfitrion
     {
         static void Main(string[] args)
         {

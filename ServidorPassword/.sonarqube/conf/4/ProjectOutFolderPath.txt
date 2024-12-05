@@ -1,1 +1,1 @@
-C:\Users\mario\Desktop\Proyecto_Password\ServidorPassword\.sonarqube\out\4
+C:\Users\mario\Desktop\ServidorJuegoPassword\ServidorPassword\.sonarqube\out\4

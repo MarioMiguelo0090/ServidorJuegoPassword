@@ -63,6 +63,7 @@
     <Compile Include="PruebaGestionAmistad.cs" />
     <Compile Include="PruebaGestionAmistadExcepcion.cs" />
     <Compile Include="PruebaGestionEstadisticas.cs" />
+    <Compile Include="PruebaGestionLogros.cs" />
     <Compile Include="PruebaGestionPartida.cs" />
     <Compile Include="PruebaGestionPartidaExcepcion.cs" />
     <Compile Include="PruebaGestionPerfil.cs" />

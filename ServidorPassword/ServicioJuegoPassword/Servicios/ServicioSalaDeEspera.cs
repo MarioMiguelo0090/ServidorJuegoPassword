@@ -43,7 +43,7 @@ namespace ServicioJuegoPassword.Servicios
             var cliente = OperationContext.Current.GetCallbackChannel<IServicioSalaDeEsperaCallback>();            
             if (_jugadoresEnPartida.ContainsKey(codigoPartida))
             {                
-                var jugadorAEliminar = _jugadores[codigoPartida].FirstOrDefault(j => j.NombreUsuario == jugador.NombreUsuario);
+                var jugadorAEliminar = _jugadores[codigoPartida].Find(j => j.NombreUsuario == jugador.NombreUsuario);
                 if (jugadorAEliminar != null)
                 {
                     _jugadores[codigoPartida].Remove(jugadorAEliminar);
