@@ -18,37 +18,44 @@ namespace ServicioJuegoPassword.Servicios
 
         public int ResponderSolicitudAmistad(Amistad amistad)
         {
-            return _gestionAmistad.ConfirmarSolicitudAmistadPorIdAmistad(amistad);
+            return GestionAmistad.ConfirmarSolicitudAmistadPorIdAmistad(amistad);
         }
 
-        public List<int> ConsultarAmistadesPorIdJugador(int idJugador)
+        public List<JugadorContrato> ConsultarAmistadesPorIdJugador(int idJugador)
         {
-            return _gestionAmistad.RecuperarIdAmigosPorIdJugador(idJugador);
+            var amigosObtenidos = GestionAmistad.RecuperarAmigosPorIdJugador(idJugador);
+            List<JugadorContrato> amigosFinales = new List<JugadorContrato>();
+            foreach (var amigoObtenido in amigosObtenidos) 
+            {
+                JugadorContrato jugador=JugadorContrato.ConvertirDeAccesoADatos(amigoObtenido);
+                amigosFinales.Add(jugador);
+            }
+            return amigosFinales;
         }
 
         public List<int> ConsultarSolicitudesAmistadPorIdJugador(int idJugador)
         {
-            return _gestionAmistad.RecuperarSolicitudesAmistadPorIdJugador(idJugador);
+            return GestionAmistad.RecuperarSolicitudesAmistadPorIdJugador(idJugador);
         }
 
         public int ConsultarIdJugadorPorCorreo(string correo)
         {
-            return _gestionAmistad.ObtenerIdJugadorPorCorreo(correo);
+            return GestionAmistad.ObtenerIdJugadorPorCorreo(correo);
         }
 
         public List<string> ObtenerNombresDeUsuarioPorIdJugadores(List<int> idJugadores)
         {
-            return _gestionAmistad.RecuperarNombresDeUsuarioPorIdJugador(idJugadores);
+            return GestionAmistad.RecuperarNombresDeUsuarioPorIdJugador(idJugadores);
         }
 
         public int ValidarExistenciaAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos)
         {
-            return _gestionAmistad.ValidarExistenciaAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
+            return GestionAmistad.ValidarExistenciaAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
         }
 
         public int RecuperarIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos)
         {
-            return _gestionAmistad.ObtenerIdAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
+            return GestionAmistad.ObtenerIdAmistadPorIdJugadores(idJugadorUno,idJugadorDos);
         }
     }
 }

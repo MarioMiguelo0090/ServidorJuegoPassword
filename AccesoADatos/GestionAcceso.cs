@@ -79,7 +79,7 @@ namespace AccesoADatos
             return resultadoRegistro;
         }
 
-        public int RetonarIdAccesoPorCorreo(string correo)
+        public static int RetonarIdAccesoPorCorreo(string correo)
         {
             int idAcceso = 0;
             try
@@ -101,7 +101,7 @@ namespace AccesoADatos
             return idAcceso;
         }
 
-        public string RetornarContraseniaPorCorreo(string correo)
+        public static string RetornarContraseniaPorCorreo(string correo)
         {
             string contrasenia = "";
             try
@@ -123,7 +123,7 @@ namespace AccesoADatos
             return contrasenia;
         }
 
-        public int ValidarPresenciaCorreo(string correo)
+        public static int ValidarPresenciaCorreo(string correo)
         {
             int resultado = 0;
             try
@@ -145,7 +145,7 @@ namespace AccesoADatos
             return resultado;
         }
 
-        public Cuenta ObtenerCuentaPorCorreo(string correo)
+        public static Cuenta ObtenerCuentaPorCorreo(string correo)
         {
             Cuenta cuenta = new Cuenta();
             try
@@ -191,7 +191,7 @@ namespace AccesoADatos
             return cuenta;
         }
 
-        public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
+        public static Cuenta RecuperarCuentaPorIdJugador(int idJugador)
         {
             Cuenta cuenta = new Cuenta();
             try

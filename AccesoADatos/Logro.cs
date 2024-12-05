@@ -21,8 +21,7 @@ namespace AccesoADatos
         }
     
         public int idLogro { get; set; }
-        public string nombre { get; set; }
-        public string reglas { get; set; }
+        public string regla { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleLogro> DetalleLogro { get; set; }

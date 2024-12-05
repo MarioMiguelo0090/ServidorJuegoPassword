@@ -41,10 +41,9 @@ namespace PruebaAccesoADatos
         public void PruebaActualizarEstadoDePartidaPorIdPartidaExitosa() 
         {
             int idPartida = 1;
-            string estadoPartida = "Terminada";
-            GestionPartida gestionPartida=new GestionPartida();
+            string estadoPartida = "Terminada";            
             int resultadoEsperado = 1;
-            int resultadoObtenido=gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
+            int resultadoObtenido=GestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -52,10 +51,9 @@ namespace PruebaAccesoADatos
         public void PruebaActualizarEstadoDePartidaPorIdPartidaFallida() 
         {
             int idPartida = 0;
-            string estadoPartida = "Terminada";
-            GestionPartida gestionPartida = new GestionPartida();
+            string estadoPartida = "Terminada";            
             int resultadoEsperado = 0;
-            int resultadoObtenido = gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
+            int resultadoObtenido = GestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida, estadoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -63,9 +61,8 @@ namespace PruebaAccesoADatos
         public void PruebaValidarInexistenciaCodigoPartidaExitosa() 
         {
             string codigoPartida = "1234";
-            int resultadoEsperado = 0;
-            GestionPartida gestionPartida= new GestionPartida();    
-            int resultadoObtenido=gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            int resultadoEsperado = 0;            
+            int resultadoObtenido=GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
             Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
 
@@ -73,9 +70,8 @@ namespace PruebaAccesoADatos
         public void PruebaValidarInexistenciaCodigoPartidaFallida() 
         {
             string codigoPartida = "12345678";
-            int resultadoEsperado = 1;
-            GestionPartida gestionPartida = new GestionPartida();
-            int resultadoObtenido = gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            int resultadoEsperado = 1;            
+            int resultadoObtenido = GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -125,9 +121,8 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerPartidaPorCodigoPartidaExitosa() 
         {
             string codigoPartida = "71582435";
-            int idPartidaEsperado = 1;
-            GestionPartida gestionPartida = new GestionPartida();
-            Partida partidaObtenida=gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            int idPartidaEsperado = 1;            
+            Partida partidaObtenida=GestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
             int idPartidaObtenido = partidaObtenida.idPartida;
             Assert.AreEqual(idPartidaEsperado,idPartidaObtenido);
         }
@@ -135,9 +130,8 @@ namespace PruebaAccesoADatos
         [TestMethod]
         public void PruebaObtenerPartidaPorCodigoPartidaFallida()
         {
-            string codigoPartida = "7158243";            
-            GestionPartida gestionPartida = new GestionPartida();
-            Partida partidaObtenida = gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            string codigoPartida = "7158243";                        
+            Partida partidaObtenida = GestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
             Assert.IsNull(partidaObtenida);
         }
 

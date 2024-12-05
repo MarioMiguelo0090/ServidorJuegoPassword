@@ -16,7 +16,7 @@ namespace AccesoADatos
     {
         private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public int ValidarPresenciaDeNombreUsuario(string nombreUsuario) 
+        public static int ValidarPresenciaDeNombreUsuario(string nombreUsuario) 
         {
             int resultadoPresencia = 0;
             try
@@ -38,7 +38,7 @@ namespace AccesoADatos
             return resultadoPresencia;
         }
 
-        public int GuadarRutaImagenPorIdJugador(int idJugador,string rutaImagen) 
+        public static int GuadarRutaImagenPorIdJugador(int idJugador,string rutaImagen) 
         {
             int resultadoActualizacion = 0;
             try
@@ -66,7 +66,7 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuadarDescripcionPorIdJugador(int idJugador, string descripcion)
+        public static int GuadarDescripcionPorIdJugador(int idJugador, string descripcion)
         {
             int resultadoActualizacion = 0;
             try
@@ -94,7 +94,7 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuardarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario) 
+        public static int GuardarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario) 
         {
             int resultadoActualizacion = 0;
             try
@@ -122,7 +122,7 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuardarCorreoPorIdAcceso(int idAcceso, string correo) 
+        public static int GuardarCorreoPorIdAcceso(int idAcceso, string correo) 
         {
             int resultadoActualizacion = 0;
             try 
@@ -150,7 +150,7 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int GuardarContraseniaPorIdAcceso(int idAcceso, string contrasenia) 
+        public static int GuardarContraseniaPorIdAcceso(int idAcceso, string contrasenia) 
         {
             int resultadoActualizacion = 0;
             try
@@ -178,7 +178,7 @@ namespace AccesoADatos
             return resultadoActualizacion;
         }
 
-        public int ObtenerIdAccesoPorCorreo(string correo) 
+        public static int ObtenerIdAccesoPorCorreo(string correo) 
         {
             int idAcceso = 0;
             try 

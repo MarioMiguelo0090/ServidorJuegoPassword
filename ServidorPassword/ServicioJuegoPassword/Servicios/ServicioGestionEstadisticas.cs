@@ -9,28 +9,27 @@ using System.Threading.Tasks;
 namespace ServicioJuegoPassword.Servicios
 {
     public partial class ServicioPassword : IServicioGestionEstadisticas
-    {
-        private GestionEstadisticas _gestionEstadisticas = new GestionEstadisticas();
+    {        
 
         public int AumentarPartidasGanadasPorIdEstadistica(int idEstadistica)
         {
-            return _gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            return GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
         }
 
         public int AumentarPartidasPerdidasPorIdEstadistica(int idEstadistica)
         {
-            return _gestionEstadisticas.AgregarPartidaPerdidaPorIdEstadistica(idEstadistica);
+            return GestionEstadisticas.AgregarPartidaPerdidaPorIdEstadistica(idEstadistica);
         }
 
         public EstadisticaContrato ObtenerEstadisticaPorIdEstadistica(int idEstadistica)
         {
-            var datosEstadistica = _gestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
+            var datosEstadistica = GestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
             return EstadisticaContrato.ConvertirDeAccesoADatos(datosEstadistica);
         }
 
         public int SumarPuntajePorIdEstadistica(int idEstadistica, int puntaje)
         {
-            return _gestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntaje);
+            return GestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntaje);
         }
     }
 }

@@ -13,11 +13,10 @@ namespace PruebaAccesoADatos
     {
         [TestMethod]
         public void PruebaValidarPresenciaDeNombreUsuarioExcepcion() 
-        {
-            GestionPerfil gestionPerfil = new GestionPerfil();
+        {            
             string nombreUsuario = "MarioLimon";
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
+            int resultadoObtenido = GestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -25,10 +24,9 @@ namespace PruebaAccesoADatos
         public void PruebaGuadarRutaImagenPorIdJugadorExcepcion() 
         {
             int idJugador = 1;
-            string rutaImagen = "ImagenEjemplo.jpg";
-            GestionPerfil gestionPerfil = new GestionPerfil();
+            string rutaImagen = "ImagenEjemplo.jpg";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
+            int resultadoObtenido = GestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -36,10 +34,9 @@ namespace PruebaAccesoADatos
         public void PruebaGuadarDescripcionPorIdJugadorExcepcion() 
         {
             int idJugador = 1;
-            string descripcion = "Soy un nuevo jugador en password";
-            GestionPerfil gestionPerfil = new GestionPerfil();
+            string descripcion = "Soy un nuevo jugador en password";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
+            int resultadoObtenido = GestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -47,10 +44,9 @@ namespace PruebaAccesoADatos
         public void PruebaGuardarNombreUsuarioPorIdJugadorExcepcion() 
         {
             int idJugador = 1;
-            string nombreUsuario = "MarioMiguelLimon";
-            GestionPerfil gestionPerfil = new GestionPerfil();
+            string nombreUsuario = "MarioMiguelLimon";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
+            int resultadoObtenido = GestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -58,10 +54,9 @@ namespace PruebaAccesoADatos
         public void PruebaGuardarCorreoPorIdAccesoExcepcion() 
         {
             int idAcceso = 2;
-            string correo = "oscarapodaca@gmail.com";
-            GestionPerfil gestionPerfil = new GestionPerfil();
+            string correo = "oscarapodaca@gmail.com";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
+            int resultadoObtenido = GestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -69,10 +64,9 @@ namespace PruebaAccesoADatos
         public void PruebaGuardarContraseniaPorIdAccesoExcepcion() 
         {
             int idAcceso = 2;
-            string contrasenia = "a095f496d56094b03ba1746842f74e3fb295c7c7dbb516eefe11dfe53fd1e6a0";
-            GestionPerfil gestionPerfil = new GestionPerfil();
+            string contrasenia = "a095f496d56094b03ba1746842f74e3fb295c7c7dbb516eefe11dfe53fd1e6a0";           
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, contrasenia);
+            int resultadoObtenido = GestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, contrasenia);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
     }

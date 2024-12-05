@@ -15,7 +15,7 @@ namespace AccesoADatos
     {
         private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public int RegistrarNuevaPartidaPorIdJugador(int idJugador,Partida nuevaPartida) 
+        public int RegistrarNuevaPartidaPorIdJugador(int idJugador, Partida nuevaPartida)
         {
             int registroNuevaPartida = 0;
             try
@@ -61,7 +61,7 @@ namespace AccesoADatos
                     }
                 }
             }
-            catch (DbUpdateException excepcionActualizacion) 
+            catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
                 registroNuevaPartida = -1;
@@ -74,14 +74,14 @@ namespace AccesoADatos
             return registroNuevaPartida;
         }
 
-        public int ActualizarEstadoDePartidaPorIdPartida(int idPartida,string nuevoEstado)
+        public static int ActualizarEstadoDePartidaPorIdPartida(int idPartida, string nuevoEstado)
         {
             int resultadoActualizacionEstado = 0;
-            try 
+            try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
-                    var partida=contexto.Partida.Find(idPartida);
+                    var partida = contexto.Partida.Find(idPartida);
                     if (partida != null) {
                         partida.estadoPartida = nuevoEstado;
                         resultadoActualizacionEstado = contexto.SaveChanges();
@@ -101,15 +101,15 @@ namespace AccesoADatos
             return resultadoActualizacionEstado;
         }
 
-        public int ValidarInexistenciaCodigoPartida(string codigoPartida) 
+        public static int ValidarInexistenciaCodigoPartida(string codigoPartida)
         {
             int resultadoInexistencia = 0;
-            try 
+            try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
-                    var partida = contexto.Partida.Any(entidad=>entidad.codigoPartida==codigoPartida);
-                    if (partida) 
+                    var partida = contexto.Partida.Any(entidad => entidad.codigoPartida == codigoPartida);
+                    if (partida)
                     {
                         resultadoInexistencia = 1;
                     }
@@ -123,14 +123,14 @@ namespace AccesoADatos
             return resultadoInexistencia;
         }
 
-        public List<Pregunta> RecuperarPreguntas() 
+        public List<Pregunta> RecuperarPreguntas()
         {
-            List<Pregunta> preguntas= new List<Pregunta>();
+            List<Pregunta> preguntas = new List<Pregunta>();
             try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
-                    preguntas=contexto.Pregunta.ToList();
+                    preguntas = contexto.Pregunta.ToList();
                 }
             }
             catch (EntityException excepcionEntidad)
@@ -145,53 +145,56 @@ namespace AccesoADatos
             return preguntas;
         }
 
-        public List<Respuesta> RecuperarRespuestasPorIdPregunta(int idPregunta) 
+        public List<Respuesta> RecuperarRespuestasPorIdPregunta(int idPregunta)
         {
             List<Respuesta> respuestas = new List<Respuesta>();
             try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
-                    respuestas = contexto.Respuesta.Where(respuesta=>respuesta.FKidPregunta==idPregunta)
+                    respuestas = contexto.Respuesta.Where(respuesta => respuesta.FKidPregunta == idPregunta)
                         .ToList();
                 }
             }
-            catch (EntityException excepcionEntidad) 
+            catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
                 Respuesta respuesta = new Respuesta
                 {
                     idRespuesta = -1,
                 };
-                respuestas.Insert(0,respuesta);
+                respuestas.Insert(0, respuesta);
             }
             return respuestas;
         }
 
-        public Partida ObtenerPartidaPorCodigoPartida(string codigoPartida)
+        public static Partida ObtenerPartidaPorCodigoPartida(string codigoPartida)
         {
             Partida partida = new Partida();
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
-                    partida = contexto.Partida.FirstOrDefault(entidad => entidad.codigoPartida == codigoPartida);
+                    partida = contexto.Partida.FirstOrDefault(entidad => entidad.codigoPartida == codigoPartida);                    
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                partida.idPartida = -1;
+                partida = new Partida
+                {
+                    idPartida = -1
+                };
             }
             return partida;
         }
 
-        public List<Respuesta> ObtenerRespuestasPorIdPreguntas(List<int> idPreguntas) 
+        public List<Respuesta> ObtenerRespuestasPorIdPreguntas(List<int> idPreguntas)
         {
-            List<Respuesta> respuestasObtenidas=new List<Respuesta>();
+            List<Respuesta> respuestasObtenidas = new List<Respuesta>();
             try
             {
-                using (var contexto = new PasswordEntidades()) 
+                using (var contexto = new PasswordEntidades())
                 {
                     respuestasObtenidas = contexto.Respuesta
                     .Where(entidad => idPreguntas.Contains(entidad.FKidPregunta))
@@ -209,6 +212,54 @@ namespace AccesoADatos
             }
             return respuestasObtenidas;
         }
+
+        public static int VerificarCatalogoPreguntas() 
+        {
+            int verificacionCatalogoPreguntas = 0;
+
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {                    
+                    int totalPreguntas = contexto.Pregunta.Count();
+
+                    if (totalPreguntas >= 30)
+                    {
+                        verificacionCatalogoPreguntas = 1;
+                    }                  
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                verificacionCatalogoPreguntas = -1;
+            }
+            return verificacionCatalogoPreguntas;
+        }
+
+        public static int VerificarCatalogoRespuestas()
+        {
+            int verificacionCatalogoRespuestas = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    int totalRespuestas = contexto.Respuesta.Count();
+                    if (totalRespuestas >= 90)
+                    {
+                        verificacionCatalogoRespuestas = 1;
+                    }
+                }
+            }
+            catch (EntityException excepcionEntidad)
+            {
+                _bitacora.Error(excepcionEntidad);
+                verificacionCatalogoRespuestas = -1;
+            }
+            return verificacionCatalogoRespuestas;
+        }
+
+
 
     }
 }
