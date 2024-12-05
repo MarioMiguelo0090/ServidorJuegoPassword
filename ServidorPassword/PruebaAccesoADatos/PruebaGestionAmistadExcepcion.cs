@@ -35,9 +35,8 @@ namespace PruebaAccesoADatos
                 respuesta = true,
                 fechaRespuesta = DateTime.Today,
             };
-            int resultadoEsperado = -1;
-            GestionAmistad gestionAmistad = new GestionAmistad();
-            int resultadoObtenido = gestionAmistad.ConfirmarSolicitudAmistadPorIdAmistad(amistad);
+            int resultadoEsperado = -1;            
+            int resultadoObtenido = GestionAmistad.ConfirmarSolicitudAmistadPorIdAmistad(amistad);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -45,9 +44,8 @@ namespace PruebaAccesoADatos
         public void PruebaRecuperarSolicitudesAmistadPorIdJugadorExcepcion() 
         {
             int idJugador = 3;
-            int resultadoEsperado = -1;
-            GestionAmistad gestionAmistad = new GestionAmistad();
-            List<int> solicitudesAmistadObtenidas = gestionAmistad.RecuperarSolicitudesAmistadPorIdJugador(idJugador);
+            int resultadoEsperado = -1;            
+            List<int> solicitudesAmistadObtenidas = GestionAmistad.RecuperarSolicitudesAmistadPorIdJugador(idJugador);
             int resultadoObtenido = solicitudesAmistadObtenidas.First();
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
@@ -55,21 +53,19 @@ namespace PruebaAccesoADatos
         [TestMethod]
         public void PruebaRecuperarAmigosPorIdJugadorExcepcion() 
         {
-            int idJugador = 1;
-            GestionAmistad gestionAmistad = new GestionAmistad();
+            int idJugador = 1;            
             int idAmistadEsperada = -1;
-            List<int> amistadesObtenidas = gestionAmistad.RecuperarIdAmigosPorIdJugador(idJugador);
-            int idAmistadObtenida = amistadesObtenidas.First();
+            List<Jugador> amistadesObtenidas = GestionAmistad.RecuperarAmigosPorIdJugador(idJugador);
+            int idAmistadObtenida = amistadesObtenidas.First().idJugador;
             Assert.AreEqual(idAmistadEsperada, idAmistadObtenida);
         }
 
         [TestMethod]
         public void PruebaObtenerIdJugadorPorCorreoExcepcion() 
         {
-            string correo = "mariolimon13c@gmail.com";
-            GestionAmistad gestionAmistad = new GestionAmistad();
+            string correo = "mariolimon13c@gmail.com";            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionAmistad.ObtenerIdJugadorPorCorreo(correo);
+            int resultadoObtenido = GestionAmistad.ObtenerIdJugadorPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -77,9 +73,8 @@ namespace PruebaAccesoADatos
         public void PruebaRecuperarNombresDeUsuarioPorIdJugadorExcepcion() 
         {
             List<int> idJugadores = new List<int>();
-            idJugadores.Add(1);
-            GestionAmistad gestionAmistad = new GestionAmistad();
-            List<string> nombresUsuario = gestionAmistad.RecuperarNombresDeUsuarioPorIdJugador(idJugadores);
+            idJugadores.Add(1);            
+            List<string> nombresUsuario = GestionAmistad.RecuperarNombresDeUsuarioPorIdJugador(idJugadores);
             string resultadoEsperado = "excepcion";
             string resultadoObtenido = nombresUsuario.First();
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
@@ -89,10 +84,9 @@ namespace PruebaAccesoADatos
         public void PruebaValidarExistenciaAmistadPorIdJugadoresExcepcion() 
         {
             int idJugadorRemitente = 1;
-            int idJugadorDestinatario = 3;
-            GestionAmistad gestionAmistad = new GestionAmistad();
+            int idJugadorDestinatario = 3;            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionAmistad.ValidarExistenciaAmistadPorIdJugadores(idJugadorRemitente, idJugadorDestinatario);
+            int resultadoObtenido = GestionAmistad.ValidarExistenciaAmistadPorIdJugadores(idJugadorRemitente, idJugadorDestinatario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -100,10 +94,9 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerIdAmistadPorIdJugadoresExcepcion() 
         {
             int idJugadorUno = 1;
-            int idJugadorDos = 2;
-            GestionAmistad gestionAmistad = new GestionAmistad();
+            int idJugadorDos = 2;            
             int resultadoEsperado = -1;
-            int resultadoObtenido = gestionAmistad.ObtenerIdAmistadPorIdJugadores(idJugadorUno, idJugadorDos);
+            int resultadoObtenido = GestionAmistad.ObtenerIdAmistadPorIdJugadores(idJugadorUno, idJugadorDos);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
     }

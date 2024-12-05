@@ -22,7 +22,7 @@ namespace ServicioJuegoPassword.Interfaces
         List<int> ConsultarSolicitudesAmistadPorIdJugador(int idJugador);
 
         [OperationContract]
-        List<int> ConsultarAmistadesPorIdJugador(int idJugador);
+        List<JugadorContrato> ConsultarAmistadesPorIdJugador(int idJugador);
 
         [OperationContract]
         int ConsultarIdJugadorPorCorreo(string correo);

@@ -50,7 +50,7 @@ namespace AccesoADatos
             return resultadoRegistroAmistad;
         }
 
-        public int ConfirmarSolicitudAmistadPorIdAmistad(Amistad posibleAmistad)
+        public static int ConfirmarSolicitudAmistadPorIdAmistad(Amistad posibleAmistad)
         {
             int resultadoConfirmacion = 0;
             try
@@ -79,7 +79,7 @@ namespace AccesoADatos
             return resultadoConfirmacion;
         }
 
-        public List<int> RecuperarSolicitudesAmistadPorIdJugador(int idJugador)
+        public static List<int> RecuperarSolicitudesAmistadPorIdJugador(int idJugador)
         {
             List<int> idJugadores = new List<int>();
             try
@@ -100,33 +100,36 @@ namespace AccesoADatos
             return idJugadores;
         }
 
-        public List<int> RecuperarIdAmigosPorIdJugador(int idJugador)
+        public static List<Jugador> RecuperarAmigosPorIdJugador(int idJugador)
         {
-            List<int> idAmigos = new List<int>();
+            List<Jugador> amigos = new List<Jugador>();
             try
             {
                 using (var contexto = new PasswordEntidades())
-                {
-                    idAmigos = contexto.Amistad
-                        .Where(entidad => entidad.FKidJugador == idJugador && entidad.respuesta == true)
-                        .Select(entidad => entidad.idJugadorAmigo)
-                        .Union(
-                            contexto.Amistad
-                            .Where(entidad => entidad.idJugadorAmigo == idJugador && entidad.respuesta == true)
-                            .Select(entidad => entidad.FKidJugador)
-                        )
+                {                    
+                    var idsAmigos = contexto.Amistad
+                        .Where(entidad =>
+                            (entidad.FKidJugador == idJugador || entidad.idJugadorAmigo == idJugador) &&
+                            entidad.respuesta == true)
+                        .Select(entidad =>
+                            entidad.FKidJugador == idJugador ? entidad.idJugadorAmigo : entidad.FKidJugador)
+                        .Distinct()
+                        .ToList();                    
+                    amigos = contexto.Jugador
+                        .Where(jugador => idsAmigos.Contains(jugador.idJugador))
                         .ToList();
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                idAmigos.Insert(0, -1);                 
+                amigos.Insert(0, new Jugador { idJugador = -1 });
             }
-            return idAmigos;
+            return amigos;
         }
 
-        public int ObtenerIdJugadorPorCorreo(string correo) 
+
+        public static int ObtenerIdJugadorPorCorreo(string correo) 
         {
             int idJugador = 0;
             try
@@ -153,7 +156,7 @@ namespace AccesoADatos
             return idJugador;
         }
 
-        public List<string> RecuperarNombresDeUsuarioPorIdJugador(List<int> idJugadores) 
+        public static List<string> RecuperarNombresDeUsuarioPorIdJugador(List<int> idJugadores) 
         {
             List<string> nombresUsuarios = new List<string>();
             try
@@ -176,7 +179,7 @@ namespace AccesoADatos
         }
 
 
-        public int ValidarExistenciaAmistadPorIdJugadores(int idJugadorRemitente, int idJugadorDestinatario) 
+        public static int ValidarExistenciaAmistadPorIdJugadores(int idJugadorRemitente, int idJugadorDestinatario) 
         {
             int validacionInexistenciaAmistad = 0;
             try
@@ -200,7 +203,7 @@ namespace AccesoADatos
             return validacionInexistenciaAmistad;
         }
 
-        public int ObtenerIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos) 
+        public static int ObtenerIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos) 
         {
             int idAmistad = 0;
             try

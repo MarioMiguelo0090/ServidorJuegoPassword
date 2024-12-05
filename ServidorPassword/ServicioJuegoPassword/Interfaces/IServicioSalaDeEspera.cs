@@ -22,6 +22,8 @@ namespace ServicioJuegoPassword.Interfaces
         void IniciarPartida(string codigoPartida,int cantidadPreguntas);
     }
 
+
+    [ServiceContract]
     public interface IServicioSalaDeEsperaCallback
     {
         [OperationContract]
@@ -43,6 +45,15 @@ namespace ServicioJuegoPassword.Interfaces
 
         [DataMember]
         public int IdJugador { get; set; }
+
+        public static JugadorContrato ConvertirDeAccesoADatos(Jugador jugador) 
+        {
+            return new JugadorContrato 
+            {
+                NombreUsuario=jugador.nombreUsuario,
+                IdJugador=jugador.idJugador,
+            };
+        }
     }    
 
 }

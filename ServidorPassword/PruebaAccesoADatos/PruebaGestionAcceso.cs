@@ -38,61 +38,55 @@ namespace PruebaAccesoADatos
 
         [TestMethod]
         public void PruebaRetonarIdAccesoPorCorreoExitoso() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             String correo= "mariolimon@gmail.com";
             int resultadoEsperado = 1;
-            int resultadoObtenido=gestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            int resultadoObtenido=GestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaRetonarIdAccesoPorCorreoFallida() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "ejemplo@hotmail.com";
             int resultadoEsperado = 0;
-            int resultadoObtenido = gestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            int resultadoObtenido = GestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaRetornarContraseniaPorCorreoExitoso() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "mariolimon@gmail.com";
             string resultadoEsperado = "Qwerty1234";
-            string resultadoObtenido=gestionAcceso.RetornarContraseniaPorCorreo(correo);
+            string resultadoObtenido=GestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaRetornarContraseniaPorCorreoFallida() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "ejemplo@hotmail.com";
             string contraseniaEsperada = "";
-            string contrasniaObtenida=gestionAcceso.RetornarContraseniaPorCorreo(correo);
+            string contrasniaObtenida=GestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(contraseniaEsperada, contrasniaObtenida);
         }
 
         [TestMethod]
         public void PruebaValidarPresenciaCorreoExitoso() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = 1;
-            int resultadoObtenido=gestionAcceso.ValidarPresenciaCorreo(correo);
+            int resultadoObtenido=GestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaValidarPresenciaCorreoFallida() 
-        {
-            GestionAcceso gestionAcceso = new GestionAcceso();
+        {            
             string correo = "ejemplo@gmail.com";
             int resultadoEsperado = 0;
-            int resultadoObtenido=gestionAcceso.ValidarPresenciaCorreo(correo);
+            int resultadoObtenido=GestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -106,20 +100,18 @@ namespace PruebaAccesoADatos
             cuentaPrueba.IdJugador = 1;            
             cuentaPrueba.NombreUsuario = "MarioLimon";
             cuentaPrueba.RutaImagen = "";
-            cuentaPrueba.Descripcion = "";            
-            GestionAcceso gestionAcceso = new GestionAcceso();
-            Cuenta cuentaObtenida=gestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
+            cuentaPrueba.Descripcion = "";                        
+            Cuenta cuentaObtenida=GestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
             Assert.AreEqual(cuentaPrueba, cuentaObtenida);
         }
 
         [TestMethod]
         public void PruebaObtenerCuentaPorCorreoFallida() 
-        {
-            GestionAcceso gestionAcceso=new GestionAcceso();
+        {            
             string correo = "ejemplo@gmail.com";
             Cuenta cuentaEsperada= new Cuenta();
             cuentaEsperada.IdAcceso= 0;
-            Cuenta cuentaObtenida=gestionAcceso.ObtenerCuentaPorCorreo(correo);
+            Cuenta cuentaObtenida=GestionAcceso.ObtenerCuentaPorCorreo(correo);
             Assert.AreEqual(cuentaEsperada.IdAcceso,cuentaObtenida.IdAcceso);
         }
 
@@ -130,9 +122,8 @@ namespace PruebaAccesoADatos
                 IdAcceso = 1,
                 IdJugador = 1,               
             };
-            int idJugador = 1;
-            GestionAcceso gestionAcceso = new GestionAcceso();
-            Cuenta cuentaObtenida = gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+            int idJugador = 1;            
+            Cuenta cuentaObtenida = GestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
             Assert.AreEqual(cuentaEsperada,cuentaObtenida);
         }
 

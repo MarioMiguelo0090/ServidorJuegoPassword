@@ -18,12 +18,12 @@ namespace ServicioJuegoPassword.Servicios
         }
         public int ActualizarEstadoPorIdPartida(int idPartida, string estado)
         {
-            return _gestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida,estado);
+            return GestionPartida.ActualizarEstadoDePartidaPorIdPartida(idPartida,estado);
         }
 
         public int ValidarCodigoPartida(string codigoPartida)
         {
-            return _gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            return GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
         }
 
         public List<PreguntaContrato> ObtenerPreguntas()
@@ -45,7 +45,7 @@ namespace ServicioJuegoPassword.Servicios
 
         public PartidaContrato RecuperarPartidaPorCodigo(string codigoPartida)
         {
-            var datosPartida = _gestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
+            var datosPartida = GestionPartida.ObtenerPartidaPorCodigoPartida(codigoPartida);
             return PartidaContrato.ConvertirDeAccesoADatos(datosPartida);             
         }
 
