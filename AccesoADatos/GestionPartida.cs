@@ -101,7 +101,7 @@ namespace AccesoADatos
             return resultadoActualizacionEstado;
         }
 
-        public static int ValidarInexistenciaCodigoPartida(string codigoPartida)
+        public int ValidarInexistenciaCodigoPartida(string codigoPartida)
         {
             int resultadoInexistencia = 0;
             try
@@ -213,7 +213,7 @@ namespace AccesoADatos
             return respuestasObtenidas;
         }
 
-        public static int VerificarCatalogoPreguntas() 
+        public int VerificarCatalogoPreguntas() 
         {
             int verificacionCatalogoPreguntas = 0;
 
@@ -237,7 +237,7 @@ namespace AccesoADatos
             return verificacionCatalogoPreguntas;
         }
 
-        public static int VerificarCatalogoRespuestas()
+        public int VerificarCatalogoRespuestas()
         {
             int verificacionCatalogoRespuestas = 0;
             try
@@ -258,8 +258,5 @@ namespace AccesoADatos
             }
             return verificacionCatalogoRespuestas;
         }
-
-
-
     }
 }

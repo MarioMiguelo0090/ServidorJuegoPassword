@@ -20,6 +20,13 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract(IsOneWay = true)]
         void IniciarPartida(string codigoPartida,int cantidadPreguntas);
+
+        [OperationContract(IsOneWay = true)]
+        void ExpulsarJugador(string codigoPartida,JugadorContrato jugador);
+
+        [OperationContract(IsOneWay = true)]
+        void ExpulsarTodosJugadores(string codigoPartida);
+
     }
 
 
@@ -31,6 +38,9 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         void AbrirVentanaPartida(List<PreguntaContrato> preguntasSeleccionadas,List<RespuestaContrato> respuestasSeleccionadas);
+
+        [OperationContract]
+        void NotificarExpulsion();
     }
 
     
