@@ -23,7 +23,7 @@ namespace ServicioJuegoPassword.Servicios
 
         public int ValidarCodigoPartida(string codigoPartida)
         {
-            return GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            return _gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
         }
 
         public List<PreguntaContrato> ObtenerPreguntas()
@@ -87,7 +87,17 @@ namespace ServicioJuegoPassword.Servicios
                 idPreguntas.Add(pregunta.IdPregunta);
             }
             return idPreguntas;
-        }        
+        }
+
+        public int VerificarCatalogoCompletoPreguntas()
+        {
+            return _gestionPartida.VerificarCatalogoPreguntas();
+        }
+
+        public int VerificarCatalogoCompletoRespuestas()
+        {
+            return _gestionPartida.VerificarCatalogoRespuestas();
+        }
     }
             
 }

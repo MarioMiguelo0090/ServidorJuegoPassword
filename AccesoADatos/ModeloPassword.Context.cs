@@ -31,9 +31,9 @@ namespace AccesoADatos
         public virtual DbSet<DetallePartida> DetallePartida { get; set; }
         public virtual DbSet<Estadistica> Estadistica { get; set; }
         public virtual DbSet<Jugador> Jugador { get; set; }
+        public virtual DbSet<Logro> Logro { get; set; }
         public virtual DbSet<Partida> Partida { get; set; }
         public virtual DbSet<Pregunta> Pregunta { get; set; }
         public virtual DbSet<Respuesta> Respuesta { get; set; }
-        public virtual DbSet<Logro> Logro { get; set; }
     }
 }
