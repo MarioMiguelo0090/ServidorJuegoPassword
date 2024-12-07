@@ -36,13 +36,15 @@ namespace PruebaAccesoADatos
         }
 
         [TestMethod]
-        public void PruebaValidarInexistenciaCodigoPartidaExcepcion() 
+        public void PruebaValidarInexistenciaCodigoPartidaExcepcion()
         {
             string codigoPartida = "1234";
-            int resultadoEsperado = -1;            
-            int resultadoObtenido = GestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
+            int resultadoEsperado = -1;
+            GestionPartida gestionPartida = new GestionPartida(); // Crear instancia
+            int resultadoObtenido = gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida); // Usar instancia
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
+
 
         [TestMethod]
         public void PruebaRecuperarPreguntasExcepcion() 
