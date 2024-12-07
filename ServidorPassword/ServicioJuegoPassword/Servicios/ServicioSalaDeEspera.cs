@@ -14,7 +14,7 @@ namespace ServicioJuegoPassword.Servicios
     {
         private static Dictionary<string, List<IServicioSalaDeEsperaCallback>> _jugadoresEnPartida = new Dictionary<string, List<IServicioSalaDeEsperaCallback>>();
         private static Dictionary<string, List<JugadorContrato>> _jugadores= new Dictionary<string, List<JugadorContrato>>();
-
+        private static Dictionary<string, IServicioSalaDeEsperaCallback> _retrollamadaPorJugador = new Dictionary<string, IServicioSalaDeEsperaCallback>();
 
         public void ConectarJugador(string codigoPartida, JugadorContrato jugador)
         {
@@ -22,6 +22,10 @@ namespace ServicioJuegoPassword.Servicios
             if (!_jugadoresEnPartida.ContainsKey(codigoPartida)) 
             {
                 _jugadoresEnPartida[codigoPartida] = new List<IServicioSalaDeEsperaCallback>();
+            }
+            if (!_retrollamadaPorJugador.ContainsKey(jugador.NombreUsuario))
+            {
+                _retrollamadaPorJugador[jugador.NombreUsuario] = cliente;
             }
             if (!_jugadoresEnPartida[codigoPartida].Contains(cliente)) 
             {
@@ -32,9 +36,9 @@ namespace ServicioJuegoPassword.Servicios
                 }
                 _jugadores[codigoPartida].Add(jugador);
             }            
-            foreach (var callback in _jugadoresEnPartida[codigoPartida])
+            foreach (var retrollamada in _jugadoresEnPartida[codigoPartida])
             {
-                callback.ActualizarListaJugadores(_jugadores[codigoPartida]);
+                retrollamada.ActualizarListaJugadores(_jugadores[codigoPartida]);
             }
         }
 
@@ -51,11 +55,39 @@ namespace ServicioJuegoPassword.Servicios
                 if (_jugadoresEnPartida[codigoPartida].Contains(cliente))
                 {
                     _jugadoresEnPartida[codigoPartida].Remove(cliente);
-                }                
-                foreach (var callback in _jugadoresEnPartida[codigoPartida])
+                }
+                if (_retrollamadaPorJugador.ContainsKey(jugador.NombreUsuario))
                 {
-                    callback.ActualizarListaJugadores(_jugadores[codigoPartida]);
+                    _retrollamadaPorJugador.Remove(jugador.NombreUsuario);
+                }
+                foreach (var retrollamadaJugador in _jugadoresEnPartida[codigoPartida])
+                {
+                    retrollamadaJugador.ActualizarListaJugadores(_jugadores[codigoPartida]);
                 }                                
+            }
+        }
+
+        public void ExpulsarJugador(string codigoPartida, JugadorContrato jugador) 
+        {
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida))
+            {                                   
+                if (_retrollamadaPorJugador.ContainsKey(jugador.NombreUsuario))
+                {
+                    var retrollamadaJugador = _retrollamadaPorJugador[jugador.NombreUsuario];
+                    retrollamadaJugador.NotificarExpulsion();
+                }                                                
+            }
+        }
+
+        public void ExpulsarTodosJugadores(string codigoPartida) 
+        {
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida))
+            {
+                var copiaRetrollamadas = _jugadoresEnPartida[codigoPartida].ToList();
+                foreach (var retrollamada in copiaRetrollamadas)
+                {
+                    retrollamada.NotificarExpulsion();
+                }
             }
         }
 

@@ -21,6 +21,9 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         bool VerificarConexionUsuario(string jugador);
+
+        [OperationContract]
+        bool ValidarNumeroJugadoresEnPartida(string codigoPartida);
     }
 
 }
