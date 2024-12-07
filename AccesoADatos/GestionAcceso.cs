@@ -101,7 +101,7 @@ namespace AccesoADatos
             return idAcceso;
         }
 
-        public static string RetornarContraseniaPorCorreo(string correo)
+        public string RetornarContraseniaPorCorreo(string correo)
         {
             string contrasenia = "";
             try

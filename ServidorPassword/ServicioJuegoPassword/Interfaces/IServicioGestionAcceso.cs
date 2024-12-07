@@ -16,10 +16,7 @@ namespace ServicioJuegoPassword.Interfaces
         int RegistrarNuevoJugador(Acceso acceso, Jugador jugador);
 
         [OperationContract]
-        int ValidarInicioDeSesion(Acceso acceso);
-
-        [OperationContract]
-        string EncriptarContrasenia(string contrasenia);
+        int ValidarInicioDeSesion(Acceso acceso);        
 
         [OperationContract]
         int ValidarNombreUsuario(string nombreUsuario);
