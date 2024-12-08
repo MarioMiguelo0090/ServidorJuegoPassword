@@ -33,7 +33,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            int resultadoObtenido = gestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -42,7 +43,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "mariolimon@gmail.com";
             string resultadoEsperado = "excepcion";
-            string resultadoObtenido = GestionAcceso.RetornarContraseniaPorCorreo(correo);
+            GestionAcceso gestionAcceso= new GestionAcceso();
+            string resultadoObtenido = gestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -51,7 +53,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionAcceso.ValidarPresenciaCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            int resultadoObtenido = gestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -59,8 +62,9 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerCuentaPorCorreoExcepcion() 
         {
             Cuenta cuentaPrueba = new Cuenta();
-            cuentaPrueba.IdAcceso = -1;                        
-            Cuenta cuentaObtenida = GestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
+            cuentaPrueba.IdAcceso = -1;
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida = gestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
             Assert.AreEqual(cuentaPrueba.IdAcceso, cuentaObtenida.IdAcceso);
         }
     }

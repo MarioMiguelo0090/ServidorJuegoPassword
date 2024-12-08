@@ -29,5 +29,8 @@ namespace ServicioJuegoPassword.Interfaces
 
         [OperationContract]
         Cuenta RecuperarCuentaPorIdJugador(int idJugador);
+
+        [OperationContract]
+        int ValidarPresenciaCuenta(string nombreUsuario, string correo);
     }
 }

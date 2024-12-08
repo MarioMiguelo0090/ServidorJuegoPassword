@@ -20,25 +20,10 @@ namespace ServicioJuegoPassword.Interfaces
         int ActualizarEstadoPorIdPartida(int idPartida, string estado);
 
         [OperationContract]
-        int ValidarCodigoPartida(string codigoPartida);
+        int ValidarCodigoPartida(string codigoPartida);                
 
         [OperationContract]
-        List<PreguntaContrato> ObtenerPreguntas();
-
-        [OperationContract]
-        List<Respuesta> ObtenerRespuestaPorIdPregunta(int idPregunta);
-
-        [OperationContract]
-        PartidaContrato RecuperarPartidaPorCodigo(string codigoPartida);
-
-        [OperationContract]
-        List<RespuestaContrato> RecuperarRespuestasPorIdPreguntas(List<int> idPreguntas);
-
-        [OperationContract]
-        List<PreguntaContrato> SeleccionarPreguntasAlAzar(int cantidadPreguntas);
-
-        [OperationContract]
-        List<int> ObtenerIdPreguntas(List<PreguntaContrato> preguntasSeleccionadas);
+        PartidaContrato RecuperarPartidaPorCodigo(string codigoPartida);                        
 
         [OperationContract]
         int VerificarCatalogoCompletoPreguntas();

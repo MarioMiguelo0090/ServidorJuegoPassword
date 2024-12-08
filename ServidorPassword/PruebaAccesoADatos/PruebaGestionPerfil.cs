@@ -17,7 +17,8 @@ namespace PruebaAccesoADatos
         {            
             string nombreUsuario = "MarioLimon";
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
+            GestionPerfil  gestionPerfil= new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -26,7 +27,8 @@ namespace PruebaAccesoADatos
         {            
             string nombreUsuario = "nadie";
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.ValidarPresenciaDeNombreUsuario(nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -36,7 +38,8 @@ namespace PruebaAccesoADatos
             int idJugador = 1;
             string rutaImagen = "pack://application:,,,/Imagenes/Fondos/perfil1.png";            
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -46,7 +49,8 @@ namespace PruebaAccesoADatos
             int idJugador = 0;
             string rutaImagen = "ImagenEjemplo.jpg";
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -56,7 +60,8 @@ namespace PruebaAccesoADatos
             int idJugador = 1;
             string descripcion = "Soy un nuevo jugador en password";            
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -66,7 +71,8 @@ namespace PruebaAccesoADatos
             int idJugador = 0;
             string descripcion = "Nada";            
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -76,7 +82,8 @@ namespace PruebaAccesoADatos
             int idJugador = 1;
             string nombreUsuario = "MarioMiguelLimon";            
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -86,7 +93,8 @@ namespace PruebaAccesoADatos
             int idJugador = 0;
             string nombreUsuario = "nadie";            
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -96,7 +104,8 @@ namespace PruebaAccesoADatos
             int idAcceso = 2;
             string correo = "oscarapodaca@gmail.com";            
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -106,7 +115,8 @@ namespace PruebaAccesoADatos
             int idAcceso = 0;
             string correo = "ejemplo@gmail.com";            
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -116,7 +126,8 @@ namespace PruebaAccesoADatos
             int idAcceso = 2;
             string contrasenia = "a095f496d56094b03ba1746842f74e3fb295c7c7dbb516eefe11dfe53fd1e6a0";            
             int resultadoEsperado = 1;
-            int resultadoObtenido = GestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso,contrasenia);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso,contrasenia);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -126,7 +137,8 @@ namespace PruebaAccesoADatos
             int idAcceso = 0;
             string contrasenia = "Contrasenia123$";            
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso,contrasenia);
+            GestionPerfil gestionPerfil = new GestionPerfil();
+            int resultadoObtenido = gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso,contrasenia);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
     }

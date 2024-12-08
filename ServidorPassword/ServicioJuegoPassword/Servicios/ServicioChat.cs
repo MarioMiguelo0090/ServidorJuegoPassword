@@ -28,11 +28,8 @@ namespace ServicioJuegoPassword.Servicios
             }         
             string mensaje=chat+Environment.NewLine;
             foreach (var callback in _clientesPorPartida[codigoPartida])
-            {                
-                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
-                {
-                    callback.Responder(mensaje);
-                }
+            {                                
+                callback.Responder(mensaje);                
             }
         }
 
