@@ -8,78 +8,99 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using log4net;
+using System.Data.Entity.Infrastructure;
 
 namespace AccesoADatos
 {
     public class GestionAcceso
     {
         private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly object _bloqueo = new object();
 
         public int RegistrarAcceso(Acceso nuevoAcceso, Jugador nuevoJugador)
         {
             int resultadoRegistro = 0;
-            try
+            lock (_bloqueo) 
             {
-                using (var contexto = new PasswordEntidades())
+                try
                 {
-                    using (var contextoTransaccion = contexto.Database.BeginTransaction())
+                    using (var contexto = new PasswordEntidades())
                     {
-                        try
+                        using (var contextoTransaccion = contexto.Database.BeginTransaction())
                         {
-                            Acceso acceso = new Acceso
+                            var accesoExistente = contexto.Acceso.Any(accesoCuenta => accesoCuenta.correo == nuevoAcceso.correo);
+                            var jugadorExistente = contexto.Jugador.Any(jugadorCuenta => jugadorCuenta.nombreUsuario == nuevoJugador.nombreUsuario);
+                            if (accesoExistente || jugadorExistente)
                             {
-                                correo = nuevoAcceso.correo,
-                                contrasenia = nuevoAcceso.contrasenia,
-                            };
-                            contexto.Acceso.Add(acceso);
-                            contexto.SaveChanges();
-                            int idAcceso = acceso.idAcceso;
-                            Estadistica estadistica = new Estadistica
+                                resultadoRegistro = 2;
+                                contextoTransaccion.Rollback();
+                            }
+                            else
                             {
-                                puntaje = 0,
-                                partidasGanadas = 0,
-                                partidasPerdidas = 0,
-                            };
-                            contexto.Estadistica.Add(estadistica);
-                            contexto.SaveChanges();
-                            int idEstadisitca = estadistica.idEstadistica;
-                            Jugador jugador = new Jugador
-                            {
-                                nombreUsuario = nuevoJugador.nombreUsuario,
-                                descripcion = nuevoJugador.descripcion,
-                                rutaImagen = nuevoJugador.rutaImagen,
-                                FKidAcceso = idAcceso,
-                                FKidEstadistica = idEstadisitca,
-                            };
-                            contexto.Jugador.Add(jugador);
-                            contexto.SaveChanges();
-                            contextoTransaccion.Commit();
-                            resultadoRegistro = 1;
-                        }
-                        catch (DbEntityValidationException excepcionValidacion)
-                        {
-                            _bitacora.Warn(excepcionValidacion);
-                            contextoTransaccion.Rollback();
-                            resultadoRegistro = -1;
-                        }
-                        catch (EntityException excepcionSQL)
-                        {
-                            _bitacora.Error(excepcionSQL);
-                            contextoTransaccion.Rollback();
-                            resultadoRegistro = -1;
+                                try
+                                {
+                                    Acceso acceso = new Acceso
+                                    {
+                                        correo = nuevoAcceso.correo,
+                                        contrasenia = nuevoAcceso.contrasenia,
+                                    };
+                                    contexto.Acceso.Add(acceso);
+                                    contexto.SaveChanges();
+                                    int idAcceso = acceso.idAcceso;
+                                    Estadistica estadistica = new Estadistica
+                                    {
+                                        puntaje = 0,
+                                        partidasGanadas = 0,
+                                        partidasPerdidas = 0,
+                                    };
+                                    contexto.Estadistica.Add(estadistica);
+                                    contexto.SaveChanges();
+                                    int idEstadisitca = estadistica.idEstadistica;
+                                    Jugador jugador = new Jugador
+                                    {
+                                        nombreUsuario = nuevoJugador.nombreUsuario,
+                                        descripcion = nuevoJugador.descripcion,
+                                        rutaImagen = nuevoJugador.rutaImagen,
+                                        FKidAcceso = idAcceso,
+                                        FKidEstadistica = idEstadisitca,
+                                    };
+                                    contexto.Jugador.Add(jugador);
+                                    contexto.SaveChanges();
+                                    contextoTransaccion.Commit();
+                                    resultadoRegistro = 1;
+                                }
+                                catch (DbEntityValidationException excepcionValidacion)
+                                {
+                                    _bitacora.Warn(excepcionValidacion);
+                                    contextoTransaccion.Rollback();
+                                    resultadoRegistro = -1;
+                                }
+                                catch (DbUpdateException excepcionActualizacion)
+                                {
+                                    _bitacora.Warn(excepcionActualizacion);
+                                    contextoTransaccion.Rollback();
+                                    resultadoRegistro = -1;
+                                }
+                                catch (EntityException excepcionSQL)
+                                {
+                                    _bitacora.Error(excepcionSQL);
+                                    contextoTransaccion.Rollback();
+                                    resultadoRegistro = -1;
+                                }
+                            }
                         }
                     }
                 }
-            }
-            catch (EntityException excepcionSQL)
-            {
-                _bitacora.Error(excepcionSQL);
-                resultadoRegistro = -1;
-            }
+                catch (EntityException excepcionSQL)
+                {
+                    _bitacora.Error(excepcionSQL);
+                    resultadoRegistro = -1;
+                }
+            }            
             return resultadoRegistro;
         }
 
-        public static int RetonarIdAccesoPorCorreo(string correo)
+        public int RetonarIdAccesoPorCorreo(string correo)
         {
             int idAcceso = 0;
             try
@@ -101,7 +122,7 @@ namespace AccesoADatos
             return idAcceso;
         }
 
-        public static string RetornarContraseniaPorCorreo(string correo)
+        public string RetornarContraseniaPorCorreo(string correo)
         {
             string contrasenia = "";
             try
@@ -123,7 +144,7 @@ namespace AccesoADatos
             return contrasenia;
         }
 
-        public static int ValidarPresenciaCorreo(string correo)
+        public int ValidarPresenciaCorreo(string correo)
         {
             int resultado = 0;
             try
@@ -145,7 +166,7 @@ namespace AccesoADatos
             return resultado;
         }
 
-        public static Cuenta ObtenerCuentaPorCorreo(string correo)
+        public Cuenta ObtenerCuentaPorCorreo(string correo)
         {
             Cuenta cuenta = new Cuenta();
             try
@@ -191,7 +212,7 @@ namespace AccesoADatos
             return cuenta;
         }
 
-        public static Cuenta RecuperarCuentaPorIdJugador(int idJugador)
+        public Cuenta RecuperarCuentaPorIdJugador(int idJugador)
         {
             Cuenta cuenta = new Cuenta();
             try
@@ -233,6 +254,30 @@ namespace AccesoADatos
                 cuenta.IdAcceso = -1;
             }
             return cuenta;
+        }
+
+        public int VerificarRegistroCuenta(string nombreUsuario, string correo) 
+        {
+
+            int resultadoVerificacion = 0;
+            try
+            {
+                using (var contexto = new PasswordEntidades())
+                {
+                    var accesoExistente = contexto.Acceso.Any(accesoCuenta => accesoCuenta.correo == correo);
+                    var jugadorExistente = contexto.Jugador.Any(jugadorCuenta => jugadorCuenta.nombreUsuario == nombreUsuario);
+                    if (accesoExistente || jugadorExistente)
+                    {
+                        resultadoVerificacion = 1;                        
+                    }
+                }
+            }
+            catch (EntityException excepcionSql)
+            {
+                _bitacora.Error(excepcionSql);
+                resultadoVerificacion = -1;
+            }
+            return resultadoVerificacion;
         }
 
     }

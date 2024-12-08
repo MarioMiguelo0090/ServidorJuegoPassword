@@ -9,36 +9,37 @@ using System.Threading.Tasks;
 namespace ServicioJuegoPassword.Servicios
 {
     public partial class ServicioPassword : IServicioPersonalizacionPerfil
-    {                        
+    {               
+        GestionPerfil _gestionPerfil=new GestionPerfil();
+
         public int EditarCorreoPorIdAcceso(int idAcceso, string correo)
         {
-            return GestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
+            return _gestionPerfil.GuardarCorreoPorIdAcceso(idAcceso, correo);
         }
 
         public int EditarDescripcionPorIdJugador(int idJugador, string descripcion)
         {
-            return GestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
+            return _gestionPerfil.GuadarDescripcionPorIdJugador(idJugador, descripcion);
         }
 
         public int EditarNombreUsuarioPorIdJugador(int idJugador, string nombreUsuario)
         {
-            return GestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
+            return _gestionPerfil.GuardarNombreUsuarioPorIdJugador(idJugador, nombreUsuario);
         }
 
         public int EditarRutaImagenPorIdJugador(int idJugador, string rutaImagen)
         {            
-            return GestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
+            return _gestionPerfil.GuadarRutaImagenPorIdJugador(idJugador, rutaImagen);
         }
 
         public int EditarContraseniaPorIdAcceso(int idAcceso, string contrasenia)
-        {
-            string nuevaContrasenia = EncriptarContrasenia(contrasenia);
-            return GestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, nuevaContrasenia);
+        {            
+            return _gestionPerfil.GuardarContraseniaPorIdAcceso(idAcceso, contrasenia);
         }
 
         public int RecuperarIdAccesoPorCorreo(string correo)
         {
-            return GestionPerfil.ObtenerIdAccesoPorCorreo(correo);
+            return _gestionPerfil.ObtenerIdAccesoPorCorreo(correo);
         }
     }
 }
