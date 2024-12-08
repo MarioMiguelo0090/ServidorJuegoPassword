@@ -10,11 +10,11 @@ namespace ServicioJuegoPassword.Servicios
 {
     public partial class ServicioPassword : IServicioGestionLogros
     {
-        private GestionLogros _gestionLogros=new GestionLogros();
+        private GestionLogros _gestionLogros = new GestionLogros();
 
         public List<int> ObtenerIdLogrosPorIdJugador(int idJugador)
         {
-            return GestionLogros.ObtenerLogrosPorIdJugador(idJugador);
+            return _gestionLogros.ObtenerLogrosPorIdJugador(idJugador);
         }
 
         public int RegistrarNuevoLogroPorIdJugador(int idJugador, int idLogro)
@@ -24,22 +24,22 @@ namespace ServicioJuegoPassword.Servicios
 
         public int VerificarCatalogoDeLogros()
         {
-            return GestionLogros.VerificarCatalogoLogros();
+            return _gestionLogros.VerificarCatalogoLogros();
         }
 
         public int VerificarPrimerLogroPorIdEstadistica(int idEstadistica)
         {
-            return GestionLogros.VerificarCumplimientoPrimerLogroPorIdEstadistica(idEstadistica);
+            return _gestionLogros.VerificarCumplimientoPrimerLogroPorIdEstadistica(idEstadistica);
         }
 
         public int VerificarRegistroEspecificoLogroPorIdJugador(int idJugador, int idLogro)
         {
-            return GestionLogros.VerificarRegistroLogroPorIdJugador(idJugador, idLogro);
+            return _gestionLogros.VerificarRegistroLogroPorIdJugador(idJugador, idLogro);
         }
 
         public int VerificarSegundoLogroPorIdEstadistica(int idEstadistica)
         {
-            return GestionLogros.VerificarCumplimientoSegundoLogroPorIdEstadistica(idEstadistica);
+            return _gestionLogros.VerificarCumplimientoSegundoLogroPorIdEstadistica(idEstadistica);
         }
     }
 }
