@@ -41,7 +41,8 @@ namespace PruebaAccesoADatos
         {            
             String correo= "mariolimon@gmail.com";
             int resultadoEsperado = 1;
-            int resultadoObtenido=GestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            GestionAcceso gestionAcceso=new GestionAcceso();
+            int resultadoObtenido= gestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -50,7 +51,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "ejemplo@hotmail.com";
             int resultadoEsperado = 0;
-            int resultadoObtenido = GestionAcceso.RetonarIdAccesoPorCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            int resultadoObtenido = gestionAcceso.RetonarIdAccesoPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -59,7 +61,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "mariolimon@gmail.com";
             string resultadoEsperado = "Qwerty1234";
-            string resultadoObtenido=GestionAcceso.RetornarContraseniaPorCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            string resultadoObtenido= gestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -68,7 +71,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "ejemplo@hotmail.com";
             string contraseniaEsperada = "";
-            string contrasniaObtenida=GestionAcceso.RetornarContraseniaPorCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            string contrasniaObtenida= gestionAcceso.RetornarContraseniaPorCorreo(correo);
             Assert.AreEqual(contraseniaEsperada, contrasniaObtenida);
         }
 
@@ -77,7 +81,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "mariolimon@gmail.com";
             int resultadoEsperado = 1;
-            int resultadoObtenido=GestionAcceso.ValidarPresenciaCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            int resultadoObtenido= gestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -86,7 +91,8 @@ namespace PruebaAccesoADatos
         {            
             string correo = "ejemplo@gmail.com";
             int resultadoEsperado = 0;
-            int resultadoObtenido=GestionAcceso.ValidarPresenciaCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            int resultadoObtenido= gestionAcceso.ValidarPresenciaCorreo(correo);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -100,8 +106,9 @@ namespace PruebaAccesoADatos
             cuentaPrueba.IdJugador = 1;            
             cuentaPrueba.NombreUsuario = "MarioLimon";
             cuentaPrueba.RutaImagen = "";
-            cuentaPrueba.Descripcion = "";                        
-            Cuenta cuentaObtenida=GestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
+            cuentaPrueba.Descripcion = "";
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida = gestionAcceso.ObtenerCuentaPorCorreo(cuentaPrueba.Correo);
             Assert.AreEqual(cuentaPrueba, cuentaObtenida);
         }
 
@@ -111,7 +118,8 @@ namespace PruebaAccesoADatos
             string correo = "ejemplo@gmail.com";
             Cuenta cuentaEsperada= new Cuenta();
             cuentaEsperada.IdAcceso= 0;
-            Cuenta cuentaObtenida=GestionAcceso.ObtenerCuentaPorCorreo(correo);
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida= gestionAcceso.ObtenerCuentaPorCorreo(correo);
             Assert.AreEqual(cuentaEsperada.IdAcceso,cuentaObtenida.IdAcceso);
         }
 
@@ -122,8 +130,9 @@ namespace PruebaAccesoADatos
                 IdAcceso = 1,
                 IdJugador = 1,               
             };
-            int idJugador = 1;            
-            Cuenta cuentaObtenida = GestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
+            int idJugador = 1;
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Cuenta cuentaObtenida = gestionAcceso.RecuperarCuentaPorIdJugador(idJugador);
             Assert.AreEqual(cuentaEsperada,cuentaObtenida);
         }
 

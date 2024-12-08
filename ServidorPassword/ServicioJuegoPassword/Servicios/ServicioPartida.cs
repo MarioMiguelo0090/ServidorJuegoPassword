@@ -62,11 +62,14 @@ namespace ServicioJuegoPassword.Servicios
         public int ObtenerPuntaje(string codigoPartida, string nombreUsuario)
         {
             int puntaje = 0;
-            var puntajeJugadores = _puntajeJugadores[codigoPartida];
-            if (puntajeJugadores.ContainsKey(nombreUsuario))
+            if (_puntajeJugadores.ContainsKey(codigoPartida)) 
             {
-                puntaje = puntajeJugadores[nombreUsuario];
-            }
+                var puntajeJugadores = _puntajeJugadores[codigoPartida];
+                if (puntajeJugadores.ContainsKey(nombreUsuario))
+                {
+                    puntaje = puntajeJugadores[nombreUsuario];
+                }
+            }            
             return puntaje;
         }
 
