@@ -42,7 +42,7 @@ namespace AccesoADatos
             return resultadoRegitroLogro;
         }
 
-        public static int VerificarRegistroLogroPorIdJugador(int idJugador, int idLogro) 
+        public int VerificarRegistroLogroPorIdJugador(int idJugador, int idLogro) 
         {
             int verificacionLogro = 0;
             try
@@ -65,7 +65,7 @@ namespace AccesoADatos
             return verificacionLogro;
         }
 
-        public static List<int> ObtenerLogrosPorIdJugador(int idJugador) 
+        public List<int> ObtenerLogrosPorIdJugador(int idJugador) 
         {
             List<int> logros = new List<int>();
             try
@@ -86,7 +86,7 @@ namespace AccesoADatos
             return logros;
         }
 
-        public static int VerificarCatalogoLogros()
+        public int VerificarCatalogoLogros()
         {
             int resultadoVerificacion = 0;
             try
@@ -108,7 +108,7 @@ namespace AccesoADatos
             return resultadoVerificacion;
         }
 
-        public static int VerificarCumplimientoPrimerLogroPorIdEstadistica(int idEstadistica) 
+        public int VerificarCumplimientoPrimerLogroPorIdEstadistica(int idEstadistica) 
         {
             int resultadoVerificacion = 0;
             try
@@ -130,7 +130,7 @@ namespace AccesoADatos
             return resultadoVerificacion;
         }
 
-        public static int VerificarCumplimientoSegundoLogroPorIdEstadistica(int idEstadistica)
+        public int VerificarCumplimientoSegundoLogroPorIdEstadistica(int idEstadistica)
         {
             int resultadoVerificacion = 0;
             try

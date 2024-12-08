@@ -27,8 +27,9 @@ namespace PruebaAccesoADatos
         {
             int idJugadorInvalido = -1;
             int idLogro = 1;
+            GestionLogros gestionLogros = new GestionLogros();
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionLogros.VerificarRegistroLogroPorIdJugador(idJugadorInvalido, idLogro);
+            int resultadoObtenido = gestionLogros.VerificarRegistroLogroPorIdJugador(idJugadorInvalido, idLogro);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -36,16 +37,18 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerLogrosPorIdJugadorExcepcion()
         {
             int idJugadorInvalido = -1;
+            GestionLogros gestionLogros = new GestionLogros();
             List<int> resultadoEsperado = new List<int> { -1 };
-            List<int> resultadoObtenido = GestionLogros.ObtenerLogrosPorIdJugador(idJugadorInvalido);
+            List<int> resultadoObtenido = gestionLogros.ObtenerLogrosPorIdJugador(idJugadorInvalido);
             CollectionAssert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
         [TestMethod]
         public void PruebaVerificarCatalogoLogrosExcepcion()
         {
+            GestionLogros gestionLogros = new GestionLogros();
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionLogros.VerificarCatalogoLogros();
+            int resultadoObtenido = gestionLogros.VerificarCatalogoLogros();
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -53,8 +56,9 @@ namespace PruebaAccesoADatos
         public void PruebaVerificarCumplimientoPrimerLogroPorIdEstadisticaExcepcion()
         {
             int idEstadisticaInvalida = -1;
+            GestionLogros gestionLogros = new GestionLogros();
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionLogros.VerificarCumplimientoPrimerLogroPorIdEstadistica(idEstadisticaInvalida);
+            int resultadoObtenido = gestionLogros.VerificarCumplimientoPrimerLogroPorIdEstadistica(idEstadisticaInvalida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -62,8 +66,9 @@ namespace PruebaAccesoADatos
         public void PruebaVerificarCumplimientoSegundoLogroPorIdEstadisticaExcepcion()
         {
             int idEstadisticaInvalida = -1;
+            GestionLogros gestionLogros = new GestionLogros();
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionLogros.VerificarCumplimientoSegundoLogroPorIdEstadistica(idEstadisticaInvalida);
+            int resultadoObtenido = gestionLogros.VerificarCumplimientoSegundoLogroPorIdEstadistica(idEstadisticaInvalida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
     }
