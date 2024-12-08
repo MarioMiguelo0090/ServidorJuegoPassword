@@ -97,9 +97,9 @@ namespace PruebaAccesoADatos
         {
             int idJugador = 3;            
             int resultadoEsperado = 0;
-            //List<int> amistadesObtenidas = GestionAmistad.RecuperarIdAmigosPorIdJugador(idJugador);
-            //int resultadoObtenido = amistadesObtenidas.Count();
-            //Assert.AreEqual(resultadoEsperado,resultadoObtenido);
+            List<Jugador> amistadesObtenidas = GestionAmistad.RecuperarAmigosPorIdJugador(idJugador);
+            int resultadoObtenido = amistadesObtenidas.Count();
+            Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
 
         [TestMethod]

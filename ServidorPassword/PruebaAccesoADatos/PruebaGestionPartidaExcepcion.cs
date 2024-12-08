@@ -40,8 +40,8 @@ namespace PruebaAccesoADatos
         {
             string codigoPartida = "1234";
             int resultadoEsperado = -1;
-            GestionPartida gestionPartida = new GestionPartida(); // Crear instancia
-            int resultadoObtenido = gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida); // Usar instancia
+            GestionPartida gestionPartida = new GestionPartida();
+            int resultadoObtenido = gestionPartida.ValidarInexistenciaCodigoPartida(codigoPartida);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
