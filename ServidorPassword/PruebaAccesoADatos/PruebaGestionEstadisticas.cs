@@ -17,7 +17,8 @@ namespace PruebaAccesoADatos
             int idEstadistica = 1;
             int puntajeAAgregar = 10;
             int resultadoEsperado = 1;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
             Assert.AreEqual(resultadoEsperado,resultadoObtenido);
         }
 
@@ -26,8 +27,9 @@ namespace PruebaAccesoADatos
         {
             int idEstadistica = 0;
             int puntajeAAgregar = 10;
-            int resultadoEsperado = 0;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
+            int resultadoEsperado = 0;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -35,8 +37,9 @@ namespace PruebaAccesoADatos
         public void PruebaAgregarPartidaGanadaPorIdEstadisticaExitosa() 
         {
             int idEstadistica = 1;
-            int resultadoEsperado = 1;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 1;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -44,8 +47,9 @@ namespace PruebaAccesoADatos
         public void PruebaAgregarPartidaGanadaPorIdEstadisticaFallida() 
         {
             int idEstadistica = 0;
-            int resultadoEsperado = 0;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 0;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -53,8 +57,9 @@ namespace PruebaAccesoADatos
         public void PruebaAgregarPartidaPerdidaPorIdEstadisticaExitosa() 
         {
             int idEstadistica = 1;
-            int resultadoEsperado = 1;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 1;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -62,8 +67,9 @@ namespace PruebaAccesoADatos
         public void PruebaAgregarPartidaPerdidaPorIdEstadisticaFallida()
         {
             int idEstadistica = 0;
-            int resultadoEsperado = 0;            
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 0;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -71,8 +77,9 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerEstadisticaPorIdEstadisticaExitosa() 
         {
             int idEstadistica = 1;            
-            int resultadoEsperado = 1;              
-            Estadistica estadisticaObtenida=GestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 1;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            Estadistica estadisticaObtenida=gestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
             int resultadoObtenido = estadisticaObtenida.idEstadistica;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
@@ -82,8 +89,9 @@ namespace PruebaAccesoADatos
         public void PruebaObtenerEstadisticaPorIdEstadisticaFallida()
         {
             int idEstadistica = 0;         
-            int resultadoEsperado = 0;            
-            Estadistica estadisticaObtenida = GestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
+            int resultadoEsperado = 0;
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            Estadistica estadisticaObtenida = gestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
             int resultadoObtenido = estadisticaObtenida.idEstadistica;
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }

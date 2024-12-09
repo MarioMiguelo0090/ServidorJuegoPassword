@@ -69,13 +69,10 @@ namespace ServicioJuegoPassword.Servicios
 
         public void ExpulsarJugador(string codigoPartida, JugadorContrato jugador) 
         {
-            if (_jugadoresEnPartida.ContainsKey(codigoPartida))
-            {                                   
-                if (_retrollamadaPorJugador.ContainsKey(jugador.NombreUsuario))
-                {
-                    var retrollamadaJugador = _retrollamadaPorJugador[jugador.NombreUsuario];
-                    retrollamadaJugador.NotificarExpulsion();
-                }                                                
+            if (_jugadoresEnPartida.ContainsKey(codigoPartida) && _retrollamadaPorJugador.ContainsKey(jugador.NombreUsuario))
+            {
+                var retrollamadaJugador = _retrollamadaPorJugador[jugador.NombreUsuario];
+                retrollamadaJugador.NotificarExpulsion();
             }
         }
 
