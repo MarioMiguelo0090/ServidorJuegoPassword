@@ -41,15 +41,7 @@ namespace ServicioJuegoPassword.Servicios
 
         public bool ValidarNumeroJugadoresEnPartida(string codigoPartida)
         {
-            bool validacionJugadores = false;
-            if (_jugadores.ContainsKey(codigoPartida)) 
-            {
-                if (_jugadores[codigoPartida].Count() < 10) 
-                {
-                    validacionJugadores = true;
-                }
-            }
-            return validacionJugadores;
+            return _jugadores.ContainsKey(codigoPartida) && _jugadores[codigoPartida].Count < 10;
         }
 
         public bool VerificarConexionUsuario(string jugador)

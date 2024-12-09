@@ -17,7 +17,8 @@ namespace PruebaAccesoADatos
             int idEstadistica = -1;
             int puntajeAAgregar = 10;
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPuntajePorIdEstadistica(idEstadistica, puntajeAAgregar);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -26,7 +27,8 @@ namespace PruebaAccesoADatos
         {
             int idEstadistica = -1;
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaGanadaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -35,7 +37,8 @@ namespace PruebaAccesoADatos
         {
             int idEstadistica = -1; 
             int resultadoEsperado = -1;
-            int resultadoObtenido = GestionEstadisticas.AgregarPartidaPerdidaPorIdEstadistica(idEstadistica);
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            int resultadoObtenido = gestionEstadisticas.AgregarPartidaPerdidaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
 
@@ -44,7 +47,8 @@ namespace PruebaAccesoADatos
         {
             int idEstadistica = -1;
             Estadistica resultadoEsperado = null;
-            Estadistica resultadoObtenido = GestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
+            GestionEstadisticas gestionEstadisticas = new GestionEstadisticas();
+            Estadistica resultadoObtenido = gestionEstadisticas.ObtenerEstadisticaPorIdEstadistica(idEstadistica);
             Assert.AreEqual(resultadoEsperado, resultadoObtenido);
         }
     }
