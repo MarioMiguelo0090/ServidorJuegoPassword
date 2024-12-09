@@ -13,7 +13,7 @@ namespace AccesoADatos
     {
         private static readonly ILog _bitacora = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static int AgregarPuntajePorIdEstadistica(int idEstadistica, int puntajeAAgregar)
+        public int AgregarPuntajePorIdEstadistica(int idEstadistica, int puntajeAAgregar)
         {
             int resultadoAgregacionPuntaje = 0;
             try
@@ -39,11 +39,10 @@ namespace AccesoADatos
                 _bitacora.Error(excepcionEntidad);
                 resultadoAgregacionPuntaje = -1;
             }
-
             return resultadoAgregacionPuntaje;
         }
 
-        public static int AgregarPartidaGanadaPorIdEstadistica(int idEstadistica)
+        public int AgregarPartidaGanadaPorIdEstadistica(int idEstadistica)
         {
             int resultadoAgregacionPuntaje = 0;
             try
@@ -72,7 +71,7 @@ namespace AccesoADatos
             return resultadoAgregacionPuntaje;
         }
 
-        public static int AgregarPartidaPerdidaPorIdEstadistica(int idEstadistica)
+        public int AgregarPartidaPerdidaPorIdEstadistica(int idEstadistica)
         {
             int resultadoAgregacionPuntaje = 0;
             try
@@ -101,7 +100,7 @@ namespace AccesoADatos
             return resultadoAgregacionPuntaje;
         }
 
-        public static Estadistica ObtenerEstadisticaPorIdEstadistica(int idEstadistica)
+        public Estadistica ObtenerEstadisticaPorIdEstadistica(int idEstadistica)
         {
             Estadistica resultadoEstadistica = new Estadistica();
             try
