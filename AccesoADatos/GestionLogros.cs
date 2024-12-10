@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using AccesoADatos.Auxiliares;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -15,7 +16,7 @@ namespace AccesoADatos
 
         public int RegistrarLogroPorIdJugador(int idJugador, int idLogro) 
         {
-            int resultadoRegitroLogro = 0;
+            int resultadoRegitroLogro = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -32,19 +33,19 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoRegitroLogro = -1;
+                resultadoRegitroLogro = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoRegitroLogro = -1;
+                resultadoRegitroLogro = Constantes.ValorError;
             }
             return resultadoRegitroLogro;
         }
 
         public int VerificarRegistroLogroPorIdJugador(int idJugador, int idLogro) 
         {
-            int verificacionLogro = 0;
+            int verificacionLogro = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -53,14 +54,14 @@ namespace AccesoADatos
                     .Any(detalleLogro => detalleLogro.FKIdJugador == idJugador && detalleLogro.FKIdLogro == idLogro);                    
                     if (logroExistente)
                     {
-                        verificacionLogro = 1;
+                        verificacionLogro = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                verificacionLogro = -1;
+                verificacionLogro = Constantes.ValorError;
             }
             return verificacionLogro;
         }
@@ -81,73 +82,73 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                logros.Insert(0, -1);
+                logros.Insert(0, Constantes.ValorError);
             }
             return logros;
         }
 
         public int VerificarCatalogoLogros()
         {
-            int resultadoVerificacion = 0;
+            int resultadoVerificacion = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {                    
                     int totalLogros = contexto.Logro.Count();
-                    if (totalLogros >= 5)
+                    if (totalLogros >= Constantes.NumeroLogros)
                     {
-                        resultadoVerificacion = 1;
+                        resultadoVerificacion = Constantes.ValorExitoso;
                     }                    
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoVerificacion = -1; 
+                resultadoVerificacion = Constantes.ValorError; 
             }
             return resultadoVerificacion;
         }
 
         public int VerificarCumplimientoPrimerLogroPorIdEstadistica(int idEstadistica) 
         {
-            int resultadoVerificacion = 0;
+            int resultadoVerificacion = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
                     var estadistica = contexto.Estadistica.FirstOrDefault(entidad => entidad.idEstadistica == idEstadistica);                    
-                    if (estadistica != null && estadistica.partidasGanadas > 0)
+                    if (estadistica != null && estadistica.partidasGanadas > Constantes.ValorNeutro)
                     {
-                        resultadoVerificacion = 1;
+                        resultadoVerificacion = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoVerificacion = -1;
+                resultadoVerificacion = Constantes.ValorError;
             }
             return resultadoVerificacion;
         }
 
         public int VerificarCumplimientoSegundoLogroPorIdEstadistica(int idEstadistica)
         {
-            int resultadoVerificacion = 0;
+            int resultadoVerificacion = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
                     var estadistica = contexto.Estadistica.FirstOrDefault(entidad => entidad.idEstadistica == idEstadistica);
-                    if (estadistica != null && estadistica.partidasGanadas >= 10)
+                    if (estadistica != null && estadistica.partidasGanadas >= Constantes.NumeroPartidasGanadas)
                     {
-                        resultadoVerificacion = 1;
+                        resultadoVerificacion = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoVerificacion = -1;
+                resultadoVerificacion = Constantes.ValorError;
             }
             return resultadoVerificacion;
         }       

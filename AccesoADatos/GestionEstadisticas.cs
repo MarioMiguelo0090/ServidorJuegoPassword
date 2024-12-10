@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using AccesoADatos.Auxiliares;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -15,7 +16,7 @@ namespace AccesoADatos
 
         public int AgregarPuntajePorIdEstadistica(int idEstadistica, int puntajeAAgregar)
         {
-            int resultadoAgregacionPuntaje = 0;
+            int resultadoAgregacionPuntaje = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -32,19 +33,19 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             return resultadoAgregacionPuntaje;
         }
 
         public int AgregarPartidaGanadaPorIdEstadistica(int idEstadistica)
         {
-            int resultadoAgregacionPuntaje = 0;
+            int resultadoAgregacionPuntaje = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -61,12 +62,12 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             return resultadoAgregacionPuntaje;
         }
@@ -90,12 +91,12 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoAgregacionPuntaje = -1;
+                resultadoAgregacionPuntaje = Constantes.ValorError;
             }
             return resultadoAgregacionPuntaje;
         }
@@ -114,19 +115,19 @@ namespace AccesoADatos
                     }
                     else
                     {
-                        resultadoEstadistica.idEstadistica = 0;
+                        resultadoEstadistica.idEstadistica = Constantes.ValorNeutro;
                     }
                 }
             }
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoEstadistica.idEstadistica = -1;
+                resultadoEstadistica.idEstadistica = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoEstadistica.idEstadistica = -1;
+                resultadoEstadistica.idEstadistica = Constantes.ValorError;
             }
             return resultadoEstadistica;
         }

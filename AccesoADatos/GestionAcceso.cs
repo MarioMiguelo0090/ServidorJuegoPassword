@@ -19,7 +19,7 @@ namespace AccesoADatos
 
         public int RegistrarAcceso(Acceso nuevoAcceso, Jugador nuevoJugador)
         {
-            int resultadoRegistro = 0;
+            int resultadoRegistro =Constantes.ValorNeutro;
             lock (_bloqueo) 
             {
                 try
@@ -49,9 +49,9 @@ namespace AccesoADatos
                                     int idAcceso = acceso.idAcceso;
                                     Estadistica estadistica = new Estadistica
                                     {
-                                        puntaje = 0,
-                                        partidasGanadas = 0,
-                                        partidasPerdidas = 0,
+                                        puntaje = Constantes.ValorNeutro,
+                                        partidasGanadas = Constantes.ValorNeutro,
+                                        partidasPerdidas = Constantes.ValorNeutro,
                                     };
                                     contexto.Estadistica.Add(estadistica);
                                     contexto.SaveChanges();
@@ -67,25 +67,25 @@ namespace AccesoADatos
                                     contexto.Jugador.Add(jugador);
                                     contexto.SaveChanges();
                                     contextoTransaccion.Commit();
-                                    resultadoRegistro = 1;
+                                    resultadoRegistro = Constantes.ValorExitoso;
                                 }
                                 catch (DbEntityValidationException excepcionValidacion)
                                 {
                                     _bitacora.Warn(excepcionValidacion);
                                     contextoTransaccion.Rollback();
-                                    resultadoRegistro = -1;
+                                    resultadoRegistro = Constantes.ValorError;
                                 }
                                 catch (DbUpdateException excepcionActualizacion)
                                 {
                                     _bitacora.Warn(excepcionActualizacion);
                                     contextoTransaccion.Rollback();
-                                    resultadoRegistro = -1;
+                                    resultadoRegistro = Constantes.ValorError;
                                 }
                                 catch (EntityException excepcionSQL)
                                 {
                                     _bitacora.Error(excepcionSQL);
                                     contextoTransaccion.Rollback();
-                                    resultadoRegistro = -1;
+                                    resultadoRegistro = Constantes.ValorError;
                                 }
                             }
                         }
@@ -94,7 +94,7 @@ namespace AccesoADatos
                 catch (EntityException excepcionSQL)
                 {
                     _bitacora.Error(excepcionSQL);
-                    resultadoRegistro = -1;
+                    resultadoRegistro = Constantes.ValorError;
                 }
             }            
             return resultadoRegistro;
@@ -102,7 +102,7 @@ namespace AccesoADatos
 
         public int RetonarIdAccesoPorCorreo(string correo)
         {
-            int idAcceso = 0;
+            int idAcceso = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -117,14 +117,14 @@ namespace AccesoADatos
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                idAcceso = -1;
+                idAcceso = Constantes.ValorError;
             }
             return idAcceso;
         }
 
         public string RetornarContraseniaPorCorreo(string correo)
         {
-            string contrasenia = "";
+            string contrasenia = Constantes.ContraseniaNeutra;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -139,14 +139,14 @@ namespace AccesoADatos
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                contrasenia = "excepcion";
+                contrasenia = Constantes.Excepcion;
             }
             return contrasenia;
         }
 
         public int ValidarPresenciaCorreo(string correo)
         {
-            int resultado = 0;
+            int resultado = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -161,7 +161,7 @@ namespace AccesoADatos
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultado = -1;
+                resultado = Constantes.ValorError;
             }
             return resultado;
         }
@@ -200,14 +200,14 @@ namespace AccesoADatos
                     }
                     else
                     {
-                        cuenta.IdAcceso = 0;
+                        cuenta.IdAcceso = Constantes.ValorNeutro;
                     }
                 }
             }
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                cuenta.IdAcceso = -1;
+                cuenta.IdAcceso = Constantes.ValorError;
             }
             return cuenta;
         }
@@ -244,14 +244,14 @@ namespace AccesoADatos
                     }
                     else
                     {
-                        cuenta.IdAcceso = 0;
+                        cuenta.IdAcceso = Constantes.ValorNeutro;
                     }
                 }
             }
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                cuenta.IdAcceso = -1;
+                cuenta.IdAcceso = Constantes.ValorError;
             }
             return cuenta;
         }
@@ -259,7 +259,7 @@ namespace AccesoADatos
         public int VerificarRegistroCuenta(string nombreUsuario, string correo) 
         {
 
-            int resultadoVerificacion = 0;
+            int resultadoVerificacion = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -268,14 +268,14 @@ namespace AccesoADatos
                     var jugadorExistente = contexto.Jugador.Any(jugadorCuenta => jugadorCuenta.nombreUsuario == nombreUsuario);
                     if (accesoExistente || jugadorExistente)
                     {
-                        resultadoVerificacion = 1;                        
+                        resultadoVerificacion = Constantes.ValorExitoso;                        
                     }
                 }
             }
             catch (EntityException excepcionSql)
             {
                 _bitacora.Error(excepcionSql);
-                resultadoVerificacion = -1;
+                resultadoVerificacion = Constantes.ValorError;
             }
             return resultadoVerificacion;
         }

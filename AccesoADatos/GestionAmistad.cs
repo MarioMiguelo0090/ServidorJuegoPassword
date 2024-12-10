@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using AccesoADatos.Auxiliares;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -17,7 +18,7 @@ namespace AccesoADatos
 
         public int RegistrarNuevaSolicitudAmistad(Amistad nuevaAmistad)
         {
-            int resultadoRegistroAmistad = 0;
+            int resultadoRegistroAmistad = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -35,24 +36,24 @@ namespace AccesoADatos
             catch(DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoRegistroAmistad = -1;
+                resultadoRegistroAmistad = Constantes.ValorError;
             }
             catch (DbEntityValidationException excepcionValidacion)
             {
                 _bitacora.Warn(excepcionValidacion);
-                resultadoRegistroAmistad = -1;
+                resultadoRegistroAmistad = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoRegistroAmistad = -1;
+                resultadoRegistroAmistad = Constantes.ValorError;
             }
             return resultadoRegistroAmistad;
         }
 
         public static int ConfirmarSolicitudAmistadPorIdAmistad(Amistad posibleAmistad)
         {
-            int resultadoConfirmacion = 0;
+            int resultadoConfirmacion = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -69,12 +70,12 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoConfirmacion = -1;
+                resultadoConfirmacion = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoConfirmacion = -1;
+                resultadoConfirmacion = Constantes.ValorError;
             }
             return resultadoConfirmacion;
         }
@@ -95,7 +96,7 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                idJugadores.Insert(0, -1); 
+                idJugadores.Insert(0, Constantes.ValorError); 
             }
             return idJugadores;
         }
@@ -123,7 +124,7 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                amigos.Insert(0, new Jugador { idJugador = -1 });
+                amigos.Insert(0, new Jugador { idJugador = Constantes.ValorError });
             }
             return amigos;
         }
@@ -131,7 +132,7 @@ namespace AccesoADatos
 
         public static int ObtenerIdJugadorPorCorreo(string correo) 
         {
-            int idJugador = 0;
+            int idJugador = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -151,7 +152,7 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                idJugador = -1;
+                idJugador = Constantes.ValorError;
             }
             return idJugador;
         }
@@ -172,7 +173,7 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                string nombreUsuario = "excepcion";
+                string nombreUsuario = Constantes.Excepcion;
                 nombresUsuarios.Add(nombreUsuario);
             }
             return nombresUsuarios;
@@ -181,7 +182,7 @@ namespace AccesoADatos
 
         public static int ValidarExistenciaAmistadPorIdJugadores(int idJugadorRemitente, int idJugadorDestinatario) 
         {
-            int validacionInexistenciaAmistad = 0;
+            int validacionInexistenciaAmistad = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -191,21 +192,21 @@ namespace AccesoADatos
                         (entidad.idJugadorAmigo == idJugadorRemitente && entidad.FKidJugador == idJugadorDestinatario));
                     if (amistad != null)
                     {
-                        validacionInexistenciaAmistad = 1;
+                        validacionInexistenciaAmistad = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                validacionInexistenciaAmistad = -1;
+                validacionInexistenciaAmistad = Constantes.ValorError;
             }        
             return validacionInexistenciaAmistad;
         }
 
         public static int ObtenerIdAmistadPorIdJugadores(int idJugadorUno, int idJugadorDos) 
         {
-            int idAmistad = 0;
+            int idAmistad = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades()) 
@@ -221,7 +222,7 @@ namespace AccesoADatos
             catch (EntityException excepcionEntidad) 
             {
                 _bitacora.Error(excepcionEntidad);
-                idAmistad = -1;
+                idAmistad = Constantes.ValorError;
             }
             return idAmistad;
         }
