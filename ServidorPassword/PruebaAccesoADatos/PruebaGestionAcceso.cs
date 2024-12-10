@@ -8,6 +8,19 @@ namespace PruebaAccesoADatos
     [TestClass]
     public class PruebaGestionAcceso
     {
+        [TestInitialize]
+        public void ConfigurarAcceso(TestContext contextoPrueba) 
+        {
+            GestionAcceso gestionAcceso = new GestionAcceso();
+            Acceso acceso = new Acceso();
+            acceso.correo = "ejemplo@gmail.com";
+            acceso.contrasenia = "11c3c4b9db9fc12fd6f7c57a9ab81468668ff1d3bb0ed28ed507b6a5c989e2aa";
+            Jugador jugador = new Jugador();
+            jugador.nombreUsuario = "Ejemplo";
+            jugador.rutaImagen = "";
+            jugador.descripcion = "";
+            gestionAcceso.RegistrarAcceso(acceso, jugador);            
+        }
         
         [TestMethod]
         public void PruebaRegistrarAccesoExitoso()

@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using AccesoADatos.Auxiliares;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
@@ -17,7 +18,7 @@ namespace AccesoADatos
 
         public int RegistrarNuevaPartidaPorIdJugador(int idJugador, Partida nuevaPartida)
         {
-            int registroNuevaPartida = 0;
+            int registroNuevaPartida = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -44,19 +45,19 @@ namespace AccesoADatos
                             contexto.DetallePartida.Add(detallePartida);
                             contexto.SaveChanges();
                             contextoTransaccion.Commit();
-                            registroNuevaPartida = 1;
+                            registroNuevaPartida = Constantes.ValorExitoso;
                         }
                         catch (DbEntityValidationException excepcionValidacion)
                         {
                             _bitacora.Warn(excepcionValidacion);
                             contextoTransaccion.Rollback();
-                            registroNuevaPartida = -1;
+                            registroNuevaPartida = Constantes.ValorError;
                         }
                         catch (EntityException excepcionEntidad)
                         {
                             _bitacora.Error(excepcionEntidad);
                             contextoTransaccion.Rollback();
-                            registroNuevaPartida = -1;
+                            registroNuevaPartida = Constantes.ValorError;
                         }
                     }
                 }
@@ -64,19 +65,19 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                registroNuevaPartida = -1;
+                registroNuevaPartida = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                registroNuevaPartida = -1;
+                registroNuevaPartida = Constantes.ValorError;
             }
             return registroNuevaPartida;
         }
 
         public static int ActualizarEstadoDePartidaPorIdPartida(int idPartida, string nuevoEstado)
         {
-            int resultadoActualizacionEstado = 0;
+            int resultadoActualizacionEstado = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -91,19 +92,19 @@ namespace AccesoADatos
             catch (DbUpdateException excepcionActualizacion)
             {
                 _bitacora.Warn(excepcionActualizacion);
-                resultadoActualizacionEstado = -1;
+                resultadoActualizacionEstado = Constantes.ValorError;
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                resultadoActualizacionEstado = -1;
+                resultadoActualizacionEstado = Constantes.ValorError;
             }
             return resultadoActualizacionEstado;
         }
 
         public int ValidarInexistenciaCodigoPartida(string codigoPartida)
         {
-            int resultadoInexistencia = 0;
+            int resultadoInexistencia = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
@@ -111,14 +112,14 @@ namespace AccesoADatos
                     var partida = contexto.Partida.Any(entidad => entidad.codigoPartida == codigoPartida);
                     if (partida)
                     {
-                        resultadoInexistencia = 1;
+                        resultadoInexistencia = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionSql)
             {
                 _bitacora.Warn(excepcionSql);
-                resultadoInexistencia = -1;
+                resultadoInexistencia = Constantes.ValorError;
             }
             return resultadoInexistencia;
         }
@@ -138,7 +139,7 @@ namespace AccesoADatos
                 _bitacora.Error(excepcionEntidad);
                 Pregunta pregunta = new Pregunta
                 {
-                    idPregunta = -1,
+                    idPregunta = Constantes.ValorError,
                 };
                 preguntas.Insert(0, pregunta);
             }
@@ -161,7 +162,7 @@ namespace AccesoADatos
                 _bitacora.Error(excepcionEntidad);
                 Respuesta respuesta = new Respuesta
                 {
-                    idRespuesta = -1,
+                    idRespuesta = Constantes.ValorError,
                 };
                 respuestas.Insert(0, respuesta);
             }
@@ -183,7 +184,7 @@ namespace AccesoADatos
                 _bitacora.Error(excepcionEntidad);
                 partida = new Partida
                 {
-                    idPartida = -1
+                    idPartida = Constantes.ValorError
                 };
             }
             return partida;
@@ -206,7 +207,7 @@ namespace AccesoADatos
                 _bitacora.Error(excepcionEntidad);
                 Respuesta respuesta = new Respuesta
                 {
-                    idRespuesta = -1
+                    idRespuesta = Constantes.ValorError
                 };
                 respuestasObtenidas.Insert(0, respuesta);
             }
@@ -215,7 +216,7 @@ namespace AccesoADatos
 
         public int VerificarCatalogoPreguntas() 
         {
-            int verificacionCatalogoPreguntas = 0;
+            int verificacionCatalogoPreguntas = Constantes.ValorNeutro;
 
             try
             {
@@ -223,38 +224,38 @@ namespace AccesoADatos
                 {                    
                     int totalPreguntas = contexto.Pregunta.Count();
 
-                    if (totalPreguntas >= 30)
+                    if (totalPreguntas >= Constantes.NumeroPreguntasCatalogo)
                     {
-                        verificacionCatalogoPreguntas = 1;
+                        verificacionCatalogoPreguntas = Constantes.ValorExitoso;
                     }                  
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                verificacionCatalogoPreguntas = -1;
+                verificacionCatalogoPreguntas = Constantes.ValorError;
             }
             return verificacionCatalogoPreguntas;
         }
 
         public int VerificarCatalogoRespuestas()
         {
-            int verificacionCatalogoRespuestas = 0;
+            int verificacionCatalogoRespuestas = Constantes.ValorNeutro;
             try
             {
                 using (var contexto = new PasswordEntidades())
                 {
                     int totalRespuestas = contexto.Respuesta.Count();
-                    if (totalRespuestas >= 90)
+                    if (totalRespuestas >= Constantes.NumeroRespuestasCatalogo)
                     {
-                        verificacionCatalogoRespuestas = 1;
+                        verificacionCatalogoRespuestas = Constantes.ValorExitoso;
                     }
                 }
             }
             catch (EntityException excepcionEntidad)
             {
                 _bitacora.Error(excepcionEntidad);
-                verificacionCatalogoRespuestas = -1;
+                verificacionCatalogoRespuestas = Constantes.ValorError;
             }
             return verificacionCatalogoRespuestas;
         }
